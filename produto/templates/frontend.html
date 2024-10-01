@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <title>Página do Clark</title>
+    <style> 
+        body {
+            color: rgb(255, 255, 255);
+            background-color: rgb(28, 185, 224);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        #principal {
+            background-color: rgb(41, 27, 167);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .quadrado {
+            background-color: rgb(253, 44, 7);
+            border: 2px solid black;
+            height: 100px;
+            width: 100px;
+            display: inline-block;
+            margin: 10px;
+            line-height: 100px; /* Centraliza o texto verticalmente */
+        }
+        #div1 { background-color: rgb(255, 0, 0); }
+        #div2 { background-color: rgb(0, 17, 255); }
+        #div3 { background-color: rgb(1, 255, 14); }
+        #div4 { background-color: rgb(248, 252, 3); }
+        .cartao {
+            border: 2px solid black;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: rgb(255, 255, 255);
+            color: black; /* Texto preto para contraste */
+        }
+        .cartao img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="principal">
+        <div class="quadrado" id="div1">Nome1</div>
+        <div class="quadrado" id="div2">Nome2</div>
+        <div class="quadrado" id="div3">Nome3</div>
+        <div class="quadrado" id="div4">Nome4</div>
+    </div>
+
+    <div class="cartao">
+        <img src="https://via.placeholder.com/200" alt="Produto 1">
+        <h4>Título do produto 1</h4>
+        <p>Descrição do produto 1</p>
+        <p>R$00,00</p>
+        <button>Ver detalhe</button>
+    </div>
+
+    <div class="cartao">
+        <img src="https://via.placeholder.com/200" alt="Produto 2">
+        <h4>Título do produto 2</h4>
+        <p>Descrição do produto 2</p>
+        <p>R$00,00</p>
+        <button>Ver detalhe</button>
+    </div>
+</body>
+</html>
