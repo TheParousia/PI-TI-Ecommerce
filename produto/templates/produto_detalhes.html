@@ -1,0 +1,32 @@
+{% extends "main.html" %}
+
+<!-- Definindo título da aba -->
+{% block title %}
+    Detalhes do Produto
+{% endblock %}
+
+<!-- Definindo título da página -->
+{% block titulo %}
+    Informações do Produto
+{% endblock %}
+
+<!-- Conteúdo dos detalhes do produto -->
+{% block conteudo %}
+    <div class="produto-detalhes">
+        <h1>{{ produto.nome }}</h1>
+        <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
+        <p><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+
+        <!-- Exibindo a imagem do produto se disponível -->
+        {% if produto.imagem %}
+            <div>
+                <img src="{{ produto.imagem.url }}" alt="Imagem do Produto" style="max-width: 300px;">
+            </div>
+        {% else %}
+            <p>Imagem não disponível para este produto.</p>
+        {% endif %}
+
+        <!-- Botão de ação -->
+        <a href="#" class="btn btn-primary">Adicionar ao Carrinho</a>
+    </div>
+{% endblock %}
