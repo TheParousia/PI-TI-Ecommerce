@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'exemploDB',
-        'USER': 'Sys_ecommerce',
-        'PASSWORD': 'senac123#',
-        'HOST': '192.168.30.171',
+        'NAME': 'ecommerce',
+        'USER': 'sys_ecommerce',
+        'PASSWORD': 'DbPi@2024',
+        'HOST': '192.168.30.30',
         'PORT': 3306,
     }
 }
