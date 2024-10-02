@@ -1,5 +1,7 @@
 
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.template import loader
 from produto import models
 # from .models import Produto
 
@@ -14,17 +16,19 @@ class Produto():
     cor = "Amarelo" 
     marca = "Xiaomi"
 
-def produto_detalhes(request, produto_id):
+def detalhesProduto(request):
     # Tenta buscar o produto pelo ID ou retorna um erro 404 se não encontrado
     #produto = get_object_or_404(Produto, id=produto_id)
-
+    produto = Produto()
     
     # Dados do produto a serem passados para o template
     context = {
         'produto': produto
     }
-    
+    # template = loader.get_template("detalhes.html")
     # Renderiza o template 'produto_detalhes.html' com o contexto do produto
     return render(request, 'produto_detalhes.html', context)
+
+    # return HttpResponse("template.render()")
 
     

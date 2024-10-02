@@ -1,32 +1,188 @@
-{% extends "main.html" %}
+<style>
+    body {
+        background-color: #EFF2F6;
+        font-family: Arial, sans-serif;
+    }
 
-<!-- Definindo título da aba -->
-{% block title %}
-    Detalhes do Produto
-{% endblock %}
+    .container {
+        display: flex;
+        margin: 20px auto;
+        padding: 20px;
+        /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+    }
 
-<!-- Definindo título da página -->
-{% block titulo %}
-    Informações do Produto
-{% endblock %}
+    .container > div {
+        width: 50%;
+    }
 
-<!-- Conteúdo dos detalhes do produto -->
-{% block conteudo %}
-    <div class="produto-detalhes">
-        <h1>{{ produto.nome }}</h1>
-        <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
-        <p><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+    .imgs {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
 
-        <!-- Exibindo a imagem do produto se disponível -->
-        {% if produto.imagem %}
-            <div>
-                <img src="{{ produto.imagem.url }}" alt="Imagem do Produto" style="max-width: 300px;">
-            </div>
-        {% else %}
-            <p>Imagem não disponível para este produto.</p>
-        {% endif %}
+    .foto-produto img {
+        width: 17vw;
+        height: 17vw;
+        border-radius: 10px;
+    }
 
-        <!-- Botão de ação -->
-        <a href="#" class="btn btn-primary">Adicionar ao Carrinho</a>
+    .produto-detalhes {
+        padding: 0 20px;
+    }
+
+    .produto-detalhes h1 {
+        font-size: 24px;
+        margin: 0 0 10px;
+    }
+
+    .produto-detalhes p {
+        font-size: 18px;
+        color: #333;
+    }
+
+    .produto-detalhes .preco {
+        font-size: 24px;
+        color: #333;
+        margin: 10px 0;
+    }
+
+    .capacidade {
+        margin: 20px 0;
+    }
+
+    .capacidade span {
+        display: inline-block;
+        padding: 10px 15px;
+        margin: 5px;
+        border: 2px solid #ccc;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .capacidade span:hover,
+    .capacidade span.active {
+        border-color: black;
+        background-color: #f5f5f5;
+    }
+
+    /* Alinhar o botão e o seletor de quantidade lado a lado */
+    .cart-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    /* Botão de Adicionar ao Carrinho */
+    .btn-btn-primary {
+        display: inline-block;
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        border: 2px solid black;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .btn-btn-primary:hover {
+        background-color: #333;
+    }
+
+    /* Estilo do controle de quantidade */
+    .quantidade {
+        margin: 0;
+    }
+
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .quantity-controls input {
+        width: 50px;
+        text-align: center;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .quantity-btn {
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 18px;
+    }
+
+    .quantity-btn:hover {
+        background-color: #f0f0f0;
+    }
+</style>
+
+<div class="container">
+    <div class="imgs">
+        <div class="foto-produto">
+            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+        </div>
+        <div class="foto-produto">
+            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+        </div>
+        <div class="foto-produto">
+            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+        </div>
+        <div class="foto-produto">
+            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+        </div>
     </div>
-{% endblock %}
+    <div class="produto-detalhes">
+        <h1>{{ produto.modelo }}</h1>
+        <p class="preco">R$ {{ produto.preco }}</p>
+        <p>{{ produto.descricao }}</p>
+
+        <label>Capacidade:</label>
+        <div class="capacidade">
+            <span class="active">64GB</span>
+            <span>128GB</span>
+            <span>256GB</span>
+        </div>
+
+        <!-- Alinhamento da quantidade e do botão -->
+        <div class="cart-actions">
+            <!-- Botão de ação -->
+            <a href="#" class="btn-btn-primary">Adicionar ao Carrinho</a>
+
+            <!-- Controle de quantidade -->
+            <div class="quantidade">
+                <label for="quantidade">Quantidade:</label>
+                <div class="quantity-controls">
+                    <button id="decrease" class="quantity-btn">−</button>
+                    <input type="number" id="quantidade" value="1" min="1">
+                    <button id="increase" class="quantity-btn">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const decreaseBtn = document.getElementById('decrease');
+    const increaseBtn = document.getElementById('increase');
+    const quantityInput = document.getElementById('quantidade');
+
+    decreaseBtn.addEventListener('click', () => {
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+        }
+    });
+
+    increaseBtn.addEventListener('click', () => {
+        let currentValue = parseInt(quantityInput.value);
+        quantityInput.value = currentValue + 1;
+    });
+</script>
