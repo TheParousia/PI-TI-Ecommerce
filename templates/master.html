@@ -1,41 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% endblock %}</title>
   {% load bootstrap5 %}
   {% bootstrap_css %}
   {% bootstrap_javascript %}
+</head>
+<body>
   <header>
-    <!-- Fixed navbar -->
+    <!-- Barra superior -->
+    <div class="bg-dark text-light d-flex justify-content-between align-items-center p-2">
+      <div class="ms-3">BR</div>
+      <div class="text-center flex-grow-1">Frete grátis para todo o País</div>
+      <div class="me-3">
+        <button class="btn btn-outline-light">Suporte</button>
+      </div>
+    </div>
+
+    <!-- Navbar fixa -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Barra de navegação fixa</font></font></a>
+        <a class="navbar-brand" href="#">BR</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Alternar navegação">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <ul class="navbar-nav mx-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lar</font></font></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Link</font></font></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Desabilitado</font></font></a>
+              <a class="nav-link active text-center" aria-current="page" href="#">FRETE GRÁTIS EM TODO PARÁ! DEZEMBRO. 15–28.</a>
             </li>
           </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Procurar" aria-label="Procurar">
-            <button class="btn btn-outline-success" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Procurar</font></font></button>
-          </form>
+          <div class="d-flex">
+            <a class="nav-link text-white" href="#">SUPORTE</a> <!-- Mudança aqui -->
+          </div>
         </div>
       </div>
     </nav>
+    
+    <!-- Barra de pesquisa secundária -->
+    <div class="bg-body shadow-sm">
+      <form class="d-flex container my-2">
+        <input class="form-control me-2" type="search" placeholder="Procurar" aria-label="Procurar">
+        <button class="btn btn-outline-success" type="submit">Procurar</button>
+      </form>
+    </div>
   </header>
 
   {% block content %}
   {% endblock %}
 
+  {% bootstrap_javascript %}
 </body>
 </html>
