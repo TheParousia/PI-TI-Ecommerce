@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Produtos</title>
+    <title>Loja de Celulares</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,14 +22,18 @@
             background-color: #f8f8f8;
             text-align: center;
         }
-        .filters {
+        .main-content {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
+            width: 100%;
+        }
+        .filters {
             background-color: #f1f1f1;
             padding: 10px;
-            margin-bottom: 20px;
+            margin-right: 20px;
+            width: 250px;
+        }
+        .filters div {
+            margin-bottom: 10px;
         }
         .filters label {
             margin-right: 10px;
@@ -37,6 +41,24 @@
         .filters select, .filters input {
             margin-right: 20px;
             padding: 5px;
+            width: 100%;
+        }
+        .products-section {
+            flex-grow: 1;
+        }
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .products-header .sort-options {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+        .products-header .sort-options select {
+            margin-left: 10px;
         }
         .products {
             display: flex;
@@ -72,48 +94,122 @@
             border: none;
             cursor: pointer;
         }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 10px;
+            list-style: none;
+        }
+        .dropdown-menu.show {
+            display: block.
+        }
+        .dropdown-menu li {
+            padding: 5px 10px;
+            cursor: pointer.
+        }
+        .dropdown-menu li:hover {
+            background-color: #f1f1f1.
+        }
+        .new-div {
+            text-align: left; /* Alinha o texto à esquerda */
+            width: 100%; /* Garante que a div ocupe toda a largura disponível */
+            max-width: 1200px; /* Mantém a largura máxima consistente */
+            padding: 20px; /* Adiciona padding para espaçamento */
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Lista de Produtos</h1>
+    <div class="new-div">
+        <h1>Comprar</h1>
+        <p>Junte-se aos milhares de clientes satisfeitos que já escolheram nossa loja e descubra por que somos a escolha número um para todas as suas necessidades!</p>    
     </div>
-    <div class="filters">
-        <label for="marca">Marca:</label>
-        <select id="marca" name="marca">
-            <option value="">Todas</option>
-            <!-- Adicione opções de marca aqui -->
-        </select>
-        <label for="modelo">Modelo:</label>
-        <select id="modelo" name="modelo">
-            <option value="">Todos</option>
-            <!-- Adicione opções de modelo aqui -->
-        </select>
-        <label for="cor">Cor:</label>
-        <select id="cor" name="cor">
-            <option value="">Todas</option>
-            <!-- Adicione opções de cor aqui -->
-        </select>
-        <label for="preco">Preço:</label>
-        <input type="number" id="preco" name="preco" placeholder="Máximo">
-        <button>Aplicar Filtros</button>
-        <button>Limpar Filtros</button>
-    </div>
-    <div class="products">
-        {% for produto in produtos %}
-        <div class="card">
-            <h2>{{ produto.modelo }}</h2>
-            <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
-            <p><strong>Capacidade 1:</strong> {{ produto.capacidade1 }}</p>
-            <p><strong>Capacidade 2:</strong> {{ produto.capacidade2 }}</p>
-            <p><strong>Capacidade 3:</strong> {{ produto.capacidade3 }}</p>
-            <p><strong>Quantidade em Estoque:</strong> {{ produto.qtdEstoque }}</p>
-            <p class="price"><strong>Preço:</strong> {{ produto.preco }}</p>
-            <p><strong>Cor:</strong> {{ produto.cor }}</p>
-            <p><strong>Marca:</strong> {{ produto.marca }}</p>
+    <div class="main-content">
+        <div class="filters">
+            <form method="get">
+                <div>
+                    <label for="marca">Marca:</label>
+                    <select id="marca" name="marca">
+                        <option value="">Todas</option>
+                        <!-- Adicione opções de marca aqui -->
+                    </select>
+                </div>
+                <div>
+                    <label for="modelo">Modelo:</label>
+                    <select id="modelo" name="modelo">
+                        <option value="">Todos</option>
+                        <!-- Adicione opções de modelo aqui -->
+                    </select>
+                </div>
+                <div>
+                    <label for="cor">Cor:</label>
+                    <select id="cor" name="cor">
+                        <option value="">Todas</option>
+                        <!-- Adicione opções de cor aqui -->
+                    </select>
+                </div>
+                <div class="dropdown">
+                    <button id="bordenarpor" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="fa fa-exchange fa-rotate-90" aria-hidden="true"></span> Ordenar por
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="bordenarpor">
+                        <li data-value="preco_asc">Menor Preço</li>
+                        <li data-value="preco_desc">Maior Preço</li>
+                    </ul>
+                </div>
+                <input type="hidden" id="ordenar_por" name="ordenar_por">
+                <div>
+                    <button type="submit">Aplicar Filtros</button>
+                    <button type="reset">Limpar Filtros</button>
+                </div>
+            </form>
         </div>
-        {% endfor %}
+        <div class="products-section">
+            <div class="products-header">
+                <div class="sort-options">
+                    <span>Ordenar por</span>
+                    <select id="ordenar" name="ordenar">
+                        <option value="popular_asc">Mais Populares</option>
+                        <option value="popular_desc">Menos Populares</option>
+                        <!-- Adicione outras opções de ordenação aqui -->
+                    </select>
+                </div>
+            </div>
+            <div class="products">
+                {% for produto in produtos %}
+                <div class="card"> 
+                    <img src="" width="100px" height="100px" alt="">
+                    <h2>{{ produto.modelo }}</h2>
+                    <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
+                    <p><strong>Capacidade 1:</strong> {{ produto.capacidade1 }}</p>
+                    <p><strong>Capacidade 2:</strong> {{ produto.capacidade2 }}</p>
+                    <p><strong>Capacidade 3:</strong> {{ produto.capacidade3 }}</p>
+                    <p><strong>Quantidade em Estoque:</strong> {{ produto.qtd_estoque }}</p>
+                    <p class="price"><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+                    <p><strong>Cor:</strong> {{ produto.cor }}</p>
+                    <p><strong>Marca:</strong> {{ produto.marca }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
     <button class="load-more">Carregar mais produtos</button>
+
+    <script>
+        document.getElementById('bordenarpor').addEventListener('click', function() {
+            document.querySelector('.dropdown-menu').classList.toggle('show');
+        });
+
+        document.querySelectorAll('.dropdown-menu li').forEach(function(item) {
+            item.addEventListener('click', function() {
+                document.querySelector('.dropdown-menu').classList.remove('show');
+                document.getElementById('ordenar_por').value = this.getAttribute('data-value');
+                // Aqui você pode adicionar a lógica para ordenar os produtos
+                console.log('Ordenar por:', this.getAttribute('data-value'));
+            });
+        });
+    </script>
 </body>
 </html>
