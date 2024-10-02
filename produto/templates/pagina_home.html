@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Home</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .promo {
+            width: 100%;
+            height: 300px; /* Altura fixa para o retângulo */
+            background-color: #f0f0f0; /* Cor de fundo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .promo img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .promocoes-list {
+            padding: 20px;
+            list-style: none;
+        }
+        .categorias {
+            text-align: center;
+            margin: 40px 0; /* Aumenta a margem superior e inferior */
+        }
+        .categorias-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px; /* Aumenta o espaço entre os quadrados */
+            margin-top: 20px;
+        }
+        .categoria {
+            width: 150px; /* Aumenta a largura dos quadros */
+            height: 150px; /* Aumenta a altura dos quadros */
+            background-color: lightgray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .categoria img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://media.moneytimes.com.br/uploads/2023/11/celulares-black-friday.jpg" style="width: 100%; height: 300px; object-fit: cover; object-position: center;">
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://s.zst.com.br/cms-assets/2022/06/capa_a52.webp" style="width: 100%; height: 300px; object-fit: cover; object-position: center;">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://img.freepik.com/fotos-premium/uma-fileira-de-smartphones-em-exposicao-em-uma-loja-exibindo-varias-cores-e-desenhos_14117-745595.jpg" style="width: 100%; height: 300px; object-fit: cover; object-position: center;">
+                <div class="container">
+                    <div class="carousel-caption text-end">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="categorias">
+        <h2>categorias</h2>
+        <div class="categorias-container">
+            <div class="categoria">
+                <img src="link_da_imagem1"/>
+            </div>
+            <div class="categoria">
+                <img src="link_da_imagem2" alt="Celular 2" />
+            </div>
+            <div class="categoria">
+                <img src="link_da_imagem3" alt="Celular 3" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
