@@ -11,11 +11,12 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
+            background-color: #d3d3d3;
         }
         .promo {
             width: 100%;
-            height: 300px; /* Altura fixa para o retângulo */
-            background-color: #f0f0f0; /* Cor de fundo */
+            height: 300px;
+            background-color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -28,27 +29,67 @@
             padding: 20px;
             list-style: none;
         }
+        
         .categorias {
             text-align: center;
-            margin: 40px 0; /* Aumenta a margem superior e inferior */
+            margin: 60px 0;
         }
         .categorias-container {
             display: flex;
             justify-content: center;
-            gap: 40px; /* Aumenta o espaço entre os quadrados */
-            margin-top: 20px;
+            gap: 60px;
+            margin-top: 40px;
         }
         .categoria {
-            width: 150px; /* Aumenta a largura dos quadros */
-            height: 150px; /* Aumenta a altura dos quadros */
+            width: 200px;
+            height: 300px;
             background-color: lightgray;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
         }
         .categoria img {
             max-width: 100%;
+            max-height: 200px;
+        }
+        .categoria h3 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .categoria p {
+            margin: 0;
+        }
+        .novidades {
+            text-align: center;
+            margin: 60px 0;
+        }
+        .novidades-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .novidade {
+            width: 200px;
+            height: 300px;
+            background-color: lightblue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .novidade img {
+            max-width: 100%;
             max-height: 100%;
+        }
+        .novidade-central {
+            width: 200px;
+            height: 300px;
+            background-color: lightcoral;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
@@ -95,19 +136,54 @@
     </div>
 
     <div class="categorias">
-        <h2>categorias</h2>
+        <h2>Categorias</h2>
         <div class="categorias-container">
             <div class="categoria">
-                <img src="link_da_imagem1"/>
+                <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" />
             </div>
             <div class="categoria">
-                <img src="link_da_imagem2" alt="Celular 2" />
+                <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" />
             </div>
             <div class="categoria">
-                <img src="link_da_imagem3" alt="Celular 3" />
+                <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" />
+            </div>
+        </div>
+    </div>
+
+    <div class="novidades">
+        <h2>Nossas últimas novidades</h2>
+        <div class="novidades-container">
+            <div class="novidade">
+                <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" style="width: 200%; height: 300px;" />
+            </div>
+            <div class="novidade-central">
+                <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" style="width: 100%; height: 300px;" />
+            </div>
+            <div class="novidade">
+                <img src="https://forbes.com.br/wp-content/uploads/2024/08/iPhone-16.png" style="width: 200%; height: 300px;" />
+            </div>
+        </div>
+    </div>
+
+    <div class="categorias">
+        <h2>Nossos produtos</h2>
+        <div class="categorias-container">
+            <div class="categoria">
+                <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" alt="Produto 1"/>
+                <h3>GALAXY A03</h3>
+                <p>R$ 99,99</p>
+            </div>
+            <div class="categoria">
+                <img src="https://ss7.vzw.com/is/image/VerizonWireless/apple-iphone-16-pro-max-desert-titanium?wid=465&hei=465&fmt=webp" alt="Produto 2"/>
+                <h3>IPHONE 16 PRO MAX </h3>
+                <p>R$ 89,99</p>
+            </div>
+            <div class="categoria">
+                <img src="https://imgs.casasbahia.com.br/55058056/1g.jpg" alt="Produto 3"/>
+                <h3>GALAXY S20 ULTRA</h3>
+                <p>R$ 6.899,00</p>
             </div>
         </div>
     </div>
 </body>
 </html>
-
