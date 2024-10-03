@@ -4,11 +4,7 @@ from django.template import loader
 from produto import models
 import os
 
-def pagina1(request):
-    return HttpResponse("Olá Mundo")
 
-def pagina2(request):
-    return HttpResponse("Bem vindo à minha pagina")
 
 def clark(request):
     template = loader.get_template("formulario_post.html")
