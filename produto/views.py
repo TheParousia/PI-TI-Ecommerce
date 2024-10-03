@@ -31,3 +31,8 @@ def filtrar_produtos(request):
         produtos = produtos.order_by('-preco')
 
     return render(request, 'filtrar_produtos.html', {'produtos': produtos})
+
+
+def contar_produtos(request):
+    total_produtos = Produto.objects.count()
+    return render(request, 'produtos/contagem.html', {'total_produtos': total_produtos})

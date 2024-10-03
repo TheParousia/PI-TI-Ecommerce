@@ -1,30 +1,26 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja de Celulares</title>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Public Sans', sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
+            display: left;
             flex-direction: column;
             align-items: center;
             background-color: #EFF2F6; 
-            color: #3d3935;
+            color: #000000;
         }
         .header, .filters, .products {
             width: 100%;
             max-width: 1200px;
             padding: 20px;
         }
-        .header {
-            background-color: #EFF2F6;
-            color: #ffffff;
-            text-align: center;
-        }
+
         .main-content {
             display: flex;
             width: 100%;
@@ -87,11 +83,12 @@
         }
         .load-more {
             padding: 10px 20px;
-            margin: 20px 0;
+            margin: 20px auto;
             background-color: #EFF2F6;
             color: black;
-            border: bleck 2px;
+            border: 2px solid black;
             cursor: pointer;
+            display: block;
         }
         .dropdown-menu {
             display: none;
@@ -117,249 +114,24 @@
             max-width: 1200px; 
             padding: 20px; 
         }
-    </style>
-</head>
-<body>
-    <div class="new-div">
-        <h1>Comprar</h1>
-        <p>Junte-se aos milhares de clientes satisfeitos que já escolheram nossa loja e descubra por que somos a escolha número um para todas as suas necessidades!</p>    
-    </div>
-    <div class="main-content">
-        <div class="filters">
-            <form method="get">
-                <div>
-                    <label for="marca">Marca:</label>
-                    <select id="marca" name="marca">
-                        <option value="">Todas</option>
-                        <!-- Adicione opções de marca aqui -->
-                    </select>
-                </div>
-                <div>
-                    <label for="modelo">Modelo:</label>
-                    <select id="modelo" name="modelo">
-                        <option value="">Todos</option>
-                        <!-- Adicione opções de modelo aqui -->
-                    </select>
-                </div>
-                <div>
-                    <label for="cor">Cor:</label>
-                    <select id="cor" name="cor">
-                        <option value="">Todas</option>
-                        <!-- Adicione opções de cor aqui -->
-                    </select>
-                </div>
-                <div class="dropdown">
-                    <button id="bordenarpor" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="fa fa-exchange fa-rotate-90" aria-hidden="true"></span> Ordenar por
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="bordenarpor">
-                        <li data-value="preco_asc">Menor Preço</li>
-                        <li data-value="preco_desc">Maior Preço</li>
-                    </ul>
-                </div>
-                <input type="hidden" id="ordenar_por" name="ordenar_por">
-                <div>
-                    <button type="submit">Aplicar Filtros</button>
-                    <button type="reset">Limpar Filtros</button>
-                </div>
-            </form>
-        </div>
-        <div class="products-section">
-            <div class="products-header">
-                <div class="sort-options">
-                    <span>Ordenar por</span>
-                    <select id="ordenar" name="ordenar">
-                        <option value="popular_asc">Mais Populares</option>
-                        <option value="popular_desc">Menos Populares</option>
-                        <!-- Adicione outras opções de ordenação aqui -->
-                    </select>
-                </div>
-            </div>
-            <div class="products">
-                {% for produto in produtos %}
-                <div class="card" style="display: none;"> 
-                    <img src="" width="190px" height="190px" alt="" style="display: block; margin: 0 auto;">
-                    <h2>{{ produto.modelo }}</h2>
-                    <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
-                    <p><strong>Disponíveis:</strong> {{ produto.qtd_estoque }}</p>
-                    <p class="price"><strong>Preço:</strong> R$ {{ produto.preco }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <button class="load-more">Carregar mais produtos</button>
-
-    <script>
-        document.getElementById('bordenarpor').addEventListener('click', function() {
-            document.querySelector('.dropdown-menu').classList.toggle('show');
-        });
-
-        document.querySelectorAll('.dropdown-menu li').forEach(function(item) {
-            item.addEventListener('click', function() {
-                document.querySelector('.dropdown-menu').classList.remove('show');
-                document.getElementById('ordenar_por').value = this.getAttribute('data-value');
-                // Adicionar a lógica para ordenar os produtos
-                console.log('Ordenar por:', this.getAttribute('data-value'));
-            });
-        });
-
-        // Mostrar os primeiros 6 produtos
-        const products = document.querySelectorAll('.card');
-        let visibleProducts = 6;
-        for (let i = 0; i < visibleProducts; i++) {
-            if (products[i]) {
-                products[i].style.display = 'block';
-            }
+        .new-div h1 {
+            color: #000000;
         }
-
-        // Carregar mais produtos ao clicar no botão
-        document.querySelector('.load-more').addEventListener('click', function() {
-            const totalProducts = products.length;
-            const nextVisibleProducts = visibleProducts + 6;
-            for (let i = visibleProducts; i < nextVisibleProducts && i < totalProducts; i++) {
-                products[i].style.display = 'block';
-            }
-            visibleProducts = nextVisibleProducts;
-            if (visibleProducts >= totalProducts) {
-                this.style.display = 'none';
-            }
-        });
-    </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loja de Celulares</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #EFF2F6; 
-            color: #3d3935;
-        }
-        .header, .filters, .products {
-            width: 100%;
-            max-width: 1200px;
-            padding: 20px;
-        }
-        .header {
-            background-color: #EFF2F6;
-            color: #ffffff;
-            text-align: center;
-        }
-        .main-content {
-            display: flex;
-            width: 100%;
-        }
-        .filters {
-            background-color: #EFF2F6;
-            padding: 10px;
-            margin-right: 20px;
-            width: 250px;
-        }
-        .filters div {
-            margin-bottom: 10px;
-        }
-        .filters label {
-            margin-right: 10px;
-        }
-        .filters select, .filters input {
-            margin-right: 20px;
-            padding: 5px;
-            width: 100%;
-        }
-        .products-section {
-            flex-grow: 1;
-        }
-        .products-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .products-header .sort-options {
-            display: flex;
-            align-items: center;
-            margin-left: auto;
-        }
-        .products-header .sort-options select {
-            margin-left: 10px;
-        }
-        .products {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-        .card {
-            margin: 10px;
-            padding: 20px;
-            width: 300px;
-            text-align: left;
-        }
-        .card h2 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-        .card p {
-            margin: 5px 0;
-        }
-        .card .price {
-            font-size: 1.2em;
-            color: #b12704;
-        }
-        .load-more {
-            padding: 10px 20px;
-            margin: 20px 0;
-            background-color: #EFF2F6;
-            color: black;
-            border: bleck 2px;
-            cursor: pointer;
-        }
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            background-color: black;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            padding: 10px;
-            list-style: none;
-        }
-        .dropdown-menu.show {
-            display: block;
-        }
-        .dropdown-menu li {
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .dropdown-menu li:hover {
-            background-color: #f1f1f1;
-        }
-        .new-div {
-            text-align: left; 
-            width: 100%; 
-            max-width: 1200px; 
-            padding: 20px; 
+        .new-div p {
+            color: #979797;
         }
         .sort-options {
-    		border: 2px solid #000; 
-    		padding: 10px; ; 
-		}
+            border: 2px solid #000; 
+            padding: 10px; 
+        }
     </style>
 </head>
 <body>
     <div class="new-div">
         <h1>Comprar</h1>
         <p>Junte-se aos milhares de clientes satisfeitos que já<br>
-        escolheram nossa loja e descubra por que somos a<br>
-        escolha número um para todas as suas necessidades!</p>    
+            escolheram nossa loja e descubra por que somos a<br>
+            escolha número um para todas as suas necessidades!</p>    
     </div>
     <div class="main-content">
         <div class="filters">
@@ -412,11 +184,12 @@
                         <!-- Adicione outras opções de ordenação aqui -->
                     </select>
                 </div>
+                <p>Mostrando {{ total_produtos }} Produtos</p>
             </div>
             <div class="products">
                 {% for produto in produtos %}
                 <div class="card" style="display: none;"> 
-                    <img src="" width="190px" height="190px" alt="" style="display: block; margin: 0 auto;">
+                    <img src="" width="190px" height="190px" alt="" style="display: left; margin: 0 auto;">
                     <h2>{{ produto.modelo }}</h2>
                     <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
                     <p><strong>Disponíveis:</strong> {{ produto.qtd_estoque }}</p>
