@@ -77,16 +77,28 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+#DATABASES = {
+#    # 'default': {
+#    #     'ENGINE': 'django.db.backends.mysql',
+#    #     'NAME': 'ecommerce',
+#    #     'USER': 'sys_ecommerce',
+#    #     'PASSWORD': 'DbPi@2024',
+#    #     'HOST': '192.168.30.30',
+#    #     'PORT': 3306,
+#    # }
+#}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce',
+        'NAME': 'ecommerce_obsequion',
         'USER': 'sys_ecommerce',
-        'PASSWORD': 'DbPi@2024',
-        'HOST': '192.168.30.30',
+        'PASSWORD': 'senac123#',
+        'HOST': '192.168.30.171',
         'PORT': 3306,
     }
 }
+
 
 
 # Password validation
