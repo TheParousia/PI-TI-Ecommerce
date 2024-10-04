@@ -13,3 +13,22 @@ class Produto(models.Model):
 
     def __str__(self):
         return f"{self.marca} {self.modelo} ({self.cor}) - R${self.preco}"
+
+class Marca(models.Model):
+    nome = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nome
+
+class Modelo(models.Model):
+    nome = models.CharField(max_length=100)
+    marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nome
+
+class Cor(models.Model):
+    nome = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nome

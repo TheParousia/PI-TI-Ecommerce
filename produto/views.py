@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.core.files.storage import FileSystemStorage
 from .models  import Produto
-
+from .models import Marca, Modelo, Cor
 
 fs = FileSystemStorage()
 
@@ -36,3 +36,13 @@ def filtrar_produtos(request):
 def contar_produtos(request):
     total_produtos = Produto.objects.count()
     return render(request, 'produtos/contagem.html', {'total_produtos': total_produtos})
+
+def filtro_smartphones(request):
+    marcas = Marca.objects.all()
+    modelos = Modelo.objects.all()
+    cores = Cor.objects.all()
+    return render(request, 'filtro_smartphones.html', {
+        'marcas': marcas,
+        'modelos': modelos,
+        'cores': cores
+    })

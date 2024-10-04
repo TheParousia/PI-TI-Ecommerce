@@ -9,7 +9,7 @@
             font-family: 'Public Sans', sans-serif;
             margin: 0;
             padding: 0;
-            display: left;
+            display: flex;
             flex-direction: column;
             align-items: center;
             background-color: #EFF2F6; 
@@ -20,7 +20,6 @@
             max-width: 1200px;
             padding: 20px;
         }
-
         .main-content {
             display: flex;
             width: 100%;
@@ -93,6 +92,10 @@
             cursor: pointer;
             display: block;
         }
+        .label-style {
+            font-family: 'Public Sans', sans-serif;
+            color: #000; /* cor preta */
+        }
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -111,6 +114,9 @@
         .dropdown-menu li:hover {
             background-color: #f1f1f1;
         }
+        .dropdown button {
+            display: none;
+        }
         .new-div {
             text-align: left; 
             width: 100%; 
@@ -127,6 +133,20 @@
             border: 2px solid #000; 
             padding: 10px; 
         }
+        form div:last-child {
+            display: flex;
+            gap: 10px;
+        }
+        button[type="submit"],
+        button[type="reset"] {
+            background-color: rgba(0, 0, 0, 0);
+            border: 2px solid black;
+            color: black;
+            padding: 7px 18px;
+            cursor: pointer; 
+            opacity: 0.7;
+            flex: 1;
+        }
     </style>
 </head>
 <body>
@@ -142,25 +162,36 @@
             <p>Categoria</p> <br>
             <form method="get">
                 <div>
-                    <label for="marca">Marca:</label>
-                    <select id="marca" name="marca">
+                    <label for="marca" class="label-style">Marca:</label>
+                    <select id="marca" name="marca" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
-                        <!-- Adicione opções de marca aqui -->
+                        {% for marca in marcas %}
+                        <option value="{{ marca.id }}">{{ marca.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div>
-                    <label for="modelo">Modelo:</label>
-                    <select id="modelo" name="modelo">
+                    <label for="modelo" class="label-style">Modelo:</label>
+                    <select id="modelo" name="modelo" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todos</option>
-                        <!-- Adicione opções de modelo aqui -->
+                        {% for modelo in modelos %}
+                        <option value="{{ modelo.id }}">{{ modelo.nome }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div>
-                    <label for="cor">Cor:</label>
-                    <select id="cor" name="cor">
+                    <label for="cor" class="label-style">Cor:</label>
+                    <select id="cor" name="cor" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
-                        <!-- Adicione opções de cor aqui -->
+                        {% for cor in cores %}
+                        <option value="{{ cor.id }}">{{ cor.nome }}</option>
+                        {% endfor %}
                     </select>
+                </div>
+                <div>
+                    <label for="preco">Preço:</label>
+                    <input type="range" id="preco" name="preco" min="700" max="20000" step="10" oninput="this.nextElementSibling.value = this.value">
+                    <output>500</output>
                 </div>
                 <div class="dropdown">
                     <button id="bordenarpor" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -177,7 +208,7 @@
                     <button type="submit">Aplicar Filtros</button>
                     <button type="reset">Limpar Filtros</button>
                 </div>
-            </form>
+            </form>        
         </div>
         <div class="products-section">
             <div class="products-header">
@@ -190,7 +221,9 @@
                     </select>
                 </div>
             </div>
-            	<p>Mostrando {{ total_produtos }} Produtos </p>
+            <div class="Qtd" style="text-align: right;">
+                <p>Mostrando {{ total_produtos }} Produtos </p>
+            </div>
             <div class="products">
                 {% for produto in produtos %}
                 <div class="card" style="display: none;"> 
