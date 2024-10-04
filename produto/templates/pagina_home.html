@@ -46,19 +46,25 @@
             background-color: lightgray;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start; 
             justify-content: flex-start;
+            position: relative;
+            padding: 5px; 
         }
         .categoria img {
             max-width: 100%;
             max-height: 200px;
+            display: block;
         }
         .categoria h3 {
-            margin-top: 10px;
-            margin-bottom: 5px;
+            font-size: 14px;
+            margin: 5px 0 0 0;
+            text-align: left; 
         }
         .categoria p {
-            margin: 0;
+            font-size: 12px;
+            margin-top: 3px;
+            text-align: left; 
         }
         .novidades {
             text-align: center;
@@ -71,7 +77,7 @@
             margin-top: 20px;
         }
         .novidade {
-            width: 200px;
+            width: 250px;
             height: 300px;
             background-color: lightblue;
             display: flex;
@@ -84,7 +90,7 @@
             max-height: 100%;
         }
         .novidade-central {
-            width: 200px;
+            width: 250px;
             height: 300px;
             background-color: lightcoral;
             display: flex;
@@ -105,7 +111,7 @@
                 <img src="https://media.moneytimes.com.br/uploads/2023/11/celulares-black-friday.jpg" style="width: 100%; height: 300px; object-fit: cover; object-position: center;">
                 <div class="container">
                     <div class="carousel-caption text-start">
-                        <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+                        
                     </div>
                 </div>
             </div>
@@ -113,7 +119,7 @@
                 <img src="https://s.zst.com.br/cms-assets/2022/06/capa_a52.webp" style="width: 100%; height: 300px; object-fit: cover; object-position: center;">
                 <div class="container">
                     <div class="carousel-caption">
-                        <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+                        
                     </div>
                 </div>
             </div>
@@ -139,13 +145,16 @@
         <h2>Categorias</h2>
         <div class="categorias-container">
             <div class="categoria">
-                <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" />
+                <img src="https://a-static.mlcdn.com.br/450x450/celular-lg-b220-3g-de-botao-para-idoso-2-chip-radio-fm-rural-nokia/wwtecnocell/89edce208eb111eeae614201ac185040/344c39d6d94a2b8994a35e225df943cc.jpeg" />
+                <h3>Celulares de entrada</h3>
             </div>
             <div class="categoria">
-                <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" />
+                <img src="https://eldorado.hubsell.com.br/media/catalog/product/3/1/3175230_UX1D032BRAZL_G1_1.jpg" />
+                <h3>Celulares intermediários</h3>
             </div>
             <div class="categoria">
-                <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" />
+                <img src="https://www.jornaljoca.com.br/wp-content/uploads/2023/05/GettyImages-1471807009.jpeg" />
+                <h3>Celulares premium</h3>
             </div>
         </div>
     </div>
@@ -154,13 +163,13 @@
         <h2>Nossas últimas novidades</h2>
         <div class="novidades-container">
             <div class="novidade">
-                <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" style="width: 200%; height: 300px;" />
+                <img src="https://down-br.img.susercontent.com/file/sg-11134201-7rbkw-lq1qvwel9y62b7_tn.webp" style="width: 100%; height: 300px;" />
             </div>
             <div class="novidade-central">
-                <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" style="width: 100%; height: 300px;" />
+                <img src="https://down-br.img.susercontent.com/file/br-11134207-7qukw-lgmr1az39kz957" style="width: 100%; height: 300px;" />
             </div>
             <div class="novidade">
-                <img src="https://forbes.com.br/wp-content/uploads/2024/08/iPhone-16.png" style="width: 200%; height: 300px;" />
+                <img src="https://down-br.img.susercontent.com/file/sg-11134201-7rdxx-lxxqmry6lg0w43_tn.webp" style="width: 100%; height: 300px;" />
             </div>
         </div>
     </div>
@@ -175,7 +184,7 @@
             </div>
             <div class="categoria">
                 <img src="https://ss7.vzw.com/is/image/VerizonWireless/apple-iphone-16-pro-max-desert-titanium?wid=465&hei=465&fmt=webp" alt="Produto 2"/>
-                <h3>IPHONE 16 PRO MAX </h3>
+                <h3>IPHONE 16 PRO MAX</h3>
                 <p>R$ 89,99</p>
             </div>
             <div class="categoria">
