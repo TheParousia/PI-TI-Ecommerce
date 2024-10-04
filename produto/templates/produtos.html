@@ -31,6 +31,9 @@
             margin-right: 20px;
             width: 250px;
         }
+        .filters h1 {
+            font-size: 25px;
+        }
         .filters div {
             margin-bottom: 10px;
         }
@@ -135,6 +138,8 @@
     </div>
     <div class="main-content">
         <div class="filters">
+            <h1>Filtros</h1>
+            <p>Categoria</p> <br>
             <form method="get">
                 <div>
                     <label for="marca">Marca:</label>
@@ -184,8 +189,8 @@
                         <!-- Adicione outras opções de ordenação aqui -->
                     </select>
                 </div>
-                <p>Mostrando {{ total_produtos }} Produtos</p>
             </div>
+            	<p>Mostrando {{ total_produtos }} Produtos </p>
             <div class="products">
                 {% for produto in produtos %}
                 <div class="card" style="display: none;"> 
