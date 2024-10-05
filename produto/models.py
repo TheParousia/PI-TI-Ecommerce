@@ -1,26 +1,17 @@
 from django.db import models
 import os
 from django.conf import settings
-'''
-class clark(models.Model):
-    nome = models.CharField(max_length=30)
-    remetente = models.CharField(max_length=30)
-    mensagem = models.TextField(max_length=255)
-    imagem = models.ImageField(upload_to='imagens/', blank=True, null=True)
+
+class Produto(models.Model):
+    modelo = models.CharField(max_length=30)
+    descricao = models.CharField(max_length=100)
+    capacidade1 = models.CharField(max_length=10)
+    capacidade2 = models.CharField(max_length=10)
+    capacidade3 = models.CharField(max_length=10)
+    qtd_estoque = models.IntegerField(default=0)
+    preco = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    cor = models.CharField(max_length=30, default='')
+    marca = models.CharField(max_length=30, default='')
 
     def __str__(self):
-        return self.nome
-
-    def delete(self, *args, **kwargs):
-        # Remove a imagem do sistema de arquivos se existir
-        if self.imagem:
-            try:
-                if os.path.isfile(self.imagem.path):
-                    os.remove(self.imagem.path)
-            except Exception as e:
-                print(f'Erro ao deletar arquivo {self.imagem.path}: {e}')
-        
-        # Chama o método delete da classe pai
-        super().delete(*args, **kwargs)
-
-'''
+        return f"{self.marca} {self.modelo} ({self.cor}) - R${self.preco}"

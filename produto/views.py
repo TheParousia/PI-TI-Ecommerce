@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from django.template import loader
 from produto import models
 import os
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+fs = FileSystemStorage()
 
 
 
@@ -88,5 +91,23 @@ def atualizar_cartao(request, id):
     return render(request, "formulario_atualizar.html", context)
 
 
-def frontend(request):
-    return render(request, "frontend.html")
+def tela_produto(request):
+    return render(request, "tela_produto.html")
+
+
+def cadastrar_produto(request):
+    if request.method == "POST":
+        file_name = fs.save('img.jpg', request.FILES['imagem'])
+        url = fs.url(file_name)
+        produto = models.Produto()
+        produto.nome = request.POST.get("nome")
+        produto.remetente = request.POST.get("remetente")
+        produto.mensagem = request.POST.get("mensagem") 
+        produto.imagem = url
+
+        produto.save()   
+
+        return redirect("tela_produto")
+
+    return render(request, "cadastrar_produto.html")
+    #return render(request, "cadastrar_produto.html")

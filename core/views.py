@@ -6,7 +6,7 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 fs = FileSystemStorage()
 
-from app1 import models
+from core import models
 
 def pagina1(request):
     return HttpResponse("Olá mundo")
