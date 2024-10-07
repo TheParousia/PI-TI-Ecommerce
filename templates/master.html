@@ -25,15 +25,25 @@
     main {
       flex: 1;
     }
-    .btn-no-border {
-      border: none; /* Remove a borda dos botões */
-      color: black; /* Define a cor da fonte como preta */
+    .botao-sem-borda {
+      border: none; /* Remove a borda */
+      background-color: transparent; /* Define o fundo transparente */
+      color: black; /* Define o texto preto */
     }
-    .form-control-no-border {
+
+    .botao-sem-borda:hover, 
+    .botao-sem-borda:focus {
+      background-color: white; /* Define o fundo branco ao passar o mouse ou focar */
+      color: black; /* Mantém o texto preto */
+      box-shadow: none; /* Remove qualquer sombra ao focar */
+      border: none; /* Remove a borda ao focar */
+    }
+
+    .barra-pesquisa-sem-borda {
       border: none; /* Remove a borda da barra de pesquisa */
       background-color: #ffffff; /* Mantém o fundo cinza claro */
     }
-    .cart-count {
+    .contador-sacola {
       margin-left: 5px; /* Espaço entre a sacola e o contador */
       font-weight: bold; /* Destaque o número */
       display: inline-flex; /* Para centralizar verticalmente */
@@ -48,23 +58,23 @@
       position: relative;
       width: 100%;
     }
-    .subscribe-section {
+    .secao-inscricao {
       background-color: #f8f9fa; /* Cor de fundo da seção de inscrição */
       padding: 10px; /* Espaçamento interno */
       text-align: left; /* Alinhamento à esquerda */
       width: 100%;
     }
-    .subscribe-text {
+    .texto-inscricao {
       margin-bottom: 5px; /* Espaço entre o texto e o campo de e-mail */
       max-width: 300px; /* Limita a largura do texto */
       word-wrap: break-word; /* Quebra a palavra se necessário */
     }
-    .button-column {
+    .coluna-botao {
       margin-left: 130px; /* Aumenta o espaço entre as colunas */
       display: flex;
       flex-direction: column;
     }
-    .button-container {
+    .container-botao {
       display: flex;
       justify-content: flex-end; /* Alinha as colunas mais à direita */
       align-items: center;
@@ -74,18 +84,20 @@
       background-color: black !important; /* Força a cor preta */
       border-color: black !important; /* Remove qualquer cor de borda */
     }
-    .btn-simple-bold {
+    .botao-negrito-simples {
       font-weight: bold; /* Texto em negrito */
       border: none; /* Remove a borda do botão */
       background-color: transparent; /* Fundo transparente */
       color: black; /* Texto preto */
     }
-    .btn-simple-bold:hover, .btn-simple-bold:focus {
-      color: black; /* Mantém a cor preta ao passar o mouse */
+    .botao-negrito-simples:hover, .botao-negrito-simples:focus {
+      background-color: white; /* Fundo branco ao passar o mouse ou focar */
+      color: black; /* Mantém a cor preta */
       box-shadow: none; /* Remove qualquer sombra ao focar */
+      border: none; /* Remove a borda ao focar */
     }
     /* Estilo das linhas */
-    .custom-hr {
+    .linha-personalizada {
       border: none; /* Remove bordas padrão */
       border-top: 2px solid black; /* Linha preta com 2px de espessura */
       margin: 10px auto; /* Margens e centralização */
@@ -119,23 +131,23 @@
     <div class="bg-body shadow-sm">
       <div class="container d-flex justify-content-between align-items-center my-2">
         <div>
-          <button class="btn btn-no-border me-2">Website</button>
-          <button class="btn btn-no-border me-2">Loja</button>
-          <button class="btn btn-no-border me-2">Compras</button>
-          <button class="btn btn-no-border me-2">Contato</button>
+          <button class="botao-sem-borda me-2">Website</button>
+          <button class="botao-sem-borda me-2">Loja</button>
+          <button class="botao-sem-borda me-2">Compras</button>
+          <button class="botao-sem-borda me-2">Contato</button>
         </div>
         <form class="d-flex align-items-center">
           <div class="input-group me-2">
             <span class="input-group-text border-0 bg-body">
               <i class="fas fa-search"></i>
             </span>
-            <input class="form-control form-control-no-border" type="search" placeholder="Procurar" aria-label="Procurar">
+            <input class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar" aria-label="Procurar">
           </div>
-          <span class="cart-count">0</span> <!-- Contador sem fundo -->
-          <button class="btn btn-no-border ms-2" type="button">
+          <span class="contador-sacola">0</span> <!-- Contador sem fundo -->
+          <button class="botao-sem-borda ms-2" type="button">
             <i class="bi bi-handbag"></i> <!-- Ícone de sacola -->
           </button> 
-          <button class="btn btn-no-border ms-2" type="button">Logar</button> <!-- Botão Logar -->
+          <button class="botao-sem-borda ms-2" type="button">Logar</button> <!-- Botão Logar -->
         </form>
       </div>
     </div>
@@ -147,36 +159,36 @@
   </main>
 
   <!-- Linha preta antes da seção de Inscreva-se -->
-  <hr class="custom-hr">
+  <hr class="linha-personalizada">
 
   <!-- Seção de Inscreva-se -->
-  <div class="subscribe-section">
+  <div class="secao-inscricao">
     <div class="container">
-      <h2 class="subscribe-title" style="font-size: 2em; font-weight: bold;">Inscreva-se no nosso informativo</h2> <!-- Título em negrito e maior -->
-      <p class="subscribe-text">Seja o primeiro a saber sobre nossas ofertas especiais, novidades e atualizações.</p>
+      <h2 class="titulo-inscricao" style="font-size: 2em; font-weight: bold;">Inscreva-se no nosso informativo</h2> <!-- Título em negrito e maior -->
+      <p class="texto-inscricao">Seja o primeiro a saber sobre nossas ofertas especiais, novidades e atualizações.</p>
       <div class="d-flex align-items-center">
         <div class="input-group me-2" style="max-width: 400px;"> <!-- Limita a largura -->
           <input type="email" class="form-control" placeholder="Insira seu e-mail" aria-label="Inscreva-se">
-          <button class="btn btn-simple-bold input-group-text">Inscreva-se</button> <!-- Botão simplificado dentro do input group -->
+          <button class="botao-negrito-simples input-group-text">Inscreva-se</button> <!-- Botão simplificado dentro do input group -->
         </div>
-        <div class="button-container">
-          <div class="button-column">
-            <button class="btn btn-no-border font-weight-bold">Website</button>
-            <button class="btn btn-no-border">Botão 2</button>
-            <button class="btn btn-no-border">Botão 3</button>
-            <button class="btn btn-no-border">Botão 4</button>
+        <div class="container-botao">
+          <div class="coluna-botao">
+            <button class="botao-sem-borda font-weight-bold">Website</button>
+            <button class="botao-sem-borda">Botão 2</button>
+            <button class="botao-sem-borda">Botão 3</button>
+            <button class="botao-sem-borda">Botão 4</button>
           </div>
-          <div class="button-column">
-            <button class="btn btn-no-border font-weight-bold">Loja</button>
-            <button class="btn btn-no-border">Botão 2</button>
-            <button class="btn btn-no-border">Botão 3</button>
-            <button class="btn btn-no-border">Botão 4</button>
+          <div class="coluna-botao">
+            <button class="botao-sem-borda font-weight-bold">Loja</button>
+            <button class="botao-sem-borda">Botão 2</button>
+            <button class="botao-sem-borda">Botão 3</button>
+            <button class="botao-sem-borda">Botão 4</button>
           </div>
-          <div class="button-column">
-            <button class="btn btn-no-border font-weight-bold">Contato</button>
-            <button class="btn btn-no-border">Botão 2</button>
-            <button class="btn btn-no-border">Botão 3</button>
-            <button class="btn btn-no-border">Botão 4</button>
+          <div class="coluna-botao">
+            <button class="botao-sem-borda font-weight-bold">Contato</button>
+            <button class="botao-sem-borda">Botão 2</button>
+            <button class="botao-sem-borda">Botão 3</button>
+            <button class="botao-sem-borda">Botão 4</button>
           </div>
         </div>
       </div>
