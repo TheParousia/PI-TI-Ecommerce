@@ -1,4 +1,5 @@
 
+from multiprocessing import context
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
@@ -30,5 +31,8 @@ def detalhesProduto(request):
     return render(request, 'produto_detalhes.html', context)
 
     # return HttpResponse("template.render()")
+def add_infor(request):
+
+    return render(request, 'add_infor', context)
 
     
