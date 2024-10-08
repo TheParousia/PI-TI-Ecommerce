@@ -15,20 +15,27 @@ class Produto(models.Model):
         return f"{self.marca} {self.modelo} ({self.cor}) - R${self.preco}"
 
 class Marca(models.Model):
-    nome = models.CharField(max_length=100)
+    nome = models.CharField(max_length=50)
 
     def __str__(self):
         return self.nome
 
 class Modelo(models.Model):
-    nome = models.CharField(max_length=100)
-    marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=50)
 
     def __str__(self):
         return self.nome
 
 class Cor(models.Model):
-    nome = models.CharField(max_length=100)
+    nome = models.CharField(max_length=50)
 
     def __str__(self):
         return self.nome
+
+class Selecao(models.Model):
+    marca = models.ManyToManyField(Marca)
+    modelo = models.ManyToManyField(Modelo)
+    cor = models.ManyToManyField(Cor)
+
+    def __str__(self):
+        return f"{self.marca}, {self.modelo}, {self.cor}"

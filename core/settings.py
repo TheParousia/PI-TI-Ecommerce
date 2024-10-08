@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'produto',
+    'bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -94,7 +95,7 @@ DATABASES = {
         'NAME': 'ecommerce_obsequion',
         'USER': 'sys_ecommerce',
         'PASSWORD': 'senac123#',
-        'HOST': '192.168.30.171',
+        'HOST': '192.168.30.215',
         'PORT': 3306,
     }
 }

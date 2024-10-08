@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
     <style>
         body {
             font-family: 'Public Sans', sans-serif;
@@ -29,6 +32,7 @@
             padding: 10px;
             margin-right: 20px;
             width: 250px;
+
         }
         .filters h1 {
             font-size: 25px;
@@ -66,20 +70,20 @@
             flex-wrap: wrap;
             justify-content: space-around;
         }
-        .card {
+        .cartao {
             margin: 10px;
             padding: 20px;
             width: 300px;
             text-align: left;
         }
-        .card h2 {
+        .cartao h2 {
             font-size: 1.5em;
             margin-bottom: 10px;
         }
-        .card p {
+        .cartao p {
             margin: 5px 0;
         }
-        .card .price {
+        .cartao .price {
             font-size: 1.2em;
             color: #b12704;
         }
@@ -118,10 +122,9 @@
             display: none;
         }
         .new-div {
-            text-align: left; 
-            width: 100%; 
-            max-width: 1200px; 
-            padding: 20px; 
+            display: left;
+            width: 100%;
+            align-items: flex-start; 
         }
         .new-div h1 {
             color: #000000;
@@ -150,7 +153,7 @@
     </style>
 </head>
 <body>
-    <div class="new-div">
+    <div class="new-div" style="text-align: left; padding: 0; margin: 0;">
         <h1>Comprar</h1>
         <p>Junte-se aos milhares de clientes satisfeitos que já<br>
             escolheram nossa loja e descubra por que somos a<br>
@@ -160,9 +163,36 @@
         <div class="filters">
             <h1>Filtros</h1>
             <p>Categoria</p> <br>
+            <form method="POST">
+                {% csrf_token %}
+                
+                <h2>Marcas:</h2>
+                {% for marca in marcas %}
+                    <label>
+                        <input type="checkbox" name="marca" value="{{ marca.id }}"> {{ marca.nome }}
+                    </label><br>
+                {% endfor %}
+            
+                <h2>Modelos:</h2>
+                {% for modelo in modelos %}
+                    <label>
+                        <input type="checkbox" name="modelo" value="{{ modelo.id }}"> {{ modelo.nome }}
+                    </label><br>
+                {% endfor %}
+            
+                <h2>Cores:</h2>
+                {% for cor in cores %}
+                    <label>
+                        <input type="checkbox" name="cor" value="{{ cor.id }}"> {{ cor.nome }}
+                    </label><br>
+                {% endfor %}
+            
+                <button type="submit">Enviar</button>
+            </form>
+            
             <form method="get">
                 <div>
-                    <label for="marca" class="label-style">Marca:</label>
+                    <label for="marca" class="label-style">Marca</label>
                     <select id="marca" name="marca" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
                         {% for marca in marcas %}
@@ -171,7 +201,7 @@
                     </select>
                 </div>
                 <div>
-                    <label for="modelo" class="label-style">Modelo:</label>
+                    <label for="modelo" class="label-style">Modelo</label>
                     <select id="modelo" name="modelo" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todos</option>
                         {% for modelo in modelos %}
@@ -180,7 +210,7 @@
                     </select>
                 </div>
                 <div>
-                    <label for="cor" class="label-style">Cor:</label>
+                    <label for="cor" class="label-style">Cor</label>
                     <select id="cor" name="cor" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
                         {% for cor in cores %}
@@ -189,9 +219,9 @@
                     </select>
                 </div>
                 <div>
-                    <label for="preco">Preço:</label>
+                    <label for="preco">Preço</label>
                     <input type="range" id="preco" name="preco" min="700" max="20000" step="10" oninput="this.nextElementSibling.value = this.value">
-                    <output>500</output>
+                    <output> 500</output>
                 </div>
                 <div class="dropdown">
                     <button id="bordenarpor" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -214,7 +244,7 @@
             <div class="products-header">
                 <div class="sort-options">
                     <span>Ordenar por</span>
-                    <select id="ordenar" name="ordenar">
+                    <select id="ordenar" name="ordenar" style="background-color: #EFF2F6; border: none; color: black; font-family: 'Inter', sans-serif; font-weight: bold;">
                         <option value="popular_asc">Mais Populares</option>
                         <option value="popular_desc">Menos Populares</option>
                         <!-- Adicione outras opções de ordenação aqui -->
@@ -226,7 +256,7 @@
             </div>
             <div class="products">
                 {% for produto in produtos %}
-                <div class="card" style="display: none;"> 
+                <div class="cartao" style="display: none;"> 
                     <img src="" width="190px" height="190px" alt="" style="display: left; margin: 0 auto;">
                     <h2>{{ produto.modelo }}</h2>
                     <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
@@ -254,7 +284,7 @@
         });
 
         // Mostrar os primeiros 6 produtos
-        const products = document.querySelectorAll('.card');
+        const products = document.querySelectorAll('.cartao');
         let visibleProducts = 6;
         for (let i = 0; i < visibleProducts; i++) {
             if (products[i]) {

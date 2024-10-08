@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.core.files.storage import FileSystemStorage
 from .models  import Produto
-from .models import Marca, Modelo, Cor
+from .models import Marca, Modelo, Cor, Selecao
 
 fs = FileSystemStorage()
 
@@ -37,11 +37,31 @@ def contar_produtos(request):
     total_produtos = Produto.objects.count()
     return render(request, 'produtos/contagem.html', {'total_produtos': total_produtos})
 
-def filtro_smartphones(request):
+
+def selecao_view(request):
+    if request.method == 'POST':
+        marca_ids = request.POST.getlist('marca')
+        modelo_ids = request.POST.getlist('modelo')
+        cor_ids = request.POST.getlist('cor')
+
+        selecao = Selecao()
+        selecao.save()  # Salva a seleção vazia primeiro
+
+        # Adiciona as marcas selecionadas
+        for marca_id in marca_ids:
+            selecao.marca.add(marca_id)
+        for modelo_id in modelo_ids:
+            selecao.modelo.add(modelo_id)
+        for cor_id in cor_ids:
+            selecao.cor.add(cor_id)
+
+        return redirect('sucesso')  # Redireciona para uma página de sucesso
+
     marcas = Marca.objects.all()
     modelos = Modelo.objects.all()
     cores = Cor.objects.all()
-    return render(request, 'filtro_smartphones.html', {
+
+    return render(request, 'veiculos/selecao.html', {
         'marcas': marcas,
         'modelos': modelos,
         'cores': cores
