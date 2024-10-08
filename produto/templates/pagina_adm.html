@@ -1,0 +1,40 @@
+{% block title %}
+Lista de Produtos
+{% endblock %}
+
+{% block conteudo %}
+<h2>Lista de Produtos</h2>
+<a href="{% url 'criar_produto' %}" class="btn btn-primary mb-3">Criar novo produto</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Preco</th>
+            <th>Imagem</th>
+            <th>Acoes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for produto in produtos %}
+        <tr>
+            <td>{{ produto.id }}</td>
+            <td>{{ produto.nome }}</td>
+            <td>R$ {{ produto.preco }}</td>
+            <td>
+                <img src="{{ produto.imagem }}" alt="{{ produto.nome }}" style="max-width: 100px; max-height: 100px;"/>
+            </td>
+            <td>
+                <form action="{% url 'deletar_produto' produto.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Deletar</button>
+                </form>
+                <a href="{% url 'atualizar_produto' produto.id %}" class="btn btn-warning">Atualizar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

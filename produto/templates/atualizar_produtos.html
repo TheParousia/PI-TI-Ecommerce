@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+Atualizar Produto
+{% endblock %}
+
+{% block conteudo %}
+<h2>Atualizar Produto: {{ produto.nome }}</h2>
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="nome" class="form-label">Nome:</label>
+        <input type="text" name="nome" value="{{ produto.nome }}" class="form-control" required>
+    </div>
+    
+    <div class="mb-3">
+        <label for="preco" class="form-label">Preço:</label>
+        <input type="text" name="preco" value="{{ produto.preco }}" class="form-control" required>
+    </div>
+    
+    <div class="mb-3">
+        <label for="imagem" class="form-label">Imagem URL:</label>
+        <input type="text" name="imagem" value="{{ produto.imagem }}" class="form-control" required>
+    </div>
+    
+    <button type="submit" class="btn btn-success">Atualizar Produto</button>
+    <a href="{% url 'pagina_adm' %}" class="btn btn-secondary">Voltar</a>
+</form>
+{% endblock %}
