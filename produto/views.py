@@ -13,7 +13,7 @@ class Produto():
     descricao = "Aparelho excelente, para jogos pesados, com uma bateria de 5.000 mAh, que promete durar um dia inteiro de uso. O smartphone vem com um carregador de 67 W, que consegue carregar completamente a bateria em 51 minutos."
     capacidade = "256GB"
     qtdEstoque = 1
-    preco = "R$2.209"
+    preco = "2.209"
     cor = "Amarelo" 
     marca = "Xiaomi"
 

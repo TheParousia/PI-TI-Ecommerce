@@ -1,7 +1,10 @@
 <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;700&display=swap');
+    
     body {
-        background-color: #EFF2F6;
-        font-family: Arial, sans-serif;
+        background-color: #E7EEF1;
+        font-family: 'Public Sans', Arial, Helvetica, sans-serif;
         margin: 0;
         padding: 20px;
     }
@@ -11,6 +14,7 @@
         justify-content: center;
         align-items: flex-start;
         gap: 40px;
+        flex-wrap: wrap; /* Permite que os elementos se ajustem e reorganizem */
     }
 
     .imgs {
@@ -21,7 +25,7 @@
     }
 
     .foto-produto {
-        width: 300px;
+        width: 300px;  /* Tamanho fixo das imagens */
         height: 300px;
         background-color: #ddd;
         display: flex;
@@ -30,13 +34,14 @@
     }
 
     .foto-produto img {
-        max-width: 100%;
+        max-width: 100%; /* Garante que a imagem ocupe o container */
         max-height: 100%;
         object-fit: cover;
     }
 
     .produto-detalhes {
         max-width: 400px;
+        width: 100%; /* Garante que o conteúdo se ajuste em telas menores */
     }
 
     .produto-detalhes h1 {
@@ -49,7 +54,6 @@
         margin-bottom: 20px;
     }
 
-    /* Capacidade */
     .capacidade {
         display: flex;
         gap: 10px;
@@ -67,12 +71,12 @@
         border-color: black;
     }
 
-    /* Botão Adicionar ao Carrinho e controle de quantidade */
     .compra-container {
         display: flex;
         align-items: center;
         gap: 38px;
         margin-bottom: 0px;
+        flex-wrap: wrap; /* Garante que os itens se ajustem em telas menores */
     }
 
     .btn-btn-primary {
@@ -85,91 +89,164 @@
         font-size: 14px;
         text-align: center;
         text-decoration: none;
-        height: 18px; /* Define a altura do botão */
+        height: 18px;
     }
 
     .btn-btn-primary:hover {
         background-color: #333;
     }
 
-    /* Controle de quantidade */
     .quantidade-wrapper {
         display: flex;
-        align-items: center; /* Alinha o conteúdo ao centro */
-        height: 36px; /* Mesma altura do botão */
+        align-items: center;
+        height: 36px;
     }
 
-    .linha-quantidade{
+    .linha-quantidade {
         display: flex;
         justify-content: flex-end;
-        color:#666;
+        color: #666;
     }
-    
-    .linha-quantidade>*{
+
+    .linha-quantidade>* {
         width: auto;
         margin-right: 20px;
         text-align: right;
     }
-    
+
     .quantidade-control {
         display: flex;
         align-items: center;
         border: 1px solid #ccc;
-        height: 100%; /* Ajusta a altura para se igualar ao botão */
+        height: 100%;
     }
-    
+
     .quantidade-control button {
-        padding: 0 10px; /* Ajusta o padding para manter a aparência */
+        padding: 0 10px;
         background-color: white;
         border: 1px solid #ccc;
         cursor: pointer;
         font-size: 14px;
-        height: 100%; /* Alinha a altura do botão */
+        height: 100%;
     }
-    
+
     .quantidade-control input {
         width: 40px;
         text-align: center;
         font-size: 14px;
         border: none;
-        margin: 0; /* Remove a margem */
-        height: 100%; /* Alinha a altura do input */
-        
+        margin: 0;
+        height: 100%;
     }
-    
-    /* Remove as setinhas (spinners) do input number */
+
     .quantidade-control input::-webkit-outer-spin-button,
     .quantidade-control input::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
-    
+
     .quantidade-control button:hover {
         background-color: #f0f0f0;
     }
-    
-    /* Links adicionais */
+
     .additional-info {
-        font-size: 14px;
+        font-size: 12px;
         color: #666;
         display: flex;
         gap: 61px;
+        flex-wrap: wrap;
     }
-    
+
     .additional-info a {
         color: #666;
         text-decoration: none;
-        display: flex;
-        gap: 61px;
     }
-    
+
     .additional-info a:hover {
         text-decoration: underline;
     }
-    </style>
+
+    /* Media queries para tornar o layout responsivo */
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .imgs {
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 10px;
+        }
+
+        .foto-produto {
+            max-width: 300px; /* Mantém o tamanho das imagens */
+            height: 300px;
+        }
+
+        .produto-detalhes {
+            max-width: 100%;
+        }
+
+        .compra-container {
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn-btn-primary {
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .quantidade-wrapper {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .imgs {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        .foto-produto {
+            max-width: 300px; /* Mantém o tamanho fixo */
+            height: 300px;
+        }
+
+        .produto-detalhes h1 {
+            font-size: 20px;
+        }
+
+        .produto-detalhes p {
+            font-size: 16px;
+        }
+
+        .capacidade span {
+            font-size: 12px;
+            padding: 4px 10px;
+        }
+
+        .btn-btn-primary {
+            font-size: 12px;
+        }
+
+        .quantidade-control button {
+            padding: 0 5px;
+        }
+
+        .quantidade-control input {
+            width: 30px;
+        }
+
+        .additional-info {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+</style>
 
 <div class="container">
-    <!-- Imagens do produto -->
     <div class="imgs">
         <div class="foto-produto">
             <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
@@ -185,46 +262,39 @@
         </div>
     </div>
 
-    <!-- Detalhes do produto -->
     <div class="produto-detalhes">
         <h1>{{ produto.modelo }}</h1>
         <p>R$ {{ produto.preco }}</p>
         <p>{{ produto.descricao }}</p>
 
-        <!-- Opções de capacidade -->
         <label for="capacidade">Capacidade</label>
         <div class="capacidade">
             <span>64GB</span>
             <span>128GB</span>
             <span>256GB</span>
         </div>
-        
+
         <div class="linha-quantidade">
-            <div>
-                Quantidade
-            </div>
+            <div>Quantidade</div>
         </div>
-        <!-- Botão Adicionar ao Carrinho e Controle de Quantidade -->
+
         <div class="compra-container">
             <a href="#" class="btn-btn-primary">Adicionar ao Carrinho - R$ {{ produto.preco }}</a>
-            
-            <!-- Controle de quantidade sem rótulo -->
+
             <div class="quantidade-wrapper">
                 <div class="quantidade-control">
                     <button onclick="changeQuantity(-1)">-</button>
-                    <input type="number" id="quantidade" value="1" min="1">
+                    <input id="quantidade" value="1" min="1">
                     <button onclick="changeQuantity(1)">+</button>
                 </div>
             </div>
         </div>
-        
-        <!-- Informações adicionais -->
+
         <br>
         <div class="additional-info">
-        	<a margin-right: 1px; 
-             class="info-item">Frete grátis </a>
+            <a class="info-item">Frete grátis</a>
             <a class="info-item">Devoluções gratuitas</a>
-        </div>             
+        </div>
     </div>
 </div>
 
@@ -238,4 +308,3 @@
         }
     }
 </script>
-
