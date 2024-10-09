@@ -72,7 +72,7 @@
     .coluna-botao {
       display: flex;
       flex-direction: column;
-      margin-left: 200px; /* Aumenta o espaço entre as colunas */
+      margin-left: 200px; /* Espaço entre as colunas */
       margin-top: -90px; /* Eleva os botões para alinhar com o texto */
     }
     .container-botao {
@@ -102,6 +102,50 @@
       border-top: 2px solid black; /* Linha preta com 2px de espessura */
       margin: 10px auto; /* Margens e centralização */
       width: 80%; /* Linha não ocupa a largura total da página */
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .coluna-botao {
+        margin-left: 0; /* Remove margem lateral em telas pequenas */
+        margin-top: 10px; /* Ajusta o alinhamento para não sobrepor ao texto */
+        align-items: center; /* Alinha os botões à esquerda no mobile */
+      }
+
+      .container-botao {
+        flex-direction: column; /* Organiza os botões em coluna no mobile */
+        align-items: center; /* Alinha à esquerda */
+      }
+
+      .secao-inscricao .input-group {
+        width: 100%; /* Aumenta a largura do campo de e-mail no mobile */
+      }
+    }
+
+    @media (max-width: 576px) {
+      .navbar-brand {
+        font-size: 1.2rem; /* Diminui o tamanho da marca no mobile */
+      }
+
+      .navbar-nav {
+        text-align: center; /* Centraliza o menu no mobile */
+      }
+
+      .secao-inscricao {
+        text-align: center; /* Centraliza o texto no mobile */
+      }
+
+      .texto-inscricao {
+        margin-bottom: 15px; /* Ajusta o espaçamento no mobile */
+      }
+
+      .container-botao {
+        align-items: center; /* Centraliza os botões no mobile */
+      }
+
+      .coluna-botao {
+        margin-top: 0;
+      }
     }
   </style>
 </head>
@@ -166,7 +210,7 @@
     <div class="container">
       <h2 class="titulo-inscricao" style="font-size: 2em; font-weight: bold;">Inscreva-se no nosso informativo</h2> <!-- Título em negrito e maior -->
       <p class="texto-inscricao">Seja o primeiro a saber sobre nossas ofertas especiais, novidades e atualizações.</p>
-      <div class="d-flex align-items-center">
+      <div class="d-flex flex-wrap align-items-center">
         <div class="input-group me-2" style="max-width: 400px;"> <!-- Limita a largura -->
           <input type="email" class="form-control" placeholder="Insira seu e-mail" aria-label="Inscreva-se">
           <button class="botao-negrito-simples input-group-text">Inscreva-se</button> <!-- Botão simplificado dentro do input group -->
