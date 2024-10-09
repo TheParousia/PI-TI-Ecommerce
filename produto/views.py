@@ -8,15 +8,6 @@ def pagina_adm(request):
     produtos = Produto.objects.all()  # Recupera todos os produtos do banco de dados
     return render(request, 'pagina_adm.html', {'produtos': produtos})
 
-def criar_produtos(request):
-    if request.method == 'POST':
-        nome = request.POST['nome']
-        preco = request.POST['preco']
-        imagem = request.POST['imagem']
-        Produto.objects.create(nome=nome, preco=preco, imagem=imagem)
-        return redirect('pagina_adm')  # Redireciona para a lista de produtos
-    return render(request, 'criar_produtos.html')
-
 def excluir_produtos(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
     produto.delete()
@@ -28,6 +19,6 @@ def atualizar_produtos(request, produto_id):
         produto.nome = request.POST['nome']
         produto.preco = request.POST['preco']
         produto.imagem = request.POST['imagem']
-        produto.save()
+    
         return redirect('pagina_adm')  # Redireciona para a lista de produtos
     return render(request, 'atualizar_produtos.html', {'produto': produto})
