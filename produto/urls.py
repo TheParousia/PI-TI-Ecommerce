@@ -5,8 +5,7 @@ from . import views
 
 urlpatterns = [             
 path('produtos/', views.produtos, name='produtos'),
-path('filtrar/', views.filtrar_produtos, name='filtrar_produtos'),
-path('contagem/', views.contar_produtos, name='contar_produtos'),
+
 
 
 ]

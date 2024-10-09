@@ -79,6 +79,9 @@
         .cartao h2 {
             font-size: 1.5em;
             margin-bottom: 10px;
+            white-space: normal; 
+            overflow: visible; 
+            text-overflow: clip; 
         }
         .cartao p {
             margin: 5px 0;
@@ -150,6 +153,34 @@
             opacity: 0.7;
             flex: 1;
         }
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #000; /* Cor preta */
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #000; /* Cor preta */
+            border-radius: 50%; /* Faz o polegar redondo */
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            background: #000; /* Cor preta */
+            border-radius: 50%; /* Faz o polegar redondo */
+            cursor: pointer;
+        }
+        
     </style>
 </head>
 <body>
@@ -163,40 +194,13 @@
         <div class="filters">
             <h1>Filtros</h1>
             <p>Categoria</p> <br>
-            <!--  <form method="POST">
-                {% csrf_token %}
-                
-                <h2>Marcas:</h2>
-                {% for marca in marcas %}
-                    <label>
-                        <input type="checkbox" name="marca" value="{{ marca.id }}"> {{ marca.nome }}
-                    </label><br>
-                {% endfor %}
-            
-                <h2>Modelos:</h2>
-                {% for modelo in modelos %}
-                    <label>
-                        <input type="checkbox" name="modelo" value="{{ modelo.id }}"> {{ modelo.nome }}
-                    </label><br>
-                {% endfor %}
-            
-                <h2>Cores:</h2>
-                {% for cor in cores %}
-                    <label>
-                        <input type="checkbox" name="cor" value="{{ cor.id }}"> {{ cor.nome }}
-                    </label><br>
-                {% endfor %}
-            
-                <button type="submit">Enviar</button>
-            </form> -->
-            
-            <form method="get">
+            <form method="get"> 
                 <div>
                     <label for="marca" class="label-style">Marca</label>
                     <select id="marca" name="marca" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
                         {% for marca in marcas %}
-                        <option value="{{ marca.id }}">{{ marca.nome }}</option>
+                            <option value="{{ marca.id }}">{{ marca.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -205,7 +209,7 @@
                     <select id="modelo" name="modelo" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todos</option>
                         {% for modelo in modelos %}
-                        <option value="{{ modelo.id }}">{{ modelo.nome }}</option>
+                            <option value="{{ modelo.id }}">{{ modelo.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -214,14 +218,14 @@
                     <select id="cor" name="cor" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
                         {% for cor in cores %}
-                        <option value="{{ cor.id }}">{{ cor.nome }}</option>
+                            <option value="{{ cor.id }}">{{ cor.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div>
                     <label for="preco">Preço</label>
                     <input type="range" id="preco" name="preco" min="700" max="20000" step="10" oninput="this.nextElementSibling.value = this.value">
-                    <output> 500</output>
+                    <output>500</output>
                 </div>
                 <div class="dropdown">
                     <button id="bordenarpor" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -229,8 +233,8 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="bordenarpor">
-                        <li data-value="preco_asc">Menor Preço</li>
-                        <li data-value="preco_desc">Maior Preço</li>
+                        <li data-value="preco_asc" onclick="setSortOrder('preco_asc')">Menor Preço</li>
+                        <li data-value="preco_desc" onclick="setSortOrder('preco_desc')">Maior Preço</li>
                     </ul>
                 </div>
                 <input type="hidden" id="ordenar_por" name="ordenar_por">
@@ -238,7 +242,7 @@
                     <button type="submit">Aplicar Filtros</button>
                     <button type="reset">Limpar Filtros</button>
                 </div>
-            </form>        
+            </form>    
         </div>
         <div class="products-section">
             <div class="products-header">
@@ -252,7 +256,7 @@
                 </div>
             </div>
             <div class="Qtd" style="text-align: right;">
-                <p>Mostrando {{ total_produtos }} Produtos </p>
+                <p>Mostrando {{ total_produtos }} Produtos</p>
             </div>
             <div class="products">
                 {% for produto in produtos %}
@@ -269,7 +273,12 @@
     </div>
     <button class="load-more">Carregar mais produtos</button>
 
-    <script>
+<script>
+        function setSortOrder(value) {
+            document.getElementById('ordenar_por').value = value;
+            // Opcionalmente, feche o menu suspenso aqui se necessário
+        }
+
         document.getElementById('bordenarpor').addEventListener('click', function() {
             document.querySelector('.dropdown-menu').classList.toggle('show');
         });
