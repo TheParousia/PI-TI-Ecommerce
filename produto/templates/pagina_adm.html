@@ -3,56 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lista de Produtos</title>
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 </head>
 <body>
-    
+    {% block conteudo %}
+    <div class="container">
+        <h2>Lista de Produtos</h2>
+        <a href="/" class="btn btn-primary mb-3">Criar novo produto</a>
 
-
-{% block conteudo %}
-<div class="container">
-<meta charset="UTF-8">
-<h2>Lista de Produtos</h2>
-<a href="/" class="btn btn-primary mb-3">Criar novo produto</a>
-
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Preço</th>
-            <th>Imagem</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for produto in produtos %}
-        <tr>
-            <td>{{ produto.id }}</td>
-            <td>{{ produto.nome }}</td>
-            <td>R$ {{ produto.preco|floatformat:2 }}</td>
-            <td>
-                <img src="{{ produto.imagem }}" alt="{{ produto.nome }}" style="max-width: 100px; max-height: 100px;"/>
-            </td>
-            <td>
-                <form action="{% url 'deletar_produto' produto.id %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Deletar</button>
-                </form>
-                <a href="{% url 'atualizar_produto' produto.id %}" class="btn btn-warning">Atualizar</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="5" class="text-center">Nenhum produto encontrado.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-</div>
-{% endblock %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Imagem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if produtos %}
+                    {% for produto in produtos %}
+                        <tr>
+                            <td>{{ produto.id }}</td>
+                            <td>{{ produto.nome }}</td>
+                            <td>R$ {{ produto.preco|floatformat:2 }}</td>
+                            <td>
+                                <img src="{{ produto.imagem }}" alt="{{ produto.nome }}" style="max-width: 100px; max-height: 100px;"/>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">Nenhum produto encontrado.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}
 </body>
 </html>

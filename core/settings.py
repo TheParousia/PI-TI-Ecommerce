@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'ecommerce_v2',
         'USER': 'sys_ecommerce',
         'PASSWORD': 'DbPi@2024',
-        'HOST': '192.168.30.196',
+        'HOST': '172.16.0.113',
         'PORT': 3306,
     }
 }

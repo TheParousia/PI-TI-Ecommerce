@@ -10,8 +10,10 @@ def pagina_adm(request):
 
 def excluir_produtos(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
-    produto.delete()
-    return redirect('pagina_adm')  # Redireciona para a lista de produtos
+    if request.method == 'POST':
+        produto.delete()
+        return redirect('pagina_adm')  # Redireciona para a lista de produtos
+    return render(request, 'excluir_produtos.html', {'produto': produto})  # Exibir confirmação
 
 def atualizar_produtos(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
@@ -19,6 +21,6 @@ def atualizar_produtos(request, produto_id):
         produto.nome = request.POST['nome']
         produto.preco = request.POST['preco']
         produto.imagem = request.POST['imagem']
-    
+        produto.save()  # Salvar as alterações no banco de dados
         return redirect('pagina_adm')  # Redireciona para a lista de produtos
     return render(request, 'atualizar_produtos.html', {'produto': produto})
