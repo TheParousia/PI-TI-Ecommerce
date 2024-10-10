@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Link para o Bootstrap -->
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Altura total da tela */
+            background-color: #f8f9fa; /* Cor de fundo suave */
+        }
+        .form-control {
+            border: 3px solid black; /* Borda mais grossa e preta */
+            font-weight: bold; /* Texto em negrito */
+            border-radius: 25px; /* Bordas arredondadas */
+            height: 53px; /* Altura específica */
+        }
+        .card {
+            border: none; /* Remove a borda padrão do card */
+            border-radius: 10px; /* Borda arredondada para o card */
+        }
+        h2 {
+            font-family: 'Outfit', sans-serif; /* Fonte Outfit */
+            font-weight: bold; /* Título em negrito */
+        }
+    </style>
+    <title>Login</title>
+</head>
+<body>
+
+<div class="col-md-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="text-center">Login</h2> <!-- Título do login -->
+
+            <!-- Exibe mensagens de erro, se existirem -->
+            {% if messages %}
+                <div class="alert alert-danger">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Formulário de login -->
+            <form method="POST">
+                {% csrf_token %}  <!-- Token de segurança do Django -->
+
+                <!-- Campo de nome de usuário -->
+                <div class="form-group mb-3">
+                    {{ form.nome_usuario }}  <!-- Campo de input já com classes definidas -->
+                </div>
+
+                <!-- Campo de senha -->
+                <div class="form-group mb-3">
+                    {{ form.senha }}  <!-- Campo de input já com classes definidas -->
+                </div>
+
+                <!-- Link para registro e botão para submeter o formulário -->
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <p class="mb-0">Não tem uma conta? <a href="{% url 'registrar' %}">Cadastre-se</a></p> <!-- Texto de registro -->
+                    <div class="d-grid ms-2"> <!-- Adiciona margem à esquerda do botão -->
+                        <button type="submit" class="btn btn-dark rounded-pill" style="width: 100px;">Entrar</button> <!-- Botão com borda arredondada e tamanho reduzido -->
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
