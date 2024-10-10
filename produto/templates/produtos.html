@@ -65,16 +65,27 @@
         .products-header .sort-options select {
             margin-left: 10px;
         }
-        .products {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
+		.products {
+    		display: grid;
+    		grid-template-columns: repeat(3, 1fr);
+    		gap: 20px; 
+    		justify-items: start; 
+		}
         .cartao {
             margin: 10px;
             padding: 20px;
             width: 300px;
             text-align: left;
+        }
+        .cartao img{
+            border: 2px solid #d6dfe0;
+            
+            
+        }
+        img {
+            width: 190px;
+            height: 190px;
+            aspect-ratio: 1 / 1; /* This maintains the aspect ratio */
         }
         .cartao h2 {
             font-size: 1.5em;
@@ -90,7 +101,7 @@
             font-size: 1.2em;
             color: #b12704;
         }
-        .load-more {
+        .common-button {
             padding: 10px 20px;
             margin: 20px auto;
             background-color: #EFF2F6;
@@ -156,13 +167,12 @@
         input[type="range"] {
             -webkit-appearance: none;
             width: 100%;
-            height: 8px;
-            background: #000; /* Cor preta */
+            height: 2px;
+            background: #999999;
             outline: none;
             opacity: 0.7;
             transition: opacity .2s;
         }
-
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -180,7 +190,7 @@
             border-radius: 50%; /* Faz o polegar redondo */
             cursor: pointer;
         }
-        
+
     </style>
 </head>
 <body>
@@ -260,8 +270,10 @@
             </div>
             <div class="products">
                 {% for produto in produtos %}
-                <div class="cartao" style="display: none;"> 
-                    <img src="" width="190px" height="190px" alt="" style="display: left; margin: 0 auto;">
+                <div class="cartao" style="display: none;" data-popularidade="{{ produto.popularidade }}">
+                    <a href="{% url 'produto_detalhes' produto.id %}">
+                        <img src="{{ produto.imagem.url }}" width="190px" height="190px" alt="{{ produto.modelo }}" style="display: block;">
+                    </a>
                     <h2>{{ produto.modelo }}</h2>
                     <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
                     <p><strong>Disponíveis:</strong> {{ produto.qtd_estoque }}</p>
@@ -271,48 +283,111 @@
             </div>
         </div>
     </div>
-    <button class="load-more">Carregar mais produtos</button>
+    <button class="load-more common-button">Carregar mais produtos</button>
+    <button class="show-less common-button" style="display: none;">Mostrar menos produtos</button>
 
-<script>
+    <script>
         function setSortOrder(value) {
-            document.getElementById('ordenar_por').value = value;
-            // Opcionalmente, feche o menu suspenso aqui se necessário
+    document.getElementById('ordenar_por').value = value;
+    // Opcionalmente, feche o menu suspenso aqui se necessário
+}
+
+document.getElementById('bordenarpor').addEventListener('click', function() {
+    document.querySelector('.dropdown-menu').classList.toggle('show');
+});
+
+document.querySelectorAll('.dropdown-menu li').forEach(function(item) {
+    item.addEventListener('click', function() {
+        document.querySelector('.dropdown-menu').classList.remove('show');
+        document.getElementById('ordenar_por').value = this.getAttribute('data-value');
+        // Adicionar a lógica para ordenar os produtos
+        console.log('Ordenar por:', this.getAttribute('data-value'));
+    });
+});
+
+let visibleProducts = 6; // Número de produtos visíveis inicialmente
+const products = document.querySelectorAll('.cartao');
+
+// Mostrar os primeiros 6 produtos
+for (let i = 0; i < visibleProducts; i++) {
+    if (products[i]) {
+        products[i].style.display = 'block';
+    }
+}
+
+// Carregar mais produtos ao clicar no botão "Carregar mais produtos"
+document.querySelector('.load-more').addEventListener('click', function() {
+    const totalProducts = products.length;
+    const nextVisibleProducts = visibleProducts + 6;
+    
+    for (let i = visibleProducts; i < nextVisibleProducts && i < totalProducts; i++) {
+        products[i].style.display = 'block';
+    }
+    
+    visibleProducts = nextVisibleProducts;
+    
+    // Mostrar botão "Mostrar menos" se houver mais produtos para mostrar
+    if (visibleProducts < totalProducts) {
+        document.querySelector('.show-less').style.display = 'block';
+    }
+    
+    // Ocultar botão "Carregar mais" se todos os produtos estiverem visíveis
+    if (visibleProducts >= totalProducts) {
+        this.style.display = 'none';
+    }
+});
+
+// Mostrar menos produtos ao clicar no botão "Mostrar menos"
+document.querySelector('.show-less').addEventListener('click', function() {
+    const productsToHide = 6;
+    
+    // Ocultar os últimos 6 produtos visíveis
+    for (let i = visibleProducts - 1; i >= visibleProducts - productsToHide && i >= 0; i--) {
+        products[i].style.display = 'none';
+    }
+    
+    visibleProducts -= productsToHide;
+    
+    // Ocultar o botão "Mostrar menos" se não houver produtos a mostrar
+    if (visibleProducts <= 6) {
+        this.style.display = 'none';
+    }
+    
+    // Mostrar o botão "Carregar mais" se não estiver exibindo todos os produtos
+    if (visibleProducts < totalProducts) {
+        document.querySelector('.load-more').style.display = 'block';
+    }
+});
+
+// Ordenar produtos ao mudar a seleção de ordenação
+document.getElementById('ordenar').addEventListener('change', function() {
+    const order = this.value;
+    const productsArray = Array.from(products);
+    
+    // Ordenar produtos
+    productsArray.sort((a, b) => {
+        const aPopularidade = parseInt(a.getAttribute('data-popularidade'));
+        const bPopularidade = parseInt(b.getAttribute('data-popularidade'));
+        
+        return order === 'popular_asc' ? aPopularidade - bPopularidade : bPopularidade - aPopularidade;
+    });
+
+    // Remover todos os produtos atuais da visualização
+    const productsContainer = document.querySelector('.products');
+    productsContainer.innerHTML = '';
+
+    // Adicionar produtos ordenados de volta ao contêiner
+    productsArray.forEach(product => {
+        productsContainer.appendChild(product);
+    });
+
+    // Mostrar os produtos ordenados
+    for (let i = 0; i < visibleProducts; i++) {
+        if (productsArray[i]) {
+            productsArray[i].style.display = 'block';
         }
-
-        document.getElementById('bordenarpor').addEventListener('click', function() {
-            document.querySelector('.dropdown-menu').classList.toggle('show');
-        });
-
-        document.querySelectorAll('.dropdown-menu li').forEach(function(item) {
-            item.addEventListener('click', function() {
-                document.querySelector('.dropdown-menu').classList.remove('show');
-                document.getElementById('ordenar_por').value = this.getAttribute('data-value');
-                // Adicionar a lógica para ordenar os produtos
-                console.log('Ordenar por:', this.getAttribute('data-value'));
-            });
-        });
-
-        // Mostrar os primeiros 6 produtos
-        const products = document.querySelectorAll('.cartao');
-        let visibleProducts = 6;
-        for (let i = 0; i < visibleProducts; i++) {
-            if (products[i]) {
-                products[i].style.display = 'block';
-            }
-        }
-
-        // Carregar mais produtos ao clicar no botão
-        document.querySelector('.load-more').addEventListener('click', function() {
-            const totalProducts = products.length;
-            const nextVisibleProducts = visibleProducts + 6;
-            for (let i = visibleProducts; i < nextVisibleProducts && i < totalProducts; i++) {
-                products[i].style.display = 'block';
-            }
-            visibleProducts = nextVisibleProducts;
-            if (visibleProducts >= totalProducts) {
-                this.style.display = 'none';
-            }
-        });
+    }
+});
     </script>
 </body>
 </html>

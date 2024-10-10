@@ -1,12 +1,7 @@
-from django.contrib import admin
 from django.urls import path
-from . import views
-#from .views import produtos
+from .views import produtos, produto_detalhes
 
-urlpatterns = [             
-path('produtos/', views.produtos, name='produtos'),
-
-
-
+urlpatterns = [
+    path('produtos/', produtos, name='produtos'),
+    path('produtos/<int:produto_id>/', produto_detalhes, name='produto_detalhes'),
 ]
-
