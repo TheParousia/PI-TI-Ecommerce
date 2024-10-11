@@ -1,16 +1,17 @@
+# models.py
 from django.db import models
 
-# Create your models here.
-# class Produto(models.Model):
-#     modelo = models.CharField(max_length=30)
-#     descricao = models.CharField(max_length=100)
-#     capacidade1 = models.CharField(max_length=10)
-#     capacidade2 = models.CharField(max_length=10)
-#     capacidade3 = models.CharField(max_length=10)
-#     qtd_estoque = models.IntegerField(default=0)
-#     preco = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-#     cor = models.CharField(max_length=30, default='')
-#     marca = models.CharField(max_length=30, default='')
+class Cliente(models.Model):
+    nome = models.CharField(max_length=255)
+    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(unique=True)
+    telefone = models.CharField(max_length=15)
+    cpf_cnpj = models.CharField(max_length=18)  # Altere conforme a necessidade
+    cep = models.CharField(max_length=10)
+    rua = models.CharField(max_length=255)
+    numero = models.CharField(max_length=10)
+    bairro = models.CharField(max_length=255)
+    senha = models.CharField(max_length=128)  # Você pode usar hashing depois
 
-#     def __str__(self):
-#         return f"{self.marca} {self.modelo} ({self.cor}) - R${self.preco}"
+    def __str__(self):
+        return self.nome

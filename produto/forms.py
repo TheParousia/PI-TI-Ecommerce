@@ -1,4 +1,12 @@
 from django import forms
+from .models import Cliente
+
+class ClienteForm(forms.ModelForm):
+    senha = forms.CharField(widget=forms.PasswordInput())  # Campo de senha
+
+    class Meta:
+        model = Cliente
+        fields = ['nome', 'username', 'email', 'telefone', 'cpf_cnpj', 'cep', 'rua', 'numero', 'bairro', 'senha']
 
 class FormularioLogin(forms.Form):
     nome_usuario = forms.CharField(

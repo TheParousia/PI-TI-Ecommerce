@@ -1,20 +1,109 @@
-{% extends 'base.html' %}
+{% extends 'master.html' %}
 
 {% block content %}
 <div class="container">
     <h2>Registrar</h2>
     <form method="POST">
         {% csrf_token %}
-        <!-- Campos do formulário de registro -->
+        
+        <!-- Campo de Nome Completo -->
+        <div class="mb-3">
+            <label for="nome">Nome Completo:</label>
+            <input type="text" class="form-control" id="nome" name="nome" required>
+        </div>
+
+        <!-- Campo de Nome de Usuário -->
         <div class="mb-3">
             <label for="username">Nome de usuário:</label>
             <input type="text" class="form-control" id="username" name="username" required>
         </div>
+
+        <!-- Campo de E-mail -->
+        <div class="mb-3">
+            <label for="email">E-mail:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+
+        <!-- Campo de Telefone -->
+        <div class="mb-3">
+            <label for="telefone">Telefone:</label>
+            <input type="text" class="form-control" id="telefone" name="telefone" required>
+        </div>
+
+        <!-- Campo de CPF ou CNPJ -->
+        <div class="mb-3">
+            <label for="cpf_cnpj">CPF ou CNPJ:</label>
+            <input type="text" class="form-control" id="cpf_cnpj" name="cpf_cnpj" required>
+        </div>
+
+        <!-- Seção de Endereço (CEP, Rua, Número e Bairro) -->
+        <div class="form-row">
+            <!-- Campo de CEP -->
+            <div class="form-group col-md-3">
+                <label for="cep">CEP:</label>
+                <input type="text" class="form-control" id="cep" name="cep" required onblur="pesquisarCEP()">
+            </div>
+            
+            <!-- Campo de Rua -->
+            <div class="form-group col-md-5">
+                <label for="rua">Nome da Rua:</label>
+                <input type="text" class="form-control" id="rua" name="rua" required>
+            </div>
+
+            <!-- Campo de Número -->
+            <div class="form-group col-md-2">
+                <label for="numero">Nº da Casa:</label>
+                <input type="text" class="form-control" id="numero" name="numero" required>
+            </div>
+
+            <!-- Campo de Bairro -->
+            <div class="form-group col-md-2">
+                <label for="bairro">Bairro:</label>
+                <input type="text" class="form-control" id="bairro" name="bairro" required>
+            </div>
+        </div>
+
+        <!-- Campo de Senha -->
         <div class="mb-3">
             <label for="password">Senha:</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
+
+        <!-- Botão de Envio -->
         <button type="submit" class="btn btn-dark">Registrar</button>
     </form>
 </div>
+
+<script>
+    // Função para buscar o CEP na API do ViaCEP e preencher os campos de endereço automaticamente
+    function pesquisarCEP() {
+        var cep = document.getElementById('cep').value.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+        if (cep != "") {
+            var validacep = /^[0-9]{8}$/; // Validação de CEP
+
+            if (validacep.test(cep)) {
+                // Consulta o webservice ViaCEP
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!("erro" in data)) {
+                            // Preenche os campos de endereço
+                            document.getElementById('rua').value = data.logradouro;
+                            document.getElementById('bairro').value = data.bairro;
+                            // Você pode adicionar outros campos, como cidade e estado, se necessário
+                        } else {
+                            alert("CEP não encontrado.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao consultar o CEP:', error);
+                        alert("Erro ao consultar o CEP.");
+                    });
+            } else {
+                alert("Formato de CEP inválido.");
+            }
+        }
+    }
+</script>
 {% endblock %}

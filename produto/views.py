@@ -3,6 +3,43 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import FormularioLogin
 from produto.forms import FormularioLogin  # Certifique-se de que o nome do formulário está correto
+from .forms import ClienteForm
+
+# views.py
+from .models import Cliente
+
+def registrar(request):
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        telefone = request.POST.get('telefone')
+        cpf_cnpj = request.POST.get('cpf_cnpj')
+        cep = request.POST.get('cep')
+        rua = request.POST.get('rua')
+        numero = request.POST.get('numero')
+        bairro = request.POST.get('bairro')
+        senha = request.POST.get('password')  # Aqui você deve aplicar hashing
+
+        # Salva o novo cliente no banco de dados
+        cliente = Cliente(
+            nome=nome,
+            username=username,
+            email=email,
+            telefone=telefone,
+            cpf_cnpj=cpf_cnpj,
+            cep=cep,
+            rua=rua,
+            numero=numero,
+            bairro=bairro,
+            senha=senha,  # Não esqueça de hashear a senha!
+        )
+        cliente.save()
+        return redirect('alguma_url_de_sucesso')  # Altere para a URL desejada
+
+    return render(request, 'registrar.html')
+
+
 
 # Create your views here.
 def template(request):
