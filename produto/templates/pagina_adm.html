@@ -18,9 +18,10 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nome</th>
+                    <th>descricao</th>
                     <th>Preço</th>
                     <th>Imagem</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,21 +29,58 @@
                     {% for produto in produtos %}
                         <tr>
                             <td>{{ produto.id }}</td>
-                            <td>{{ produto.nome }}</td>
+                            <td>{{ produto.descricao }}</td>
                             <td>R$ {{ produto.preco|floatformat:2 }}</td>
                             <td>
-                                <img src="{{ produto.imagem }}" alt="{{ produto.nome }}" style="max-width: 100px; max-height: 100px;"/>
+                                <img src="{{ produto.imagem }}" alt="{{ produto.descricao }}" style="max-width: 100px; max-height: 100px;"/>
+                            </td>
+                            <td>
+                                <a href="{% url 'atualizar_produto' produto.id %}" class="btn btn-warning btn-sm">Atualizar</a>
+                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="{{ produto.id }}">Excluir</button>
                             </td>
                         </tr>
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="4" class="text-center">Nenhum produto encontrado.</td>
+                        <td colspan="5" class="text-center">Nenhum produto encontrado.</td>
                     </tr>
                 {% endif %}
             </tbody>
         </table>
     </div>
+
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja excluir este produto?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                    <form id="deleteForm" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Sim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var deleteModal = document.getElementById('confirmDeleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+
+            var form = document.getElementById('deleteForm');
+            form.action = '{% url "excluir_produto" 0 %}'.replace('0', id);
+        });
+    </script>
+    
     {% endblock %}
 </body>
 </html>
