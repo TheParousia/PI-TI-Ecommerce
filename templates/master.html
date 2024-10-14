@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+
+  <!-- Importação da fonte Public Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    /* Definir Public Sans como a fonte padrão */
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Public Sans', sans-serif; /* Fonte padrão */
+    }
+    main {
+      flex: 1;
+    }
+    .botao-sem-borda {
+      border: none; /* Remove a borda */
+      background-color: transparent; /* Define o fundo transparente */
+      color: black; /* Define o texto preto */
+    }
+
+    .botao-sem-borda:hover, 
+    .botao-sem-borda:focus {
+      background-color: #ffffff; /* Define o fundo branco ao passar o mouse ou focar */
+      color: black; /* Mantém o texto preto */
+      box-shadow: none; /* Remove qualquer sombra ao focar */
+      border: none; /* Remove a borda ao focar */
+    }
+
+    .barra-pesquisa-sem-borda {
+      border: none; /* Remove a borda da barra de pesquisa */
+      background-color: #ffffff; /* Mantém o fundo cinza claro */
+    }
+    .contador-sacola {
+      margin-left: 5px; /* Espaço entre a sacola e o contador */
+      font-weight: bold; /* Destaque o número */
+      display: inline-flex; /* Para centralizar verticalmente */
+      align-items: center; /* Alinhamento vertical */
+      height: 100%; /* Para ocupar a mesma altura */
+    }
+    footer {
+      background-color: black; /* Cor de fundo do rodapé */
+      color: white; /* Cor do texto */
+      text-align: center; /* Centraliza o texto */
+      padding: 10px 0; /* Espaçamento interno */
+      position: relative;
+      width: 100%;
+    }
+    .secao-inscricao {
+      background-color: #f8f9fa; /* Cor de fundo da seção de inscrição */
+      padding: 10px; /* Espaçamento interno */
+      text-align: left; /* Alinhamento à esquerda */
+      width: 100%;
+    }
+    .texto-inscricao {
+      margin-bottom: 10px; /* Espaço entre o texto e o campo de e-mail */
+      max-width: 500px; /* Limita a largura do texto */
+      word-wrap: break-word; /* Quebra a palavra se necessário */
+    }
+    .coluna-botao {
+      display: flex;
+      flex-direction: column;
+      margin-left: 200px; /* Espaço entre as colunas */
+      margin-top: -90px; /* Eleva os botões para alinhar com o texto */
+    }
+    .container-botao {
+      display: flex;
+      justify-content: flex-end; /* Alinha as colunas à direita */
+      align-items: center; /* Alinha verticalmente no centro */
+    }
+    .navbar {
+      background-color: black !important; /* Força a cor preta */
+      border-color: black !important; /* Remove qualquer cor de borda */
+    }
+    .botao-negrito-simples {
+      font-weight: bold; /* Texto em negrito */
+      border: none; /* Remove a borda do botão */
+      background-color: transparent; /* Fundo transparente */
+      color: black; /* Texto preto */
+    }
+    .botao-negrito-simples:hover, .botao-negrito-simples:focus {
+      background-color: #ffffff; /* Fundo branco ao passar o mouse ou focar */
+      color: black; /* Mantém a cor preta */
+      box-shadow: none; /* Remove qualquer sombra ao focar */
+      border: none; /* Remove a borda ao focar */
+    }
+    /* Estilo das linhas */
+    .linha-personalizada {
+      border: none; /* Remove bordas padrão */
+      border-top: 2px solid black; /* Linha preta com 2px de espessura */
+      margin: 10px auto; /* Margens e centralização */
+      width: 80%; /* Linha não ocupa a largura total da página */
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .coluna-botao {
+        margin-left: 0; /* Remove margem lateral em telas pequenas */
+        margin-top: 10px; /* Ajusta o alinhamento para não sobrepor ao texto */
+        align-items: center; /* Alinha os botões à esquerda no mobile */
+      }
+
+      .container-botao {
+        flex-direction: column; /* Organiza os botões em coluna no mobile */
+        align-items: center; /* Alinha à esquerda */
+      }
+
+      .secao-inscricao .input-group {
+        width: 100%; /* Aumenta a largura do campo de e-mail no mobile */
+      }
+    }
+
+    @media (max-width: 576px) {
+      .navbar-brand {
+        font-size: 1.2rem; /* Diminui o tamanho da marca no mobile */
+      }
+
+      .navbar-nav {
+        text-align: center; /* Centraliza o menu no mobile */
+      }
+
+      .secao-inscricao {
+        text-align: center; /* Centraliza o texto no mobile */
+      }
+
+      .texto-inscricao {
+        margin-bottom: 15px; /* Ajusta o espaçamento no mobile */
+      }
+
+      .container-botao {
+        align-items: center; /* Centraliza os botões no mobile */
+      }
+
+      .coluna-botao {
+        margin-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Navbar fixa -->
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: black !important;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">BR</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Alternar navegação">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mx-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link active text-center" aria-current="page" href="#">FRETE GRÁTIS EM TODO PARÁ! DEZEMBRO. 15–28.</a>
+            </li>
+          </ul>
+          <div class="d-flex">
+            <a class="nav-link text-white" href="#">SUPORTE</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <!-- Barra de pesquisa secundária -->
+    <div class="bg-body shadow-sm">
+      <div class="container d-flex justify-content-between align-items-center my-2">
+        <div>
+          <button class="botao-sem-borda me-2">Website</button>
+          <button class="botao-sem-borda me-2">Loja</button>
+          <button class="botao-sem-borda me-2">Compras</button>
+          <button class="botao-sem-borda me-2">Contato</button>
+        </div>
+        <form class="d-flex align-items-center">
+          <div class="input-group me-2">
+            <span class="input-group-text border-0 bg-body">
+              <i class="fas fa-search"></i>
+            </span>
+            <input class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar" aria-label="Procurar">
+          </div>
+          <span class="contador-sacola">0</span> <!-- Contador sem fundo -->
+          <button class="botao-sem-borda ms-2" type="button">
+            <i class="bi bi-handbag"></i> <!-- Ícone de sacola -->
+          </button> 
+          <button class="botao-sem-borda ms-2" type="button">Logar</button> <!-- Botão Logar -->
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Linha preta antes da seção de Inscreva-se -->
+  <hr class="linha-personalizada">
+
+  <!-- Seção de Inscreva-se -->
+  <div class="secao-inscricao">
+    <div class="container">
+      <h2 class="titulo-inscricao" style="font-size: 2em; font-weight: bold;">Inscreva-se no nosso informativo</h2> <!-- Título em negrito e maior -->
+      <p class="texto-inscricao">Seja o primeiro a saber sobre nossas ofertas especiais, novidades e atualizações.</p>
+      <div class="d-flex flex-wrap align-items-center">
+        <div class="input-group me-2" style="max-width: 400px;"> <!-- Limita a largura -->
+          <input type="email" class="form-control" placeholder="Insira seu e-mail" aria-label="Inscreva-se">
+          <button class="botao-negrito-simples input-group-text">Inscreva-se</button> <!-- Botão simplificado dentro do input group -->
+        </div>
+        <div class="container-botao">
+          <div class="coluna-botao">
+            <button class="botao-sem-borda font-weight-bold">Website</button>
+          </div>
+          <div class="coluna-botao">
+            <button class="botao-sem-borda font-weight-bold">Loja</button>
+          </div>
+          <div class="coluna-botao">
+            <button class="botao-sem-borda font-weight-bold">Contato</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé -->
+  <footer>
+    <p>© 2024 STORE MOBILE. TODOS OS DIREITOS RESERVADOS.</p>
+  </footer>
+
+  {% bootstrap_javascript %}
+</body>
+</html>
