@@ -42,8 +42,8 @@ def registrar(request):
 
 
 # Create your views here.
-def template(request):
-    return render(request, "template.html") 
+def produtos(request):
+    return render(request, "produtos.html") 
 
 def login_view(request):
     form = FormularioLogin()
@@ -59,7 +59,8 @@ def login_view(request):
             if usuario is not None:
                 # Se a autenticação for bem-sucedida, faz login e redireciona
                 login(request, usuario)
-                return redirect('home')  # Redireciona para a página inicial (ou qualquer outra)
+                print("Usuário autenticado: ",usuario.is_authenticated)
+                return redirect('produtos')  # Redireciona para a página inicial (ou qualquer outra)
             else:
                 # Se as credenciais forem inválidas, exibe uma mensagem de erro
                 messages.error(request, 'Nome de usuário ou senha inválidos.')

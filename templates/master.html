@@ -191,7 +191,16 @@
           <button class="botao-sem-borda ms-2" type="button">
             <i class="bi bi-handbag"></i> <!-- Ícone de sacola -->
           </button> 
-          <button class="botao-sem-borda ms-2" type="button">Logar</button> <!-- Botão Logar -->
+          {% if user.is_authenticated %}
+            <a href="/logout/">
+              <button class="botao-sem-borda ms-2" type="button">Deslogar</button> <!-- Botão Logar -->
+            </a>  
+          {% else %}
+            <a href="/login">
+              <button class="botao-sem-borda ms-2" type="button">Logar</button> <!-- Botão Logar -->
+            </a>
+            
+          {% endif %}
         </form>
       </div>
     </div>
