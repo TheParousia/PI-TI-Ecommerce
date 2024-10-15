@@ -83,9 +83,9 @@
             
         }
         img {
-            width: 190px;
-            height: 190px;
-            aspect-ratio: 1 / 1; /* This maintains the aspect ratio */
+            width: 260px;
+            height: 260px;
+            aspect-ratio: 1 / 1; /* Isso mantém a proporção */
         }
         .cartao h2 {
             font-size: 1.5em;
@@ -190,7 +190,25 @@
             border-radius: 50%; /* Faz o polegar redondo */
             cursor: pointer;
         }
-
+        .botao-filtro {
+            background-color: transparent;
+            border: 2px solid black;
+            color: black;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px; /* Espaço entre os botões */
+        }
+        .container {
+            display: flex;
+            align-items: center;
+        }
+        .cartao a{
+            display: block;
+            width: 260px;
+            height: 260px;
+        }
+        
     </style>
 </head>
 <body>
@@ -248,9 +266,9 @@
                     </ul>
                 </div>
                 <input type="hidden" id="ordenar_por" name="ordenar_por">
-                <div>
-                    <button type="submit">Aplicar Filtros</button>
-                    <button type="reset">Limpar Filtros</button>
+                <div class="container">
+                    <button class="botao-filtro" id="aplicarFiltros">Aplicar</button>
+                    <button class="botao-filtro" id="limparFiltros">Limpar</button>
                 </div>
             </form>    
         </div>
@@ -259,9 +277,9 @@
                 <div class="sort-options">
                     <span>Ordenar por</span>
                     <select id="ordenar" name="ordenar" style="background-color: #EFF2F6; border: none; color: black; font-family: 'Inter', sans-serif; font-weight: bold;">
-                        <option value="popular_asc">Mais Populares</option>
-                        <option value="popular_desc">Menos Populares</option>
-                        <!-- Adicione outras opções de ordenação aqui -->
+                        <option value="">Selecione</option>
+                        <option value="populares">Mais Populares</option>
+                        <option value="menos_populares">Menos Populares</option>
                     </select>
                 </div>
             </div>
@@ -359,34 +377,84 @@ document.querySelector('.show-less').addEventListener('click', function() {
     }
 });
 
-// Ordenar produtos ao mudar a seleção de ordenação
-document.getElementById('ordenar').addEventListener('change', function() {
-    const order = this.value;
-    const productsArray = Array.from(products);
-    
-    // Ordenar produtos
-    productsArray.sort((a, b) => {
-        const aPopularidade = parseInt(a.getAttribute('data-popularidade'));
-        const bPopularidade = parseInt(b.getAttribute('data-popularidade'));
-        
-        return order === 'popular_asc' ? aPopularidade - bPopularidade : bPopularidade - aPopularidade;
-    });
+document.addEventListener('DOMContentLoaded', function () {
+    const ordenarSelect = document.getElementById('ordenar');
+    const produtos = Array.from(document.querySelectorAll('.cartao'));
 
-    // Remover todos os produtos atuais da visualização
-    const productsContainer = document.querySelector('.products');
-    productsContainer.innerHTML = '';
+    ordenarSelect.addEventListener('change', function () {
+        const sortBy = this.value;
 
-    // Adicionar produtos ordenados de volta ao contêiner
-    productsArray.forEach(product => {
-        productsContainer.appendChild(product);
-    });
-
-    // Mostrar os produtos ordenados
-    for (let i = 0; i < visibleProducts; i++) {
-        if (productsArray[i]) {
-            productsArray[i].style.display = 'block';
+        if (sortBy === 'populares') {
+            produtos.sort((a, b) => {
+                return b.dataset.popularidade - a.dataset.popularidade; // Ordenar do mais popular para o menos popular
+            });
+        } else if (sortBy === 'menos_populares') {
+            produtos.sort((a, b) => {
+                return a.dataset.popularidade - b.dataset.popularidade; // Ordenar do menos popular para o mais popular
+            });
         }
+
+        // Limpa a seção de produtos antes de adicionar os produtos ordenados
+        const productsContainer = document.querySelector('.products');
+        productsContainer.innerHTML = '';
+
+        // Adiciona os produtos ordenados ao DOM
+        produtos.forEach(produto => {
+            productsContainer.appendChild(produto);
+        });
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+    const aplicarFiltrosBtn = document.getElementById('aplicarFiltros');
+    const limparFiltrosBtn = document.getElementById('limparFiltros');
+    const marcaSelect = document.getElementById('marca');
+    const modeloSelect = document.getElementById('modelo');
+    const corSelect = document.getElementById('cor');
+    const precoInput = document.getElementById('preco');
+    const produtos = Array.from(document.querySelectorAll('.cartao'));
+
+    // Function to filter products based on selected criteria
+    function applyFilters() {
+        const selectedMarca = marcaSelect.value;
+        const selectedModelo = modeloSelect.value;
+        const selectedCor = corSelect.value;
+        const selectedPreco = precoInput.value;
+
+        produtos.forEach(produto => {
+            const marcaMatch = selectedMarca === '' || produto.dataset.marca === selectedMarca;
+            const modeloMatch = selectedModelo === '' || produto.dataset.modelo === selectedModelo;
+            const corMatch = selectedCor === '' || produto.dataset.cor === selectedCor;
+            const precoMatch = produto.dataset.preco <= selectedPreco;
+
+            if (marcaMatch && modeloMatch && corMatch && precoMatch) {
+                produto.style.display = 'block'; // Show product
+            } else {
+                produto.style.display = 'none'; // Hide product
+            }
+        });
     }
+
+    // Function to clear all filters
+    function clearFilters() {
+        marcaSelect.value = '';
+        modeloSelect.value = '';
+        corSelect.value = '';
+        precoInput.value = precoInput.min; // Reset to minimum
+
+        produtos.forEach(produto => {
+            produto.style.display = 'block'; // Show all products
+        });
+    }
+
+    aplicarFiltrosBtn.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent form submission
+        applyFilters();
+    });
+
+    limparFiltrosBtn.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent form submission
+        clearFilters();
+    });
 });
     </script>
 </body>

@@ -1,0 +1,11 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ produto.nome }}</title>
+</head>
+<body>
+    <h1>{{ produto.nome }}</h1>
+    <p>Acessos: {{ produto.acessos }}</p>
+    <a href="{% url 'lista_produtos' %}">Voltar à lista de produtos</a>
+</body>
+</html>

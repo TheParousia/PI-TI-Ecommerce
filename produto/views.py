@@ -20,11 +20,11 @@ def produtos(request):
 
     # Filtragem
     if marca_id:
-        produtos = produtos.filter(marca=marca_id)  # Apliquei a mudança para usar o campo de texto
+        produtos = produtos.filter(marca=marca_id)
     if modelo_id:
-        produtos = produtos.filter(modelo=modelo_id)  # O mesmo aqui
+        produtos = produtos.filter(modelo=modelo_id)
     if cor_id:
-        produtos = produtos.filter(cor=cor_id)  # E aqui também
+        produtos = produtos.filter(cor=cor_id) 
 
     try:
         preco_min = float(preco_min)
@@ -41,6 +41,8 @@ def produtos(request):
         produtos = produtos.order_by('-preco')
 
     total_produtos = produtos.count()
+    
+    
 
     return render(request, 'produtos.html', {
         'produtos': produtos,
@@ -58,4 +60,7 @@ def produtos(request):
 
 def produto_detalhes(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
+    produto.acessos += 1
+    produto.save()
+    
     return render(request, 'produto_detalhes.html', {'produto': produto})

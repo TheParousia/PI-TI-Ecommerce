@@ -29,7 +29,7 @@ class Produto(models.Model):
     cor = models.CharField(max_length=30, default='')
     marca = models.CharField(max_length=30, default='')
     imagem = models.ImageField(upload_to='produto', default='img')
-    popularidade = models.IntegerField(default=0)  # Adiciona o campo de popularidade
+    acessos = models.IntegerField(default=0)  # Adiciona o campo de acessos
 
     def __str__(self):
         return f"{self.marca} {self.modelo} ({self.cor}) - R${self.preco}"
