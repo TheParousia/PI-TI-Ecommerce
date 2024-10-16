@@ -1,111 +1,42 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
-from django.template import loader
-from .models import Produto  # Assegure-se que o Produto está sendo importado corretamente
-import os
-from django.conf import settings
-from django.core.files.storage import FileSystemStorage
-
-fs = FileSystemStorage()
-
-def produto(request):
-    template = loader.get_template("formulario_post.html")
-    contexto = {
-        "nome": request.GET.get("nome"),
-        "mensagem": request.GET.get("mensagem"),
-        "remetente": request.GET.get("remetente"),
-    }
-    return HttpResponse(template.render(contexto, request))
-
-def formulario(request):
-    template = loader.get_template("formulario.html")
-    return HttpResponse(template.render())
-
-def clark_post(request):
-    template = loader.get_template("clark_post.html")
-    contexto = {
-        "nome": request.POST.get("nome"),
-        "mensagem": request.POST.get("mensagem"),
-        "remetente": request.POST.get("remetente"),
-    }
-    return HttpResponse(template.render(contexto, request))
-
-def formulario_post(request):
-    if request.method == "POST":
-        produto = Produto()
-        produto.nome = request.POST.get("nome")
-        produto.remetente = request.POST.get("remetente")
-        produto.mensagem = request.POST.get("mensagem")
-
-        if 'imagem' in request.FILES:
-            produto.imagem = request.FILES['imagem']
-
-        produto.save()
-        return redirect("listar_cartao")
-
-    return render(request, "formulario_post.html")
-
-def listar_cartao(request):
-    produtos = Produto.objects.all()  # Corrigido para Produto
-    context = {
-        "produto": produtos
-    }
-    return render(request, "listar_cartao.html", context)
-
-def deletar_cartao(request, id):
-    produto = get_object_or_404(Produto, id=id)  # Corrigido para Produto
-    
-    # Remover a imagem do sistema de arquivos se existir
-    if produto.imagem:
-        if os.path.isfile(produto.imagem.path):
-            os.remove(produto.imagem.path)
-
-    # Deletar o cartão do banco de dados
-    produto.delete()
-    return redirect("listar_cartao")
-
-def atualizar_cartao(request, id):
-    produto = get_object_or_404(Produto, id=id)  # Corrigido para Produto
-
-    if request.method == "POST":
-        produto.nome = request.POST.get("nome")
-        produto.remetente = request.POST.get("remetente")
-        produto.mensagem = request.POST.get("mensagem")
-
-        if 'imagem' in request.FILES:
-            produto.imagem = request.FILES['imagem']
-
-        produto.save()
-        return redirect("listar_cartao")
-
-    context = {
-        "produto": produto
-    }
-    return render(request, "formulario_atualizar.html", context)
+from django.shortcuts import render, redirect
+from .models import Produto, Marca, Modelo, Cor
 
 def tela_produto(request):
     if request.method == "POST":
-        produto = Produto()
-        produto.nome = request.POST.get("nome")
-        produto.remetente = request.POST.get("remetente")
-        produto.mensagem = request.POST.get("mensagem")
+        # Obtém ou cria as instâncias de Marca, Modelo e Cor
+        modelo_nome = request.POST['modelo']
+        cor_nome = request.POST['cor']
+        marca_nome = request.POST['marca']
 
-        if 'imagem1' in request.FILES:
-            produto.imagem = request.FILES['imagem1']
-        
-        produto.save()   
-        return redirect("tela_produto")  # Redireciona após salvar
-    return render(request, "tela_produto.html")
+        # Procura a marca, modelo e cor, ou cria novos se não existirem
+        marca, created = Marca.objects.get_or_create(nome=marca_nome)
+        modelo, created = Modelo.objects.get_or_create(nome=modelo_nome)
+        cor, created = Cor.objects.get_or_create(nome=cor_nome)
 
-def cadastrar_produto(request):
-    if request.method == "POST":
-        produto = Produto()
-        produto.nome = request.POST.get("nome")
-        produto.remetente = request.POST.get("remetente")
-        produto.mensagem = request.POST.get("mensagem")
-        
+        produto = Produto(
+            modelo=modelo,
+            descricao=request.POST['descricao'],
+            capacidade1=request.POST['capacidade1'],
+            capacidade2=request.POST['capacidade2'],
+            capacidade3=request.POST['capacidade3'],
+            qtd_estoque=request.POST['qtd_estoque'],
+            preco=request.POST['preco'],
+            cor=cor,
+            marca=marca,
+            acessos=0  # O campo de acessos é definido automaticamente como 0
+        )
+
+        # Salva as imagens
         if 'imagem' in request.FILES:
-            produto.imagem = request.FILES['imagem']
-        
+            produto.imagem1 = request.FILES['imagem']
+        if 'imagem2' in request.FILES:
+            produto.imagem2 = request.FILES['imagem2']
+        if 'imagem3' in request.FILES:
+            produto.imagem3 = request.FILES['imagem3']
+        if 'imagem4' in request.FILES:
+            produto.imagem4 = request.FILES['imagem4']
+
         produto.save()
         return redirect("tela_produto")  # Redireciona após salvar
+
+    return render(request, "tela_produto.html")

@@ -21,7 +21,7 @@
             justify-content: space-between;
         }
         .form-container, .preview-container {
-            flex: 1 1 48%; /* Utiliza quase 50% da largura disponível */
+            flex: 1 1 48%;
             background: white;
             padding: 20px;
             border-radius: 0;
@@ -29,9 +29,7 @@
             margin-bottom: 20px;
             max-width: 600px;
         }
-
         h1 {
-
             font-size: 24px;
             margin-bottom: 20px;
         }
@@ -77,7 +75,7 @@
 <div class="container">
     <div class="form-container">
         <h1>Cadastrar Produto</h1>
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form action="{% url 'tela_produto' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="modelo" class="form-label">Modelo:</label>
@@ -104,7 +102,7 @@
             <div class="row mb-3">
                 <div class="col">
                     <label for="estoque" class="form-label">Quantidade no Estoque:</label>
-                    <input type="number" class="form-control" id="estoque" name="estoque" required oninput="updatePreview()">
+                    <input type="number" class="form-control" id="estoque" name="qtd_estoque" required oninput="updatePreview()">
                 </div>
                 <div class="col">
                     <label for="preco" class="form-label">Preço:</label>
@@ -119,26 +117,29 @@
                 <label for="marca" class="form-label">Marca:</label>
                 <input type="text" class="form-control" id="marca" name="marca" required oninput="updatePreview()">
             </div>
-
+            <div class="mb-3">
+                <label for="acessos" class="form-label">Acessos:</label>
+                <input type="number" class="form-control" id="acessos" name="acessos" required oninput="updatePreview()">
+            </div>
             <div class="mb-3">
                 <label class="form-label">Imagens do Produto:</label>
                 <div class="row">
                     <div class="col-6">
-                        <input type="file" class="form-control mb-2" id="imagem1" name="imagem1" accept="image/*" onchange="previewImage(this, 'preview1')" required>
+                        <input type="file" class="form-control mb-2" id="imagem1" name="imagem" accept="imagem/*" onchange="previewImage(this, 'preview1')" required>
                         <div id="preview1"></div>
                     </div>
                     <div class="col-6">
-                        <!-- <input type="file" class="form-control mb-2" id="imagem2" name="imagem2" accept="image/*" onchange="previewImage(this, 'preview2')" required> -->
+                        <input type="file" class="form-control mb-2" id="imagem2" name="imagem2" accept="imagem/*" onchange="previewImage(this, 'preview2')" required>
                         <div id="preview2"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <!-- <input type="file" class="form-control mb-2" id="imagem3" name="imagem3" accept="image/*" onchange="previewImage(this, 'preview3')" required> -->
+                        <input type="file" class="form-control mb-2" id="imagem3" name="imagem3" accept="imagem/*" onchange="previewImage(this, 'preview3')" required>
                         <div id="preview3"></div>
                     </div>
                     <div class="col-6">
-                        <!-- <input type="file" class="form-control mb-2" id="imagem4" name="imagem4" accept="image/*" onchange="previewImage(this, 'preview4')" required> -->
+                        <input type="file" class="form-control mb-2" id="imagem4" name="imagem4" accept="imagem/*" onchange="previewImage(this, 'preview4')" required>
                         <div id="preview4"></div>
                     </div>
                 </div>
@@ -158,7 +159,7 @@
     </div>
 
     <div class="preview-container">
-        <h2>Preview visualização do produto</h2>
+        <h2>Pré-visualização do Produto</h2>
         <div class="simulacao">
             <h2 id="previewModelo">Modelo do Produto</h2>
             <div id="imagePreview" class="preview mb-2"></div>
