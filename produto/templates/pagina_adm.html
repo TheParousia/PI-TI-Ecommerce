@@ -18,8 +18,16 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>descricao</th>
+                    <th>Modelo</th>
+                    <th>Descrição</th>
+                    <th>Capacidade 1</th>
+                    <th>Capacidade 2</th>
+                    <th>Capacidade 3</th>
+                    <th>Quantidade em Estoque</th>
                     <th>Preço</th>
+                    <th>Cor</th>
+                    <th>Marca</th>
+                    <th>Acessos</th>
                     <th>Imagem</th>
                     <th>Ações</th>
                 </tr>
@@ -29,10 +37,19 @@
                     {% for produto in produtos %}
                         <tr>
                             <td>{{ produto.id }}</td>
+                            <td>{{ produto.modelo }}</td>
                             <td>{{ produto.descricao }}</td>
+                            <td>{{ produto.capacidade1 }}</td>
+                            <td>{{ produto.capacidade2 }}</td>
+                            <td>{{ produto.capacidade3 }}</td>
+                            <td>{{ produto.qtd_estoque }}</td>
                             <td>R$ {{ produto.preco|floatformat:2 }}</td>
+                            <td>{{ produto.cor }}</td>
+                            <td>{{ produto.marca }}</td>
+                            <td>{{ produto.acessos }}</td>
                             <td>
-                                <img src="{{ produto.imagem }}" alt="{{ produto.descricao }}" style="max-width: 100px; max-height: 100px;"/>
+                                <img src="{{ produto.imagem.url }}" alt="{{ produto.descricao }}" style="max-width: 100px; max-height: 100px;" />
+                                <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#imageModal" data-imagem="{{ produto.imagem.url }}">Visualizar</button>
                             </td>
                             <td>
                                 <a href="{% url 'atualizar_produto' produto.id %}" class="btn btn-warning btn-sm">Atualizar</a>
@@ -42,7 +59,7 @@
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="5" class="text-center">Nenhum produto encontrado.</td>
+                        <td colspan="13" class="text-center">Nenhum produto encontrado.</td>
                     </tr>
                 {% endif %}
             </tbody>
@@ -70,6 +87,20 @@
         </div>
     </div>
 
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Visualizar Imagem</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="modal-image" src="" alt="Imagem do Produto" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         var deleteModal = document.getElementById('confirmDeleteModal');
         deleteModal.addEventListener('show.bs.modal', function (event) {
@@ -78,6 +109,15 @@
 
             var form = document.getElementById('deleteForm');
             form.action = '{% url "excluir_produto" 0 %}'.replace('0', id);
+        });
+
+        var imageModal = document.getElementById('imageModal');
+        imageModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var imagemUrl = button.getAttribute('data-imagem');
+
+            var modalImage = document.getElementById('modal-image');
+            modalImage.src = imagemUrl;
         });
     </script>
     

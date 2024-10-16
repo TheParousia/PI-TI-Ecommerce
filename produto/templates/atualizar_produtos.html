@@ -9,10 +9,10 @@
     {% bootstrap_javascript %}
     <style>
         #imagem-preview {
-            max-width: 100px; /* Largura máxima da imagem de pré-visualização */
-            max-height: 100px; /* Altura máxima da imagem de pré-visualização */
-            display: none; /* Inicialmente escondido */
-            margin-top: 10px; /* Espaço acima da imagem */
+            max-width: 100px;
+            max-height: 100px;
+            display: none;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -23,17 +23,49 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="descricao" class="form-label">descricao:</label>
+                <label for="modelo" class="form-label">Modelo:</label>
+                <input type="text" name="modelo" value="{{ produto.modelo }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição:</label>
                 <input type="text" name="descricao" value="{{ produto.descricao }}" class="form-control" required>
             </div>
             <div class="mb-3">
+                <label for="capacidade1" class="form-label">Capacidade 1:</label>
+                <input type="text" name="capacidade1" value="{{ produto.capacidade1 }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="capacidade2" class="form-label">Capacidade 2:</label>
+                <input type="text" name="capacidade2" value="{{ produto.capacidade2 }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="capacidade3" class="form-label">Capacidade 3:</label>
+                <input type="text" name="capacidade3" value="{{ produto.capacidade3 }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="qtd_estoque" class="form-label">Quantidade em Estoque:</label>
+                <input type="number" name="qtd_estoque" value="{{ produto.qtd_estoque }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
                 <label for="preco" class="form-label">Preço:</label>
-                <input type="text" name="preco" value="{{ produto.preco }}" class="form-control" required>
+                <input type="text" name="preco" value="{{ produto.preco|floatformat:2 }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="cor" class="form-label">Cor:</label>
+                <input type="text" name="cor" value="{{ produto.cor }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="marca" class="form-label">Marca:</label>
+                <input type="text" name="marca" value="{{ produto.marca }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="acessos" class="form-label">Acessos:</label>
+                <input type="number" name="acessos" value="{{ produto.acessos }}" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label for="imagem" class="form-label">Selecionar Imagem:</label>
-                <input type="file" name="imagem" class="form-control" accept="image/*" required onchange="previewImage(event)">
-                <img id="imagem-preview" src="#" alt="Pré-visualização da Imagem" />
+                <input type="file" name="imagem" class="form-control" accept="image/*" onchange="previewImage(event)">
+                <img id="imagem-preview" src="{{ produto.imagem.url }}" alt="Pré-visualização da Imagem" />
             </div>
             <button type="submit" class="btn btn-success">Atualizar Produto</button>
             <a href="{% url 'pagina_adm' %}" class="btn btn-secondary">Voltar</a>
@@ -46,13 +78,13 @@
             const file = event.target.files[0];
             const reader = new FileReader();
 
-            reader.onload = function(){
-                preview.src = reader.result; // Atualiza o src da imagem de pré-visualização
-                preview.style.display = 'block'; // Mostra a imagem
+            reader.onload = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
             }
 
             if (file) {
-                reader.readAsDataURL(file); // Lê o arquivo como URL de dados
+                reader.readAsDataURL(file);
             }
         }
     </script>
