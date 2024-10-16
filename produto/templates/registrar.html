@@ -7,7 +7,7 @@
             <div class="card shadow-lg border-0 rounded-lg">
                 <div class="card-body p-4">
                     <h2 class="card-title text-center mb-4">Registrar</h2>
-                    <form method="POST">
+                    <form method="POST" onsubmit="return validarSenhas()">
                         {% csrf_token %}
 
                         <!-- Nome Completo -->
@@ -93,6 +93,15 @@
                             </div>
                         </div>
 
+                        <!-- Confirmar Senha -->
+                        <div class="form-group mb-3">
+                            <label for="confirm_password" class="form-label">Confirme sua Senha:</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirme sua senha" required>
+                            </div>
+                        </div>
+
                         <!-- Botão de Envio -->
                         <div class="d-grid mt-4">
                             <button type="submit" class="btn btn-dark btn-lg">Registrar</button>
@@ -128,6 +137,18 @@
                 alert("Formato de CEP inválido.");
             }
         }
+    }
+
+    // Função para validar se a senha e a confirmação são iguais
+    function validarSenhas() {
+        var senha = document.getElementById("password").value;
+        var confirmSenha = document.getElementById("confirm_password").value;
+
+        if (senha !== confirmSenha) {
+            alert("As senhas não correspondem.");
+            return false; // Impede o envio do formulário
+        }
+        return true;
     }
 </script>
 {% endblock %}
