@@ -275,7 +275,7 @@
         <div class="products-section">
             <div class="products-header">
                 <div class="sort-options">
-                    <span>Ordenar por</span>
+                    Ordenar por <span style="text-decoration: underline; font-weight: bold;">Popular</span>
                     <select id="ordenar" name="ordenar" style="background-color: #EFF2F6; border: none; color: black; font-family: 'Inter', sans-serif; font-weight: bold;">
                         <option value="">Selecione</option>
                         <option value="populares">Mais Populares</option>
@@ -290,7 +290,7 @@
                 {% for produto in produtos %}
                 <div class="cartao" style="display: none;" data-popularidade="{{ produto.popularidade }}">
                     <a href="{% url 'produto_detalhes' produto.id %}">
-                        <img src="{{ produto.imagem.url }}" width="190px" height="190px" alt="{{ produto.modelo }}" style="display: block;">
+                        <img src="{{ produto.imagem.url }}" width="260px" height="260px" alt="{{ produto.modelo }}" style="display: block;">
                     </a>
                     <h2>{{ produto.modelo }}</h2>
                     <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
@@ -404,6 +404,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
 document.addEventListener('DOMContentLoaded', function () {
     const aplicarFiltrosBtn = document.getElementById('aplicarFiltros');
     const limparFiltrosBtn = document.getElementById('limparFiltros');
