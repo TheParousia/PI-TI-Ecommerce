@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Produto
+from .models import Produto, Modelo
 
 def pagina_home(request):
     return render(request, 'pagina_home.html')
@@ -18,7 +18,17 @@ def excluir_produtos(request, produto_id):
 def atualizar_produtos(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
     if request.method == 'POST':
-        produto.modelo = request.POST.get('modelo', produto.modelo)
+        #paramos aqui fresco
+        nomeModelo = request.POST.get('modelo', produto.modelo)
+        modelo = Modelo.objects.get(nome=nomeModelo) 
+        produto.modelo = modelo
+
+        produto.cor = request.POST.get('cor', produto.cor)
+        
+        
+        produto.marca = request.POST.get('marca', produto.marca)
+
+
         produto.descricao = request.POST.get('descricao', produto.descricao)
         produto.capacidade1 = request.POST.get('capacidade1', produto.capacidade1)
         produto.capacidade2 = request.POST.get('capacidade2', produto.capacidade2)
@@ -33,15 +43,16 @@ def atualizar_produtos(request, produto_id):
             preco_str = preco_str.replace(',', '.')
             produto.preco = float(preco_str)
 
-        produto.cor = request.POST.get('cor', produto.cor)
-        produto.marca = request.POST.get('marca', produto.marca)
         
         # Acessos pode ser um campo inteiro também
         produto.acessos = int(request.POST.get('acessos', produto.acessos))
 
         # Atualiza a imagem se uma nova for enviada
-        if request.FILES.get('imagem'):
-            produto.imagem = request.FILES['imagem']
+        if request.FILES.get('imagem1'):
+            produto.imagem = request.FILES['imagem1']
+            produto.imagem = request.FILES['imagem2']
+            produto.imagem = request.FILES['imagem3']
+            produto.imagem = request.FILES['imagem4']
 
         produto.save()
         return redirect('pagina_adm')
