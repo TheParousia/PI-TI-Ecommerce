@@ -68,182 +68,197 @@
             display: flex;
             align-items: center;
         }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .preview-container {
+                order: -1; /* Coloca a pré-visualização no topo em telas pequenas */
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="form-container">
-        <h1>Cadastrar Produto</h1>
-        <form action="{% url 'tela_produto' %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="modelo" class="form-label">Modelo:</label>
-                <input type="text" class="form-control" id="modelo" name="modelo" required oninput="updatePreview()">
+    <div class="container">
+        <div class="preview-container">
+            <h2>Pré-visualização do Produto</h2>
+            <div class="simulacao">
+                <h2 id="previewModelo">Modelo do Produto</h2>
+                <div id="imagePreview" class="preview mb-2"></div>
+                <p id="previewDescricao">Descrição: N/A</p>
+                <p id="previewCapacidade">Capacidades: N/A</p>
+                <p id="previewEstoque">Quantidade em Estoque: N/A</p>
+                <p id="previewPreco">Preço: N/A</p>
+                <p id="previewCor">Cor: N/A</p>
+                <p id="previewMarca">Marca: N/A</p>
+                <p>Frete: <span id="previewFrete">N/A</span></p>
+                <p>Devolução: <span id="previewDevolucao">N/A</span></p>
             </div>
-            <div class="mb-3">
-                <label for="descricao" class="form-label">Descrição:</label>
-                <textarea class="form-control" id="descricao" name="descricao" rows="2" required oninput="updatePreview()"></textarea>
-            </div>
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="capacidade1" class="form-label">Capacidade 1:</label>
-                    <input type="text" class="form-control" id="capacidade1" name="capacidade1" oninput="updatePreview()">
+        </div>
+    
+        <div class="form-container">
+            <h1>Cadastrar Produto</h1>
+            <form action="{% url 'tela_produto' %}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="modelo" class="form-label">Modelo:</label>
+                    <input type="text" class="form-control" id="modelo" name="modelo" required oninput="updatePreview()">
                 </div>
-                <div class="col">
-                    <label for="capacidade2" class="form-label">Capacidade 2:</label>
-                    <input type="text" class="form-control" id="capacidade2" name="capacidade2" oninput="updatePreview()">
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">Descrição:</label>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="2" required oninput="updatePreview()"></textarea>
                 </div>
-                <div class="col">
-                    <label for="capacidade3" class="form-label">Capacidade 3:</label>
-                    <input type="text" class="form-control" id="capacidade3" name="capacidade3" oninput="updatePreview()">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="estoque" class="form-label">Quantidade no Estoque:</label>
-                    <input type="number" class="form-control" id="estoque" name="qtd_estoque" required oninput="updatePreview()">
-                </div>
-                <div class="col">
-                    <label for="preco" class="form-label">Preço:</label>
-                    <input type="text" class="form-control" id="preco" name="preco" required oninput="updatePreview()">
-                </div>
-                <div class="col">
-                    <label for="cor" class="form-label">Cor:</label>
-                    <input type="text" class="form-control" id="cor" name="cor" oninput="updatePreview()">
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="marca" class="form-label">Marca:</label>
-                <input type="text" class="form-control" id="marca" name="marca" required oninput="updatePreview()">
-            </div>
-            <div class="mb-3">
-                <label for="acessos" class="form-label">Acessos:</label>
-                <input type="number" class="form-control" id="acessos" name="acessos" required oninput="updatePreview()">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Imagens do Produto:</label>
-                <div class="row">
-                    <div class="col-6">
-                        <input type="file" class="form-control mb-2" id="imagem1" name="imagem" accept="imagem/*" onchange="previewImage(this, 'preview1')" required>
-                        <div id="preview1"></div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="capacidade1" class="form-label">Capacidade 1:</label>
+                        <input type="text" class="form-control" id="capacidade1" name="capacidade1" oninput="updatePreview()">
                     </div>
-                    <div class="col-6">
-                        <input type="file" class="form-control mb-2" id="imagem2" name="imagem2" accept="imagem/*" onchange="previewImage(this, 'preview2')" required>
-                        <div id="preview2"></div>
+                    <div class="col">
+                        <label for="capacidade2" class="form-label">Capacidade 2:</label>
+                        <input type="text" class="form-control" id="capacidade2" name="capacidade2" oninput="updatePreview()">
+                    </div>
+                    <div class="col">
+                        <label for="capacidade3" class="form-label">Capacidade 3:</label>
+                        <input type="text" class="form-control" id="capacidade3" name="capacidade3" oninput="updatePreview()">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <input type="file" class="form-control mb-2" id="imagem3" name="imagem3" accept="imagem/*" onchange="previewImage(this, 'preview3')" required>
-                        <div id="preview3"></div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="estoque" class="form-label">Quant. no Estoque:</label>
+                        <input type="number" class="form-control" id="estoque" name="qtd_estoque" required oninput="updatePreview()">
                     </div>
-                    <div class="col-6">
-                        <input type="file" class="form-control mb-2" id="imagem4" name="imagem4" accept="imagem/*" onchange="previewImage(this, 'preview4')" required>
-                        <div id="preview4"></div>
+                    <div class="col">
+                        <label for="preco" class="form-label">Preço:</label>
+                        <input type="text" class="form-control" id="preco" name="preco" required oninput="updatePreview()">
+                    </div>
+                    <div class="col">
+                        <label for="cor" class="form-label">Cor:</label>
+                        <input type="text" class="form-control" id="cor" name="cor" required oninput="updatePreview()">
                     </div>
                 </div>
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="freteGratis" name="freteGratis" onchange="updatePreview()">
-                <label class="form-check-label" for="freteGratis">Frete Grátis</label>
-            </div>
-            
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="devolucaoGratis" name="devolucaoGratis" onchange="updatePreview()">
-                <label class="form-check-label" for="devolucaoGratis">Devolução Gratuita</label>
-            </div>
-
-            <button type="submit" class="btn">Cadastrar Produto</button>
-        </form>
-    </div>
-
-    <div class="preview-container">
-        <h2>Pré-visualização do Produto</h2>
-        <div class="simulacao">
-            <h2 id="previewModelo">Modelo do Produto</h2>
-            <div id="imagePreview" class="preview mb-2"></div>
-            <p id="previewDescricao">Descrição do produto aparece aqui.</p>
-            <p id="previewCapacidade">Capacidades: </p>
-            <p id="previewEstoque">Quantidade em Estoque: N/A</p>
-            <p id="previewPreco">Preço: N/A</p>
-            <p id="previewCor">Cor: N/A</p>
-            <p id="previewMarca">Marca: N/A</p>
-            <p><strong>Frete:</strong> <span id="previewFrete">N/A</span></p>
-            <p><strong>Devolução:</strong> <span id="previewDevolucao">N/A</span></p>
+                <div class="mb-3">
+                    <label for="marca" class="form-label">Marca:</label>
+                    <input type="text" class="form-control" id="marca" name="marca" required oninput="updatePreview()">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Imagens do Produto:</label>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="file" class="form-control mb-2" id="imagem1" name="imagem" accept="image/*" onchange="previewImage(this, 'preview1'); updatePreview()" required>
+                            <div id="preview1"></div>
+                        </div>
+                        <div class="col-6">
+                            <input type="file" class="form-control mb-2" id="imagem2" name="imagem2" accept="image/*" onchange="previewImage(this, 'preview2'); updatePreview()" required>
+                            <div id="preview2"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="file" class="form-control mb-2" id="imagem3" name="imagem3" accept="image/*" onchange="previewImage(this, 'preview3'); updatePreview()" required>
+                            <div id="preview3"></div>
+                        </div>
+                        <div class="col-6">
+                            <input type="file" class="form-control mb-2" id="imagem4" name="imagem4" accept="image/*" onchange="previewImage(this, 'preview4'); updatePreview()" required>
+                            <div id="preview4"></div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Campo oculto de acessos -->
+                <input type="hidden" id="acessos" name="acessos" value="0">
+    
+                <div class="mb-3">
+                    <label class="form-label">Frete:</label>
+                    <div class="d-flex" required>
+                        <div class="form-check me-2">
+                            <input type="radio" class="form-check-input" id="freteSim" name="frete" value="sim" onchange="updatePreview()" required>
+                            <label class="form-check-label" for="freteSim">Sim</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="freteNao" name="frete" value="nao" onchange="updatePreview()" required>
+                            <label class="form-check-label" for="freteNao">Não</label>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="mb-3">
+                    <label class="form-label">Devolução:</label>
+                    <div class="d-flex" required>
+                        <div class="form-check me-2">
+                            <input type="radio" class="form-check-input" id="devolucaoSim" name="devolucao" value="sim" onchange="updatePreview()" required>
+                            <label class="form-check-label" for="devolucaoSim">Sim</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="devolucaoNao" name="devolucao" value="nao" onchange="updatePreview()" required>
+                            <label class="form-check-label" for="devolucaoNao">Não</label>
+                        </div>
+                    </div>
+                </div>
+    
+                <button type="submit" class="btn">Cadastrar Produto</button>
+            </form>
         </div>
     </div>
-</div>
 
-<script>
-    function previewImage(input, previewId) {
-        const previewContainer = document.getElementById(previewId);
-        previewContainer.innerHTML = ''; // Limpa a prévia anterior
-        const file = input.files[0];
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.width = '100px';
-                img.style.height = '100px';
-                img.style.objectFit = 'cover';
-                previewContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-        }
-        updatePreview();
-    }
-
-    function updatePreview() {
-        const modelo = document.getElementById('modelo').value || 'Modelo do Produto';
-        const descricao = document.getElementById('descricao').value || 'Descrição do produto aparece aqui.';
-        const capacidade1 = document.getElementById('capacidade1').value || '';
-        const capacidade2 = document.getElementById('capacidade2').value || '';
-        const capacidade3 = document.getElementById('capacidade3').value || '';
-        const estoque = document.getElementById('estoque').value || 'N/A';
-        const preco = document.getElementById('preco').value || 'N/A';
-        const cor = document.getElementById('cor').value || 'N/A';
-        const marca = document.getElementById('marca').value || 'N/A';
-        const freteGratis = document.getElementById('freteGratis').checked ? 'Sim' : 'Não';
-        const devolucaoGratis = document.getElementById('devolucaoGratis').checked ? 'Sim' : 'Não';
-
-        document.getElementById('previewModelo').innerText = modelo;
-        document.getElementById('previewDescricao').innerText = descricao;
-
-        // Apenas mostrar capacidades se estiverem preenchidas
-        const capacidades = [capacidade1, capacidade2, capacidade3].filter(Boolean);
-        document.getElementById('previewCapacidade').innerText = `Capacidades: ${capacidades.length ? capacidades.join(', ') : ''}`;
-        
-        document.getElementById('previewEstoque').innerText = `Quantidade em Estoque: ${estoque}`;
-        document.getElementById('previewPreco').innerText = `Preço: R$ ${preco}`;
-        document.getElementById('previewCor').innerText = `Cor: ${cor}`;
-        document.getElementById('previewMarca').innerText = `Marca: ${marca}`;
-        
-        document.getElementById('previewFrete').innerText = freteGratis;
-        document.getElementById('previewDevolucao').innerText = devolucaoGratis;
-
-        // Atualiza as imagens
-        const imagePreview = document.getElementById('imagePreview');
-        imagePreview.innerHTML = ''; // Limpa a prévia anterior
-        for (let i = 1; i <= 4; i++) {
-            const img = document.querySelector(`#imagem${i}`).files[0];
-            if (img) {
+    <script>
+        function previewImage(input, previewId) {
+            const previewContainer = document.getElementById(previewId);
+            previewContainer.innerHTML = ''; // Limpa a pré-visualização anterior
+            const file = input.files[0];
+            if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const imgElement = document.createElement('img');
-                    imgElement.src = e.target.result;
-                    imgElement.style.width = '100px';
-                    imgElement.style.height = '100px';
-                    imgElement.style.objectFit = 'cover';
-                    imagePreview.appendChild(imgElement);
-                };
-                reader.readAsDataURL(img);
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    previewContainer.appendChild(img);
+                    // Atualiza a pré-visualização geral
+                    const imagePreview = document.getElementById('imagePreview');
+                    const imgPreview = document.createElement('img');
+                    imgPreview.src = e.target.result;
+                    imgPreview.style.width = '100px'; // ajuste o tamanho da imagem conforme necessário
+                    imgPreview.style.height = '100px'; // ajuste o tamanho da imagem conforme necessário
+                    imagePreview.appendChild(imgPreview);
+                }
+                reader.readAsDataURL(file);
             }
         }
-    }
-</script>
 
+        function updatePreview() {
+            document.getElementById('previewModelo').textContent = document.getElementById('modelo').value;
+            document.getElementById('previewDescricao').textContent = "Descrição: " + document.getElementById('descricao').value;
+            document.getElementById('previewCapacidade').textContent = "Capacidades: " + 
+                document.getElementById('capacidade1').value + ", " + 
+                document.getElementById('capacidade2').value + ", " + 
+                document.getElementById('capacidade3').value;
+            document.getElementById('previewEstoque').textContent = "Quantidade em Estoque: " + document.getElementById('estoque').value;
+            document.getElementById('previewPreco').textContent = "Preço: " + document.getElementById('preco').value;
+            document.getElementById('previewCor').textContent = "Cor: " + document.getElementById('cor').value;
+            document.getElementById('previewMarca').textContent = "Marca: " + document.getElementById('marca').value;
+            document.getElementById('previewFrete').textContent = document.querySelector('input[name="frete"]:checked') ? 
+                document.querySelector('input[name="frete"]:checked').nextElementSibling.textContent : 'N/A';
+            document.getElementById('previewDevolucao').textContent = document.querySelector('input[name="devolucao"]:checked') ? 
+                document.querySelector('input[name="devolucao"]:checked').nextElementSibling.textContent : 'N/A';
+        }
+
+        function validateForm() {
+            const freteChecked = document.querySelector('input[name="frete"]:checked');
+            const devolucaoChecked = document.querySelector('input[name="devolucao"]:checked');
+
+            if (!freteChecked) {
+                alert("Por favor, selecione uma opção para o frete.");
+                return false;
+            }
+
+            if (!devolucaoChecked) {
+                alert("Por favor, selecione uma opção para a devolução.");
+                return false;
+            }
+
+            return true; // Formulário válido
+        }
+    </script>
 </body>
 </html>
