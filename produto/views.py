@@ -4,12 +4,14 @@ from django.contrib import messages
 from .forms import FormularioLogin
 from produto.forms import FormularioLogin  # Certifique-se de que o nome do formulário está correto
 from .forms import ClienteForm
+from django.contrib.auth.hashers import make_password
 
 # views.py
 from .models import Cliente
 
 def registrar(request):
     if request.method == 'POST':
+        # Obtém os dados do formulário
         nome = request.POST.get('nome')
         username = request.POST.get('username')
         email = request.POST.get('email')
@@ -19,9 +21,25 @@ def registrar(request):
         rua = request.POST.get('rua')
         numero = request.POST.get('numero')
         bairro = request.POST.get('bairro')
-        senha = request.POST.get('password')  # Aqui você deve aplicar hashing
+        senha = request.POST.get('password')
+        confirmar_senha = request.POST.get('confirm_password')
 
-        # Salva o novo cliente no banco de dados
+        # Valida se a senha e a confirmação de senha coincidem
+        if senha != confirmar_senha:
+            messages.error(request, 'As senhas não coincidem.')
+            return render(request, 'registrar.html')  # Volta para a página de registro
+
+        # Verifica se o email já está cadastrado
+        if Cliente.objects.filter(email=email).exists():
+            messages.error(request, 'Este e-mail já está em uso. Tente outro.')
+            return render(request, 'registrar.html')  # Volta para a página de registro
+
+        # Verifica se o username já está cadastrado
+        if Cliente.objects.filter(username=username).exists():
+            messages.error(request, 'Este nome de usuário já está em uso. Tente outro.')
+            return render(request, 'registrar.html')  # Volta para a página de registro
+
+        # Cria o cliente (hashing a senha para segurança)
         cliente = Cliente(
             nome=nome,
             username=username,
@@ -32,14 +50,18 @@ def registrar(request):
             rua=rua,
             numero=numero,
             bairro=bairro,
-            senha=senha,  # Não esqueça de hashear a senha!
+            senha=make_password(senha),  # Hasheia a senha corretamente
         )
         cliente.save()
-        return redirect('alguma_url_de_sucesso')  # Altere para a URL desejada
 
+        # Autentica o usuário após registrar
+        usuario = authenticate(request, username=username, password=senha)
+        if usuario is not None:
+            login(request, usuario)
+            return redirect('conta_criada')  # Redireciona para a página de sucesso
+
+    # Caso o método não seja POST, renderiza a página de registro
     return render(request, 'registrar.html')
-
-
 
 # Create your views here.
 def produtos(request):
@@ -72,8 +94,5 @@ def login_view(request):
     return render(request, 'login_independente.html', {'form': form})
 
 
-def registrar_view(request):
-    if request.method == 'POST':
-        # Lógica para registrar o usuário aqui
-        pass
-    return render(request, 'registrar.html')  # Certifique-se de que você tem um template registrar.html
+def conta_criada(request):
+    return render(request, 'conta_criada.html')  # Página de sucesso após a criação da conta
