@@ -48,7 +48,7 @@
                             <td>{{ produto.marca }}</td>
                             <td>{{ produto.acessos }}</td>
                             <td>
-                                <img src="{{ produto.imagem.url }}" alt="{{ produto.descricao }}" style="max-width: 100px; max-height: 100px;" />
+                                <img src="{{ produto.imagem1}}" alt="{{ produto.descricao }}" style="max-width: 100px; max-height: 100px;" />
                                 <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#imageModal" data-imagem="{{ produto.imagem.url }}">Visualizar</button>
                             </td>
                             <td>
@@ -123,4 +123,4 @@
     
     {% endblock %}
 </body>
-</html>
+</html>  
