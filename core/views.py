@@ -9,5 +9,5 @@ fs = FileSystemStorage()
 from core import models
 
 def front_end(request):
-    template = loader.get_template("frontend.html")
+    template = loader.get_template("tela_produto.html")
     return HttpResponse(template.render())

@@ -58,7 +58,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates')],
+            os.path.join(BASE_DIR, 'templates')],  # Adicionando o diretório de templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,8 +122,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
+# Diretório onde o Django vai procurar os arquivos estáticos da aplicação durante o desenvolvimento
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# Diretório onde os arquivos estáticos serão coletados quando 'collectstatic' for executado
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Diretório para os arquivos de mídia (uploads de usuários)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 
