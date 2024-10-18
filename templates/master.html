@@ -1,41 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>{% block title %}{% endblock %}</title>
-  {% load bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
-  <header>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Barra de navegação fixa</font></font></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Alternar navegação">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Lar</font></font></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Link</font></font></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Desabilitado</font></font></a>
-            </li>
-          </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Procurar" aria-label="Procurar">
-            <button class="btn btn-outline-success" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Procurar</font></font></button>
-          </form>
-        </div>
-      </div>
-    </nav>
-  </header>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenvolvedores PI</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            display: flex; 
+        }
+        .column {
+            flex: 1; /* Faz cada coluna ocupar espaço igual */
+            padding: 10px; 
+        }
+        h1 { 
+            color: #333; 
+        }
+    </style>
+</head>
+<body>  
+  <div class="column">
+    <h1>Alunos do curso de TI do ano de 2023</h1>
+    <img src="sua-imagem.jpg" alt="Adicionar imagem da turma com o comando" class="full-image">
+</div>
 
-  {% block content %}
-  {% endblock %}
+<style>
+    .column {
+        position: relative;
+        width: 100%; /* Define a largura da coluna */
+    }
 
+    .full-image {
+        width: 100%; /* A imagem ocupará 100% da largura da coluna */
+        height: auto; /* Mantém a proporção da imagem */
+    }
+</style>
+    <div class="column">
+        <h1>Sobre nós</h1>
+        <p>
+            tudo começou em 2023
+            
+        </p>
+    </div>
 </body>
 </html>
