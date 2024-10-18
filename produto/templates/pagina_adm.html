@@ -48,8 +48,14 @@
                             <td>{{ produto.marca }}</td>
                             <td>{{ produto.acessos }}</td>
                             <td>
-                                <img src="{{ produto.imagem1}}" alt="{{ produto.descricao }}" style="max-width: 100px; max-height: 100px;" />
-                                <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#imageModal" data-imagem="{{ produto.imagem.url }}">Visualizar</button>
+                                <img src="{{ produto.imagem1 }}" alt="{{ produto.descricao }}" style="max-width: 100px; max-height: 100px;" />
+                                <button class="btn btn-info btn-sm" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#imageModal" 
+                                        data-imagem1="{{ produto.imagem1 }}"
+                                        data-imagem2="{{ produto.imagem2 }}"
+                                        data-imagem3="{{ produto.imagem3 }}"
+                                        data-imagem4="{{ produto.imagem4 }}">Visualizar</button>
                             </td>
                             <td>
                                 <a href="{% url 'atualizar_produto' produto.id %}" class="btn btn-warning btn-sm">Atualizar</a>
@@ -91,11 +97,11 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="imageModalLabel">Visualizar Imagem</h5>
+                    <h5 class="modal-title" id="imageModalLabel">Visualizar Imagens</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <img id="modal-image" src="" alt="Imagem do Produto" class="img-fluid" />
+                <div class="modal-body" id="modal-image-container">
+                    <!-- As imagens serão adicionadas aqui -->
                 </div>
             </div>
         </div>
@@ -114,13 +120,28 @@
         var imageModal = document.getElementById('imageModal');
         imageModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget;
-            var imagemUrl = button.getAttribute('data-imagem');
+            var imagens = [
+                button.getAttribute('data-imagem1'),
+                button.getAttribute('data-imagem2'),
+                button.getAttribute('data-imagem3'),
+                button.getAttribute('data-imagem4')
+            ];
 
-            var modalImage = document.getElementById('modal-image');
-            modalImage.src = imagemUrl;
+            var modalImageContainer = document.getElementById('modal-image-container');
+            modalImageContainer.innerHTML = ''; // Limpa imagens anteriores
+
+            imagens.forEach(function(imagem) {
+                if (imagem) {
+                    var imgElement = document.createElement('img');
+                    imgElement.src = imagem;
+                    imgElement.style.width = '100px';
+                    imgElement.style.margin = '5px';
+                    modalImageContainer.appendChild(imgElement);
+                }
+            });
         });
     </script>
     
     {% endblock %}
 </body>
-</html>  
+</html>
