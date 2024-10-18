@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,14 +8,9 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-    <style>
-        #imagem-preview {
-            max-width: 100px;
-            max-height: 100px;
-            display: none;
-            margin-top: 10px;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="{% static 'img_preview.css' %}">
+       
 </head>
 <body>
     {% block conteudo %}
@@ -63,9 +59,24 @@
                 <input type="number" name="acessos" value="{{ produto.acessos }}" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label for="imagem" class="form-label">Selecionar Imagem:</label>
-                <input type="file" name="imagem" class="form-control" accept="image/*" onchange="previewImage(event)">
-                <img id="imagem-preview" src="{{ produto.imagem.url }}" alt="Pré-visualização da Imagem" />
+                <label for="imagem1" class="form-label">Selecionar Imagem:</label>
+                <input type="file" name="imagem1" class="form-control" accept="image/*" onchange="previewImage1(event)">
+                <img class="img-preview"  id="imagem-preview1" src="{{ produto.imagem1}}" alt="Pré-visualização da Imagem" />
+            </div>
+            <div class="mb-3">
+                <label for="imagem2" class="form-label">Selecionar Imagem:</label>
+                <input type="file" name="imagem2" class="form-control" accept="image/*" onchange="previewImage2(event)">
+                <img class="img-preview"  id="imagem-preview2" src="{{ produto.imagem2}}" alt="Pré-visualização da Imagem" />
+            </div>
+            <div class="mb-3">
+                <label for="imagem3" class="form-label">Selecionar Imagem:</label>
+                <input type="file" name="imagem3" class="form-control" accept="image/*" onchange="previewImage3(event)">
+                <img class="img-preview"  id="imagem-preview3" src="{{ produto.imagem3 }}" alt="Pré-visualização da Imagem" />
+            </div>
+            <div class="mb-3">
+                <label for="imagem4" class="form-label">Selecionar Imagem:</label>
+                <input type="file" name="imagem4" class="form-control" accept="image/*" onchange="previewImage4(event)">
+                <img class="img-preview"  id="imagem-preview4" src="{{ produto.imagem4}}" alt="Pré-visualização da Imagem" />
             </div>
             <button type="submit" class="btn btn-success">Atualizar Produto</button>
             <a href="{% url 'pagina_adm' %}" class="btn btn-secondary">Voltar</a>
@@ -73,8 +84,50 @@
     </div>
 
     <script>
-        function previewImage(event) {
-            const preview = document.getElementById('imagem-preview');
+        function previewImage1(event) {
+            const preview = document.getElementById('imagem-preview1');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+        function previewImage2(event) {
+            const preview = document.getElementById('imagem-preview2');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+        function previewImage3(event) {
+            const preview = document.getElementById('imagem-preview3');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+        function previewImage4(event) {
+            const preview = document.getElementById('imagem-preview4');
             const file = event.target.files[0];
             const reader = new FileReader();
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Produto, Modelo
+from .models import Produto, Modelo, Marca, Cor
 
 def pagina_home(request):
     return render(request, 'pagina_home.html')
@@ -19,14 +19,19 @@ def atualizar_produtos(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
     if request.method == 'POST':
         #paramos aqui fresco
+
         nomeModelo = request.POST.get('modelo', produto.modelo)
         modelo = Modelo.objects.get(nome=nomeModelo) 
         produto.modelo = modelo
 
-        produto.cor = request.POST.get('cor', produto.cor)
+        nomecor = request.POST.get('cor', produto.cor)
+        modelo = Cor.objects.get(nome=nomecor) 
+        produto.cor = modelo
         
         
-        produto.marca = request.POST.get('marca', produto.marca)
+        nomemarca = request.POST.get('marca', produto.marca)
+        modelo = Marca.objects.get(nome=nomemarca) 
+        produto.marca = modelo
 
 
         produto.descricao = request.POST.get('descricao', produto.descricao)
