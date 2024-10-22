@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-^9y!r9)o*td12i$)-b7d(2&xhdh-s&t7c=11=guz1cu9oh)-dk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['172.16.0.8', 'homolog.ecommerce.lab202.cst']
 
 
 # Application definition
