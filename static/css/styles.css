@@ -1,29 +1,29 @@
-/* seu_estilo.css */
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #E7EEF1; /* Cor de fundo principal */
-    margin: 0;
-    padding: 20px;
-}
-
 .container {
-    display: flex; /* Utilizando flexbox para organizar os elementos lado a lado */
-    justify-content: space-between; /* Espaçamento igual entre os dois containers */
-    flex-wrap: wrap; /* Permite que os elementos se movam para a linha seguinte em telas pequenas */
+    display: flex;
+    /* Utilizando flexbox para organizar os elementos lado a lado */
+    justify-content: space-between;
+    /* Espaçamento igual entre os dois containers */
+    flex-wrap: wrap;
+    /* Permite que os elementos se movam para a linha seguinte em telas pequenas */
 }
 
-.form-container, .preview-container {
-    flex: 1; /* Faz os dois containers ocuparem espaço igual */
+.form-container,
+.preview-container {
+    flex: 1;
+    /* Faz os dois containers ocuparem espaço igual */
     padding: 20px;
-    margin: 10px; /* Margem entre os containers */
+    margin: 10px;
+    /* Margem entre os containers */
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para efeito de profundidade */
-    background-color: #fff; /* Fundo branco para os containers */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Sombra para efeito de profundidade */
+    background-color: #fff;
+    /* Fundo branco para os containers */
 }
 
 .preview-container {
-    max-width: 600px; /* Aumenta a largura máxima para a pré-visualização */
+    max-width: 600px;
+    /* Aumenta a largura máxima para a pré-visualização */
 }
 
 h1 {
@@ -47,7 +47,8 @@ textarea {
 }
 
 button {
-    background-color: #007BFF; /* Cor do botão */
+    background-color: #007BFF;
+    /* Cor do botão */
     color: white;
     border: none;
     padding: 10px 15px;
@@ -56,23 +57,31 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3; /* Cor do botão ao passar o mouse */
+    background-color: #0056b3;
+    /* Cor do botão ao passar o mouse */
 }
 
 /* Media Queries para responsividade */
 @media (max-width: 768px) {
     .container {
-        flex-direction: column; /* Empilha os elementos verticalmente */
-        align-items: stretch; /* Faz os containers ocuparem a largura total */
+        flex-direction: column;
+        /* Empilha os elementos verticalmente */
+        align-items: stretch;
+        /* Faz os containers ocuparem a largura total */
     }
 
-    .form-container, .preview-container {
-        flex: none; /* Permite que os containers tenham a largura total */
-        margin: 10px 0; /* Adiciona margem vertical entre os containers */
-        width: 100%; /* Faz com que ocupem a largura total */
+    .form-container,
+    .preview-container {
+        flex: none;
+        /* Permite que os containers tenham a largura total */
+        margin: 10px 0;
+        /* Adiciona margem vertical entre os containers */
+        width: 100%;
+        /* Faz com que ocupem a largura total */
     }
 
     .preview-container {
-        order: -1; /* Coloca a pré-visualização acima do formulário */
+        order: -1;
+        /* Coloca a pré-visualização acima do formulário */
     }
 }
