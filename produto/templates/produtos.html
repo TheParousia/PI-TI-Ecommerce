@@ -52,7 +52,6 @@
         }
         .filters select, .filters input {
             margin-right: 20px;
-            padding: 5px;
             width: 100%;
         }
         .products-section {
@@ -73,10 +72,10 @@
             margin-left: 10px;
         }
 		.products {
-    	    display: grid;
-    		grid-template-columns: repeat(3, 1fr);
-    		gap: 20px; 
-    		justify-items: start; 
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px; 
+            justify-items: start; 
 		}
         .cartao {
             margin: 10px;
@@ -105,8 +104,8 @@
             margin: 5px 0;
         }
         .cartao .price {
-            font-size: 1.2em;
-            color: #b12704;
+            font-size: 1.4em;
+            color: #000;
         }
         .common-button {
             padding: 10px 20px;
@@ -170,31 +169,90 @@
             cursor: pointer; 
             opacity: 0.7;
             flex: 1;
+        
+        
         }
-        input[type="range"] {
-        -webkit-appearance: none;
-        width: 100%;
-        height: 2px;
-        background: #999;
-        outline: none;
-        opacity: 0.7;
-        transition: opacity .2s;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        ::selection {
+            color: #fff;
+            background: #17A2B8;
+        }
+        .price-input {
+            width: 100%;
+            display: flex;
+            margin: 30px 0 35px;
+        }
+        .price-input .field {
+            display: block;
+            width: 100%;
+            height: 23px;
+            align-items: center;
+        }
+        .field input {
+            width: 70px;
+            height: 110%;
+            outline: none;
+            font-size: 15px;
+            background-color: transparent;
+            border-radius: 5px;
+            text-align: center;
+            border-radius: 10%;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+        .slider {
+            height: 10px;
+            position: relative;
+            background: #ddd;
+            border-radius: 10px;
+        }
+        .slider .progress {
+            height: 100%;
+            left: 25%;
+            right: 25%;
+            position: absolute;
+            border-radius: 5px;
+            background: #8f8e8e;
+        }
+        .range-input {
+            position: relative;
+        }
+        .range-input input {
+            position: absolute;
+            width: 100%;
+            height: 10px;
+            top: -20px;
+            background: none;
+            pointer-events: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
         }
         input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 25px;
-        height: 25px;
-        background: #000; /* Cor preta */
-        border-radius: 50%; /* Faz o polegar redondo */
-        cursor: pointer;
+            height: 17px;
+            width: 17px;
+            border-radius: 50%;
+            background: #4f5050;
+            pointer-events: auto;
+            -webkit-appearance: none;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
         }
         input[type="range"]::-moz-range-thumb {
-        width: 25px;
-        height: 25px;
-        background: #000; /* Cor preta */
-        border-radius: 50%; /* Faz o polegar redondo */
-        cursor: pointer;
+            height: 17px;
+            width: 17px;
+            border: none;
+            border-radius: 50%;
+            background: #4f5050;
+            pointer-events: auto;
+            -moz-appearance: none;
         }
         .botao-filtro {
             background-color: transparent;
@@ -214,10 +272,8 @@
             width: 260px;
             height: 260px;
         }
-        
 
-        /* configuração dual-range */
-        
+
     </style>
 </head>
 <body>
@@ -242,15 +298,6 @@
                     </select>
                 </div>
                 <div>
-                    <label for="modelo" class="label-style">Modelo</label>
-                    <select id="modelo" name="modelo" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
-                        <option value="">Todos</option>
-                        {% for modelo in modelos %}
-                            <option value="{{ modelo.id }}" > {{ modelo.nome }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div>
                     <label for="cor" class="label-style">Cor</label>
                     <select id="cor" name="cor" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
@@ -260,16 +307,25 @@
                     </select>
                 </div>
 
-                <div>
-                    <fieldset>
-                    <label for="preco">Preço</label>
-                    <input type="range" id="preco" name="preco" min="700" max="20000" step="1" oninput="this.nextElementSibling.value = this.value" class="custom-class">
-                    <output></output>
-                    </fieldset>
+                <div class="price-input">
+                    <div class="field">
+                        <span>Min</span>
+                        <input type="number" class="input-min" value="2500">
+                    </div>
+                    <div class="field">
+                        <span>Max</span>
+                        <input type="number" class="input-max" value="7500">
+                    </div>
                 </div>
-
-
-
+                <br>
+                <div class="slider">
+                    <div class="progress" style="left: 25%; right: 25%;"></div>
+                </div>
+                <div class="range-input">
+                    <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
+                    <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+                </div>
+                <br>
 
                 
                 <div class="dropdown">
@@ -284,12 +340,11 @@
                 </div>
                 <input type="hidden" id="ordenar_por" name="ordenar_por">
                 
-                <input type="submit" name="" id="" value="Enviar">
-                
                 <div class="container">
                     <button type="submit" class="botao-filtro" id="aplicarFiltros">Aplicar</button>
                     <button type="reset" class="botao-filtro" id="limparFiltros">Limpar</button>
                 </div>
+
             </form>    
         </div>
         <div class="products-section">
@@ -323,6 +378,8 @@
     </div>
     <button class="load-more common-button">Carregar mais produtos</button>
     <button class="show-less common-button" style="display: none;">Mostrar menos produtos</button>
+
+
 
     <script>
         function setSortOrder(value) {
@@ -434,7 +491,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const precoInput = document.getElementById('preco');
     const produtos = Array.from(document.querySelectorAll('.cartao'));
 
-    // Function to filter products based on selected criteria
+    // Função para filtrar produtos com base em critérios selecionados
     function applyFilters() {
         const selectedMarca = marcaSelect.value;
         const selectedModelo = modeloSelect.value;
@@ -448,37 +505,79 @@ document.addEventListener('DOMContentLoaded', function () {
             const precoMatch = produto.dataset.preco <= selectedPreco;
 
             if (marcaMatch && modeloMatch && corMatch && precoMatch) {
-                produto.style.display = 'block'; // Show product
+                produto.style.display = 'block'; // Mostrar produto
             } else {
-                produto.style.display = 'none'; // Hide product
+                produto.style.display = 'none'; // Mostrar produto
             }
         });
     }
 
-    // Function to clear all filters
+    // Função para limpar todos os filtros
     function clearFilters() {
         marcaSelect.value = '';
         modeloSelect.value = '';
         corSelect.value = '';
-        precoInput.value = precoInput.min; // Reset to minimum
+        precoInput.value = precoInput.min; // Redefinir para o mínimo
 
         produtos.forEach(produto => {
-            produto.style.display = 'block'; // Show all products
+            produto.style.display = 'block'; // Mostrar todos os produtos
         });
     }
 
     aplicarFiltrosBtn.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault(); // Impedir envio de formulário
         applyFilters();
     });
 
     limparFiltrosBtn.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault(); // Impedir envio de formulário
         clearFilters();
     });
 });
 
-    
+// script do range
+
+const rangeInput = document.querySelectorAll(".range-input input"),
+priceInput = document.querySelectorAll(".price-input input"),
+range = document.querySelector(".slider .progress");
+let priceGap = 1000;
+
+priceInput.forEach(input =>{
+    input.addEventListener("input", e =>{
+        let minPrice = parseInt(priceInput[0].value),
+        maxPrice = parseInt(priceInput[1].value);
+        
+        if((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max){
+            if(e.target.className === "input-min"){
+                rangeInput[0].value = minPrice;
+                range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
+            }else{
+                rangeInput[1].value = maxPrice;
+                range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+            }
+        }
+    });
+});
+
+rangeInput.forEach(input =>{
+    input.addEventListener("input", e =>{
+        let minVal = parseInt(rangeInput[0].value),
+        maxVal = parseInt(rangeInput[1].value);
+
+        if((maxVal - minVal) < priceGap){
+            if(e.target.className === "range-min"){
+                rangeInput[0].value = maxVal - priceGap
+            }else{
+                rangeInput[1].value = minVal + priceGap;
+            }
+        }else{
+            priceInput[0].value = minVal;
+            priceInput[1].value = maxVal;
+            range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
+            range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+        }
+    });
+});
 
     </script>
 
