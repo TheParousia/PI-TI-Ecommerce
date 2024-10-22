@@ -17,6 +17,8 @@ def produtos(request):
     preco_min = request.GET.get('preco_min', 0)
     preco_max = request.GET.get('preco_max', 20000)
     ordenar_por = request.GET.get('ordenar_por')
+    
+    print("Id da marca: ", marca_id)
 
     # Filtragem
     if marca_id:
@@ -42,9 +44,7 @@ def produtos(request):
 
     total_produtos = produtos.count()
     
-    
-
-    return render(request, 'produtos.html', {
+    context = {
         'produtos': produtos,
         'total_produtos': total_produtos,
         'marcas': Marca.objects.all(),
@@ -56,7 +56,9 @@ def produtos(request):
         'preco_min': preco_min,
         'preco_max': preco_max,
         'ordenar_por': ordenar_por,
-    })
+    }
+
+    return render(request, 'produtos.html', context)
 
 def produto_detalhes(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)

@@ -107,3 +107,40 @@
             -moz-appearance: none; /* Remove o estilo padrão do "thumb" no Firefox */
             box-shadow: 0 0 6px rgba(0, 0, 0, 0.05); /* Adiciona sombra ao "thumb" */
         }
+
+
+
+        <!-- <fieldset> -->
+        <!-- <div class="wrapper"> -->
+            Contêiner principal que envolve todos os elementos
+    <!--  -->
+            <!-- <div class="price-input"> -->
+                Contêiner para os campos de entrada de preço
+                <!-- <div class="field"> -->
+                    <!-- <span>Min</span> -->
+                    <!-- <input type="number" class="input-min" value="2500"> -->
+                    Campo de entrada para o valor mínimo
+                <!-- </div> -->
+                <!-- <div class="separator">-</div> -->
+                <!-- <div class="field"> -->
+                    <!-- <span>Max</span> -->
+                    <!-- <input type="number" class="input-max" value="7500"> -->
+                    Campo de entrada para o valor máximo
+                <!-- </div> -->
+            <!-- </div> -->
+    <!--  -->
+            <!-- <div class="slider"> -->
+                Contêiner do slider
+                <!-- <div class="progress"></div> -->
+                Div para a barra de progresso do slider
+            <!-- </div> -->
+    <!--  -->
+            <!-- <div class="range-input"> -->
+                Contêiner para os inputs de range
+                <!-- <input type="range" class="range-min" min="0" max="10000" value="2500" step="100"> -->
+                Input de range para o valor mínimo
+                <!-- <input type="range" class="range-max" min="0" max="10000" value="7500" step="100"> -->
+                Input de range para o valor máximo
+            <!-- </div> -->
+        <!-- </div> -->
+    <!-- </fieldset> -->

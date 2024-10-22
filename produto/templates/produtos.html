@@ -231,13 +231,13 @@
         <div class="filters">
             <h1>Filtros</h1>
             <p>Categoria</p> <br>
-            <form method="get"> 
+            <form action="" method="get"> 
                 <div>
                     <label for="marca" class="label-style">Marca</label>
                     <select id="marca" name="marca" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
                         {% for marca in marcas %}
-                            <option value="{{ marca.id }}">{{ marca.nome }}</option>
+                            <option value="{{ marca.id }}" > {{ marca.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -246,7 +246,7 @@
                     <select id="modelo" name="modelo" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todos</option>
                         {% for modelo in modelos %}
-                            <option value="{{ modelo.id }}">{{ modelo.nome }}</option>
+                            <option value="{{ modelo.id }}" > {{ modelo.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -255,7 +255,7 @@
                     <select id="cor" name="cor" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
                         {% for cor in cores %}
-                            <option value="{{ cor.id }}">{{ cor.nome }}</option>
+                            <option value="{{ cor.id }}" > {{ cor.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -268,40 +268,7 @@
                     </fieldset>
                 </div>
 
-                <!-- <fieldset> -->
-                    <!-- <div class="wrapper"> -->
-                        Contêiner principal que envolve todos os elementos
-                <!--  -->
-                        <!-- <div class="price-input"> -->
-                            Contêiner para os campos de entrada de preço
-                            <!-- <div class="field"> -->
-                                <!-- <span>Min</span> -->
-                                <!-- <input type="number" class="input-min" value="2500"> -->
-                                Campo de entrada para o valor mínimo
-                            <!-- </div> -->
-                            <!-- <div class="separator">-</div> -->
-                            <!-- <div class="field"> -->
-                                <!-- <span>Max</span> -->
-                                <!-- <input type="number" class="input-max" value="7500"> -->
-                                Campo de entrada para o valor máximo
-                            <!-- </div> -->
-                        <!-- </div> -->
-                <!--  -->
-                        <!-- <div class="slider"> -->
-                            Contêiner do slider
-                            <!-- <div class="progress"></div> -->
-                            Div para a barra de progresso do slider
-                        <!-- </div> -->
-                <!--  -->
-                        <!-- <div class="range-input"> -->
-                            Contêiner para os inputs de range
-                            <!-- <input type="range" class="range-min" min="0" max="10000" value="2500" step="100"> -->
-                            Input de range para o valor mínimo
-                            <!-- <input type="range" class="range-max" min="0" max="10000" value="7500" step="100"> -->
-                            Input de range para o valor máximo
-                        <!-- </div> -->
-                    <!-- </div> -->
-                <!-- </fieldset> -->
+
 
 
                 
@@ -316,9 +283,12 @@
                     </ul>
                 </div>
                 <input type="hidden" id="ordenar_por" name="ordenar_por">
+                
+                <input type="submit" name="" id="" value="Enviar">
+                
                 <div class="container">
-                    <button class="botao-filtro" id="aplicarFiltros">Aplicar</button>
-                    <button class="botao-filtro" id="limparFiltros">Limpar</button>
+                    <button type="submit" class="botao-filtro" id="aplicarFiltros">Aplicar</button>
+                    <button type="reset" class="botao-filtro" id="limparFiltros">Limpar</button>
                 </div>
             </form>    
         </div>
