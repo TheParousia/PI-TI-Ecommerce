@@ -46,8 +46,7 @@ textarea {
     border-radius: 4px;
 }
 
-button {
-    background-color: #007BFF;
+.botao-personalizado {
     /* Cor do botão */
     color: white;
     border: none;
@@ -56,10 +55,6 @@ button {
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #0056b3;
-    /* Cor do botão ao passar o mouse */
-}
 
 /* Media Queries para responsividade */
 @media (max-width: 768px) {
