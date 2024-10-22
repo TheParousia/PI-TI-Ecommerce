@@ -21,17 +21,24 @@ def atualizar_produtos(request, produto_id):
         #paramos aqui fresco
 
         nomeModelo = request.POST.get('modelo', produto.modelo)
-        modelo = Modelo.objects.get(nome=nomeModelo) 
+        modelo = Modelo()
+        modelo.nome = nomeModelo
+        modelo.save()
+
         produto.modelo = modelo
 
-        nomecor = request.POST.get('cor', produto.cor)
-        modelo = Cor.objects.get(nome=nomecor) 
-        produto.cor = modelo
+        idCor = int(request.POST.get('cor', produto.cor))
+        cor = Cor.objects.get(id=idCor)
+
+        # produto.cor = Cor.objects.get(nome=nomeCor)
+        produto.cor = cor
         
         
-        nomemarca = request.POST.get('marca', produto.marca)
-        modelo = Marca.objects.get(nome=nomemarca) 
-        produto.marca = modelo
+        idMarca = request.POST.get('marca', produto.marca)
+        marca = Marca.objects.get(id=idMarca)
+        
+
+        produto.marca = marca
 
 
         produto.descricao = request.POST.get('descricao', produto.descricao)
@@ -61,5 +68,14 @@ def atualizar_produtos(request, produto_id):
 
         produto.save()
         return redirect('pagina_adm')
-    
-    return render(request, 'atualizar_produtos.html', {'produto': produto})
+
+    cores = Cor.objects.all().values()
+    marcas = Marca.objects.all().values()
+
+    context = {
+        'produto': produto,
+        'cores': cores,
+        'marcas': marcas,
+    }
+
+    return render(request, 'atualizar_produtos.html', context)

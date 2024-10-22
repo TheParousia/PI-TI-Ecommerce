@@ -7,6 +7,12 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    <style>
+        .modal-custom {
+            max-width: 600px;
+            width: 90%;
+        }
+    </style>
 </head>
 <body>
     {% block conteudo %}
@@ -94,14 +100,26 @@
     </div>
 
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-custom">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="imageModalLabel">Visualizar Imagens</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="modal-image-container">
-                    <!-- As imagens serão adicionadas aqui -->
+                <div class="modal-body">
+                    <div id="carouselImages" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="modal-image-container">
+                            <!-- As imagens serão adicionadas aqui -->
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselImages" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Próximo</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -128,17 +146,25 @@
             ];
 
             var modalImageContainer = document.getElementById('modal-image-container');
-            modalImageContainer.innerHTML = ''; // Limpa imagens anteriores
+            modalImageContainer.innerHTML = '';
 
-            imagens.forEach(function(imagem) {
+            imagens.forEach(function(imagem, index) {
                 if (imagem) {
+                    var itemClass = index === 0 ? 'carousel-item active' : 'carousel-item';
+                    var divElement = document.createElement('div');
+                    divElement.className = itemClass;
                     var imgElement = document.createElement('img');
                     imgElement.src = imagem;
-                    imgElement.style.width = '100px';
-                    imgElement.style.margin = '5px';
-                    modalImageContainer.appendChild(imgElement);
+                    imgElement.className = 'd-block w-100';
+                    imgElement.alt = "Imagem " + (index + 1); // Adicionando um texto alternativo
+                    divElement.appendChild(imgElement);
+                    modalImageContainer.appendChild(divElement);
                 }
             });
+
+            // Verifique se o carrossel está visível e, se necessário, reinicie o carrossel
+            var carousel = new bootstrap.Carousel(carouselImages);
+            carousel.to(0); // Inicie no primeiro item
         });
     </script>
     

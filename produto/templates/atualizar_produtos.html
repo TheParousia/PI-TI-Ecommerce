@@ -48,35 +48,49 @@
             </div>
             <div class="mb-3">
                 <label for="cor" class="form-label">Cor:</label>
-                <input type="text" name="cor" value="{{ produto.cor }}" class="form-control" required>
+                <select name="cor" class="form-select" aria-label="Default select example">
+                    <option selected>Selecione uma cor</option>
+
+                    {% for cor in cores %}
+                        <option value="{{cor.id}}">{{cor.nome}}</option>
+                    {% endfor %}
+                </select>
+
+                <!--input type="text" name="cor" value="{{ produto.cor }}" class="form-control" required -->
             </div>
             <div class="mb-3">
                 <label for="marca" class="form-label">Marca:</label>
-                <input type="text" name="marca" value="{{ produto.marca }}" class="form-control" required>
+                <select name="marca" class="form-select" aria-label="Default select example">
+                    <option selected>Selecione uma marca</option>
+
+                    {% for marca in marcas %}
+                        <option value="{{marca.id}}">{{marca.nome}}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="mb-3">
                 <label for="acessos" class="form-label">Acessos:</label>
                 <input type="number" name="acessos" value="{{ produto.acessos }}" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label for="imagem1" class="form-label">Selecionar Imagem:</label>
+                <label for="imagem1" class="form-label">Selecionar Imagem 1:</label>
                 <input type="file" name="imagem1" class="form-control" accept="image/*" onchange="previewImage1(event)">
-                <img class="img-preview"  id="imagem-preview1" src="{{ produto.imagem1}}" alt="Pré-visualização da Imagem" />
+                <img class="img-preview" id="imagem-preview1" src="{{ produto.imagem1 }}" alt="Pré-visualização da Imagem 1" />
             </div>
             <div class="mb-3">
-                <label for="imagem2" class="form-label">Selecionar Imagem:</label>
+                <label for="imagem2" class="form-label">Selecionar Imagem 2:</label>
                 <input type="file" name="imagem2" class="form-control" accept="image/*" onchange="previewImage2(event)">
-                <img class="img-preview"  id="imagem-preview2" src="{{ produto.imagem2}}" alt="Pré-visualização da Imagem" />
+                <img class="img-preview" id="imagem-preview2" src="{{ produto.imagem2 }}" alt="Pré-visualização da Imagem 2" />
             </div>
             <div class="mb-3">
-                <label for="imagem3" class="form-label">Selecionar Imagem:</label>
+                <label for="imagem3" class="form-label">Selecionar Imagem 3:</label>
                 <input type="file" name="imagem3" class="form-control" accept="image/*" onchange="previewImage3(event)">
-                <img class="img-preview"  id="imagem-preview3" src="{{ produto.imagem3 }}" alt="Pré-visualização da Imagem" />
+                <img class="img-preview" id="imagem-preview3" src="{{ produto.imagem3 }}" alt="Pré-visualização da Imagem 3" />
             </div>
             <div class="mb-3">
-                <label for="imagem4" class="form-label">Selecionar Imagem:</label>
+                <label for="imagem4" class="form-label">Selecionar Imagem 4:</label>
                 <input type="file" name="imagem4" class="form-control" accept="image/*" onchange="previewImage4(event)">
-                <img class="img-preview"  id="imagem-preview4" src="{{ produto.imagem4}}" alt="Pré-visualização da Imagem" />
+                <img class="img-preview" id="imagem-preview4" src="{{ produto.imagem4 }}" alt="Pré-visualização da Imagem 4" />
             </div>
             <button type="submit" class="btn btn-success">Atualizar Produto</button>
             <a href="{% url 'pagina_adm' %}" class="btn btn-secondary">Voltar</a>
@@ -98,6 +112,7 @@
                 reader.readAsDataURL(file);
             }
         }
+
         function previewImage2(event) {
             const preview = document.getElementById('imagem-preview2');
             const file = event.target.files[0];
@@ -112,6 +127,7 @@
                 reader.readAsDataURL(file);
             }
         }
+
         function previewImage3(event) {
             const preview = document.getElementById('imagem-preview3');
             const file = event.target.files[0];
@@ -126,6 +142,7 @@
                 reader.readAsDataURL(file);
             }
         }
+
         function previewImage4(event) {
             const preview = document.getElementById('imagem-preview4');
             const file = event.target.files[0];
