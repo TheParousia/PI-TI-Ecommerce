@@ -1,7 +1,42 @@
 {% extends "master.html" %}
 
 {% block content %}
-    <h1>
-        Conteúdo das páginas
-    </h1>
+    <div class="container">
+        <h1>Atualizar Cor do Produto</h1>
+
+        <!-- Pré-visualização da cor sem o texto de "Produto" -->
+        <div class="color-preview" id="colorDisplay"></div>
+
+        <form action="#" method="POST" onsubmit="return validateForm()">
+            <!-- Seletor de cor minimalista -->
+            <div class="color-picker">
+                <button type="button">Escolher Cor</button>
+                <input type="color" id="corProduto" name="cor" onchange="modificarCor()">
+            </div>
+
+            <button type="submit">Atualizar Cor</button>
+        </form>
+    </div>
+
+    <script>
+        // Função para alterar a cor da pré-visualização em tempo real
+        function modificarCor() {
+            var novaCor = document.getElementById('corProduto').value;
+            document.getElementById('colorDisplay').style.backgroundColor = novaCor;
+        }
+
+        // Função para validar o envio do formulário (simples validação para este exemplo)
+        function validateForm() {
+            var corSelecionada = document.getElementById('corProduto').value;
+            if (!corSelecionada) {
+                alert("Por favor, escolha uma cor para o produto.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+</body>
+</html>
+
 {% endblock %}
