@@ -10,13 +10,12 @@
     {% bootstrap_javascript %}
     
     <link rel="stylesheet" href="{% static 'img_preview.css' %}">
-       
 </head>
 <body>
     {% block conteudo %}
     <div class="container">
         <h2>Atualizar Produto: {{ produto.descricao }}</h2>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="modelo" class="form-label">Modelo:</label>
@@ -48,23 +47,19 @@
             </div>
             <div class="mb-3">
                 <label for="cor" class="form-label">Cor:</label>
-                <select name="cor" class="form-select" aria-label="Default select example">
-                    <option selected>Selecione uma cor</option>
-
+                <select name="cor" class="form-select" aria-label="Selecione uma cor" required>
+                    <option value="" disabled selected>Selecione uma cor</option>
                     {% for cor in cores %}
-                        <option value="{{cor.id}}">{{cor.nome}}</option>
+                        <option value="{{ cor.id }}">{{ cor.nome }}</option>
                     {% endfor %}
                 </select>
-
-                <!--input type="text" name="cor" value="{{ produto.cor }}" class="form-control" required -->
             </div>
             <div class="mb-3">
                 <label for="marca" class="form-label">Marca:</label>
-                <select name="marca" class="form-select" aria-label="Default select example">
-                    <option selected>Selecione uma marca</option>
-
+                <select name="marca" class="form-select" aria-label="Selecione uma marca" required>
+                    <option value="" disabled selected>Selecione uma marca</option>
                     {% for marca in marcas %}
-                        <option value="{{marca.id}}">{{marca.nome}}</option>
+                        <option value="{{ marca.id }}">{{ marca.nome }}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -156,6 +151,23 @@
             if (file) {
                 reader.readAsDataURL(file);
             }
+        }
+
+        function validateForm() {
+            const inputs = document.querySelectorAll('input[required], select[required]');
+            let valid = true;
+
+            inputs.forEach(input => {
+                if (!input.value) {
+                    valid = false;
+                    input.setCustomValidity("Preencha esse campo"); // Mensagem personalizada
+                    input.reportValidity(); // Exibe a mensagem
+                } else {
+                    input.setCustomValidity(""); // Limpa a mensagem de erro
+                }
+            });
+
+            return valid;
         }
     </script>
     {% endblock %}

@@ -12,6 +12,25 @@
             max-width: 600px;
             width: 90%;
         }
+        .container {
+            max-width: 90%; /* Largura do container */
+            margin: auto; /* Centralizando o container */
+        }
+        .table {
+            width: 100%; /* A tabela ocupa 100% do contêiner */
+            table-layout: fixed; /* Colunas com largura fixa */
+        }
+        .table th, .table td {
+            min-width: 100px; /* Largura mínima para as colunas */
+            word-wrap: break-word; /* Quebrar palavras longas */
+            text-align: center; /* Centralizando o texto */
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column; /* Botões em coluna */
+            align-items: center; /* Centralizar os botões */
+            gap: 5px; /* Espaçamento entre os botões */
+        }
     </style>
 </head>
 <body>
@@ -34,7 +53,7 @@
                     <th>Cor</th>
                     <th>Marca</th>
                     <th>Acessos</th>
-                    <th>Imagem</th>
+                    <th>Imagens</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -54,18 +73,33 @@
                             <td>{{ produto.marca }}</td>
                             <td>{{ produto.acessos }}</td>
                             <td>
-                                <img src="{{ produto.imagem1 }}" alt="{{ produto.descricao }}" style="max-width: 100px; max-height: 100px;" />
-                                <button class="btn btn-info btn-sm" 
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#imageModal" 
-                                        data-imagem1="{{ produto.imagem1 }}"
-                                        data-imagem2="{{ produto.imagem2 }}"
-                                        data-imagem3="{{ produto.imagem3 }}"
-                                        data-imagem4="{{ produto.imagem4 }}">Visualizar</button>
+                                <div id="carouselImages{{ produto.id }}" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        {% for imagem in produto.imagens %}
+                                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                                <img src="{{ imagem }}" class="d-block w-100" alt="Imagem do produto {{ produto.id }}">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages{{ produto.id }}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Anterior</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselImages{{ produto.id }}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Próximo</span>
+                                    </button>
+                                </div>
                             </td>
                             <td>
-                                <a href="{% url 'atualizar_produto' produto.id %}" class="btn btn-warning btn-sm">Atualizar</a>
-                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="{{ produto.id }}">Excluir</button>
+                                <div class="btn-group">
+                                    <button class="btn btn-info btn-sm" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#imageModal" 
+                                            data-imagens="{{ produto.imagens|join:',' }}">Visualizar</button>
+                                    <a href="{% url 'atualizar_produto' produto.id %}" class="btn btn-warning btn-sm">Atualizar</a>
+                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="{{ produto.id }}">Excluir</button>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}
@@ -107,15 +141,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="carouselImages" class="carousel slide" data-bs-ride="carousel">
+                    <div id="modalCarouselImages" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner" id="modal-image-container">
                             <!-- As imagens serão adicionadas aqui -->
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages" data-bs-slide="prev">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#modalCarouselImages" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Anterior</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselImages" data-bs-slide="next">
+                        <button class="carousel-control-next" type="button" data-bs-target="#modalCarouselImages" data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Próximo</span>
                         </button>
@@ -130,7 +164,6 @@
         deleteModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget;
             var id = button.getAttribute('data-id');
-
             var form = document.getElementById('deleteForm');
             form.action = '{% url "excluir_produto" 0 %}'.replace('0', id);
         });
@@ -138,12 +171,7 @@
         var imageModal = document.getElementById('imageModal');
         imageModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget;
-            var imagens = [
-                button.getAttribute('data-imagem1'),
-                button.getAttribute('data-imagem2'),
-                button.getAttribute('data-imagem3'),
-                button.getAttribute('data-imagem4')
-            ];
+            var imagens = button.getAttribute('data-imagens').split(',');
 
             var modalImageContainer = document.getElementById('modal-image-container');
             modalImageContainer.innerHTML = '';
@@ -156,15 +184,15 @@
                     var imgElement = document.createElement('img');
                     imgElement.src = imagem;
                     imgElement.className = 'd-block w-100';
-                    imgElement.alt = "Imagem " + (index + 1); // Adicionando um texto alternativo
+                    imgElement.alt = "Imagem " + (index + 1);
                     divElement.appendChild(imgElement);
                     modalImageContainer.appendChild(divElement);
                 }
             });
 
-            // Verifique se o carrossel está visível e, se necessário, reinicie o carrossel
-            var carousel = new bootstrap.Carousel(carouselImages);
-            carousel.to(0); // Inicie no primeiro item
+            // Reiniciar o carrossel
+            var carousel = new bootstrap.Carousel(modalCarouselImages);
+            carousel.to(0); // Iniciar no primeiro item
         });
     </script>
     
