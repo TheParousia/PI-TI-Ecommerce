@@ -9,25 +9,39 @@ fs = FileSystemStorage()
 
 
 def produtos(request):
-    produtos = Produto.objects.all()
-
+    # Obtendo os parâmetros de consulta
     marca_id = request.GET.get('marca')
-    modelo_id = request.GET.get('modelo')
     cor_id = request.GET.get('cor')
-    preco_min = request.GET.get('preco_min', 0)
-    preco_max = request.GET.get('preco_max', 20000)
+    preco_min = float(request.GET.get('precoMin', 0))
+    preco_max = float(request.GET.get('precoMax', 20000))
     ordenar_por = request.GET.get('ordenar_por')
     
+    precoMin = 0
+    precoMax = 10000
+    
+    if preco_min != None:
+        precoMin = preco_min
+        precoMax = preco_max
+    
+    print(request.GET)
+    
+    print("preco_min: ",preco_min)
+    print("preco_max: ",preco_max)
+
+    # Filtra produtos com preço maior que 100 e menor que 500
+    # produtos_precos = Produto.objects.filter(preco__gt=preco_min, preco__lt=preco_max)
+
+    produtos = Produto.objects.all()
+
     print("Id da marca: ", marca_id)
 
     # Filtragem
     if marca_id:
-        produtos = produtos.filter(marca=marca_id)
-    if modelo_id:
-        produtos = produtos.filter(modelo=modelo_id)
+        produtos = produtos.filter(marca_id=marca_id)
     if cor_id:
-        produtos = produtos.filter(cor=cor_id) 
+        produtos = produtos.filter(cor_id=cor_id)
 
+    # Validação dos preços
     try:
         preco_min = float(preco_min)
         preco_max = float(preco_max)
@@ -43,20 +57,29 @@ def produtos(request):
         produtos = produtos.order_by('-preco')
 
     total_produtos = produtos.count()
-    
+
     context = {
         'produtos': produtos,
         'total_produtos': total_produtos,
         'marcas': Marca.objects.all(),
-        'modelos': Modelo.objects.all(),
         'cores': Cor.objects.all(),
         'marca_selecionada': marca_id,
-        'modelo_selecionado': modelo_id,
         'cor_selecionada': cor_id,
         'preco_min': preco_min,
         'preco_max': preco_max,
         'ordenar_por': ordenar_por,
+        "precoMin": precoMin,
+        "precoMax": precoMax,
     }
+
+    return render(request, 'produtos.html', context)
+
+def produto_detalhes(request, produto_id):
+    produto = get_object_or_404(Produto, id=produto_id)
+    produto.acessos += 1
+    produto.save()
+    
+    return render(request, 'produto_detalhes.html', {'produto': produto})
 
     return render(request, 'produtos.html', context)
 

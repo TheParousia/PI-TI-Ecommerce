@@ -263,7 +263,7 @@
             font-size: 16px;
             margin-right: 10px; /* Espaço entre os botões */
         }
-        .container {
+        .estrutura-filtros {
             display: flex;
             align-items: center;
         }
@@ -293,7 +293,7 @@
                     <select id="marca" name="marca" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
                         {% for marca in marcas %}
-                            <option value="{{ marca.id }}" > {{ marca.nome }}</option>
+                            <option value="{{ marca.id }}">{{ marca.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -302,19 +302,19 @@
                     <select id="cor" name="cor" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
                         {% for cor in cores %}
-                            <option value="{{ cor.id }}" > {{ cor.nome }}</option>
+                            <option value="{{ cor.id }}">{{ cor.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>
-
+            
                 <div class="price-input">
                     <div class="field">
                         <span>Min</span>
-                        <input type="number" class="input-min" value="2500">
+                        <input type="number" class="input-min" name="precoMin" id="preco_min" value="{{precoMin}}" min="0" max="10000">
                     </div>
                     <div class="field">
                         <span>Max</span>
-                        <input type="number" class="input-max" value="7500">
+                        <input type="number" class="input-max" name="precoMax" id="preco_max" value="{{precoMax}}" min="0" max="10000">
                     </div>
                 </div>
                 <br>
@@ -322,29 +322,23 @@
                     <div class="progress" style="left: 25%; right: 25%;"></div>
                 </div>
                 <div class="range-input">
-                    <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
-                    <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+                    <input type="range" class="range-min"  min="0" max="10000" value="{{precoMin}}" step="100">
+                    <input type="range" class="range-max"  min="0" max="10000" value="{{precoMax}}" step="100">
                 </div>
                 <br>
-
-                
+            
                 <div class="dropdown">
                     <button id="bordenarpor" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="fa fa-exchange fa-rotate-90" aria-hidden="true"></span> Ordenar por
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="bordenarpor">
-                        <li data-value="preco_asc" onclick="setSortOrder('preco_asc')">Menor Preço</li>
-                        <li data-value="preco_desc" onclick="setSortOrder('preco_desc')">Maior Preço</li>
-                    </ul>
                 </div>
                 <input type="hidden" id="ordenar_por" name="ordenar_por">
                 
-                <div class="container">
-                    <button type="submit" class="botao-filtro" id="aplicarFiltros">Aplicar</button>
-                    <button type="reset" class="botao-filtro" id="limparFiltros">Limpar</button>
+                <div class="estrutura-filtros">
+                    <button type="submit" class="botao-filtro" ="aplicarFiltros">Aplicar</button>
+                    <button type="reset" class="botao-filtro" ="limparFiltros">Limpar</button>
                 </div>
-
             </form>    
         </div>
         <div class="products-section">
@@ -454,6 +448,7 @@ document.querySelector('.show-less').addEventListener('click', function() {
     }
 });
 
+// campo de popularidade
 document.addEventListener('DOMContentLoaded', function () {
     const ordenarSelect = document.getElementById('ordenar');
     const produtos = Array.from(document.querySelectorAll('.cartao'));
@@ -482,61 +477,51 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// campo de filtragem
 document.addEventListener('DOMContentLoaded', function () {
     const aplicarFiltrosBtn = document.getElementById('aplicarFiltros');
     const limparFiltrosBtn = document.getElementById('limparFiltros');
     const marcaSelect = document.getElementById('marca');
-    const modeloSelect = document.getElementById('modelo');
     const corSelect = document.getElementById('cor');
-    const precoInput = document.getElementById('preco');
+    const precoMinInput = document.getElementById('precoMin');
+    const precoMaxInput = document.getElementById('precoMax');
     const produtos = Array.from(document.querySelectorAll('.cartao'));
 
     // Função para filtrar produtos com base em critérios selecionados
     function applyFilters() {
         const selectedMarca = marcaSelect.value;
-        const selectedModelo = modeloSelect.value;
         const selectedCor = corSelect.value;
-        const selectedPreco = precoInput.value;
+        const precoMin = Number(precoMinInput.value);
+        const precoMax = Number(precoMaxInput.value);
 
         produtos.forEach(produto => {
             const marcaMatch = selectedMarca === '' || produto.dataset.marca === selectedMarca;
-            const modeloMatch = selectedModelo === '' || produto.dataset.modelo === selectedModelo;
             const corMatch = selectedCor === '' || produto.dataset.cor === selectedCor;
-            const precoMatch = produto.dataset.preco <= selectedPreco;
+            const precoProduto = Number(produto.dataset.preco);
+            const precoMatch = precoProduto >= precoMin && precoProduto <= precoMax;
 
-            if (marcaMatch && modeloMatch && corMatch && precoMatch) {
-                produto.style.display = 'block'; // Mostrar produto
-            } else {
-                produto.style.display = 'none'; // Mostrar produto
-            }
+            produto.style.display = (marcaMatch && corMatch && precoMatch) ? 'block' : 'none';
         });
     }
 
     // Função para limpar todos os filtros
     function clearFilters() {
         marcaSelect.value = '';
-        modeloSelect.value = '';
         corSelect.value = '';
-        precoInput.value = precoInput.min; // Redefinir para o mínimo
+        precoMinInput.value = precoMinInput.min; // Redefinir para o mínimo
+        precoMaxInput.value = precoMaxInput.max; // Redefinir para o máximo
 
         produtos.forEach(produto => {
             produto.style.display = 'block'; // Mostrar todos os produtos
         });
     }
 
-    aplicarFiltrosBtn.addEventListener('click', function (event) {
-        event.preventDefault(); // Impedir envio de formulário
-        applyFilters();
-    });
-
-    limparFiltrosBtn.addEventListener('click', function (event) {
-        event.preventDefault(); // Impedir envio de formulário
-        clearFilters();
-    });
+    aplicarFiltrosBtn.addEventListener('click', applyFilters);
+    limparFiltrosBtn.addEventListener('click', clearFilters);
 });
 
-// script do range
 
+// script do range
 const rangeInput = document.querySelectorAll(".range-input input"),
 priceInput = document.querySelectorAll(".price-input input"),
 range = document.querySelector(".slider .progress");
@@ -560,7 +545,11 @@ priceInput.forEach(input =>{
 });
 
 rangeInput.forEach(input =>{
-    input.addEventListener("input", e =>{
+    input.addEventListener("input", rangeInputReload);
+});
+
+
+function rangeInputReload(e){
         let minVal = parseInt(rangeInput[0].value),
         maxVal = parseInt(rangeInput[1].value);
 
@@ -576,8 +565,10 @@ rangeInput.forEach(input =>{
             range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
             range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
         }
-    });
-});
+    }
+
+
+    rangeInputReload();
 
     </script>
 
