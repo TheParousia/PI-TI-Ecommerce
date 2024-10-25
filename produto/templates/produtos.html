@@ -33,13 +33,15 @@
         .main-content {
             display: flex;
             width: 100%;
+            flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+            justify-content: space-between; /* Espaçamento entre os itens */
         }
         .filters {
             background-color: #EFF2F6;
             padding: 10px;
             margin-right: 20px;
             width: 250px;
-
+            flex: 0 0 250px; /* Largura fixa para filtros */
         }
         .filters h1 {
             font-size: 25px;
@@ -69,14 +71,26 @@
             margin-left: auto;
         }
         .products-header .sort-options select {
-            margin-left: 10px;
+            flex: 1; /* Faz o select ocupar o espaço disponível */
+            min-width: 150px; /* Largura mínima para o select */
+            margin-left: 10px; /* Espaço à esquerda */
         }
-		.products {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px; 
-            justify-items: start; 
-		}
+        
+        .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsividade */
+        gap: 20px; 
+        justify-items: start;
+    }
+        .common-button {
+            padding: 10px 20px;
+            margin: 20px auto;
+            background-color: #EFF2F6;
+            color: black;
+            border: 2px solid black;
+            cursor: pointer;
+            display: block;
+        }
         .cartao {
             margin: 10px;
             padding: 20px;
@@ -106,15 +120,6 @@
         .cartao .price {
             font-size: 1.4em;
             color: #000;
-        }
-        .common-button {
-            padding: 10px 20px;
-            margin: 20px auto;
-            background-color: #EFF2F6;
-            color: black;
-            border: 2px solid black;
-            cursor: pointer;
-            display: block;
         }
         .label-style {
             font-family: 'Public Sans', sans-serif;
@@ -153,8 +158,13 @@
             color: #979797;
         }
         .sort-options {
+            display: flex;
+            align-items: center;
             border: 2px solid #000; 
-            padding: 10px; 
+            padding: 10px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 10px;
         }
         form div:last-child {
             display: flex;
@@ -169,7 +179,6 @@
             cursor: pointer; 
             opacity: 0.7;
             flex: 1;
-        
         
         }
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -272,6 +281,29 @@
             width: 260px;
             height: 260px;
         }
+        @media (max-width: 720px) {
+                .filters {
+                    width: 90%; /* Filtros ocupam toda a largura em telas menores */
+                    margin: 0; /* Remove margem */
+                    order: 1; /* Filtros vão para o topo */
+            }
+                .products-section {
+                    width: 100%; /* Produtos ocupam toda a largura */
+                    order: 2; /* Seção de produtos fica abaixo dos filtros */
+            }
+                .common-button {
+                    width: 100%; /* Botões ocupam a largura total */
+            }
+            .sort-options {
+                flex-direction: column; /* Coloca os itens em coluna em telas menores */
+                align-items: flex-start; /* Alinha os itens à esquerda */
+            }
+            .sort-options select {
+                width: 100%; /* O select ocupa 100% da largura disponível */
+                margin-left: 0; /* Remove a margem à esquerda */
+                margin-top: 10px; /* Adiciona margem superior */
+            }
+        }
 
 
     </style>
@@ -338,6 +370,7 @@
                 <div class="estrutura-filtros">
                     <button type="submit" class="botao-filtro" ="aplicarFiltros">Aplicar</button>
                     <button type="reset" class="botao-filtro" ="limparFiltros">Limpar</button>
+                    
                 </div>
             </form>    
         </div>
@@ -362,7 +395,8 @@
                         <img src="{{ produto.imagem1 }}" width="260px" height="260px" alt="{{ produto.modelo }}" style="display: block;">
                     </a>
                     <h2>{{ produto.modelo }}</h2>
-                    <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
+                    <p><strong>Marca:</strong>{{ produto.marca }}</p>
+                    <p><strong>Cor:</strong> {{ produto.cor }}</p>
                     <p><strong>Disponíveis:</strong> {{ produto.qtd_estoque }}</p>
                     <p class="price"><strong>Preço:</strong> R$ {{ produto.preco }}</p>
                 </div>
@@ -548,7 +582,7 @@ rangeInput.forEach(input =>{
     input.addEventListener("input", rangeInputReload);
 });
 
-
+// função para aplicar 
 function rangeInputReload(e){
         let minVal = parseInt(rangeInput[0].value),
         maxVal = parseInt(rangeInput[1].value);
@@ -569,6 +603,7 @@ function rangeInputReload(e){
 
 
     rangeInputReload();
+
 
     </script>
 
