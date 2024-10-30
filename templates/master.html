@@ -1,40 +1,49 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}{% endblock %}</title>
-  {% load bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
 
   <!-- Importação da fonte Public Sans -->
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
-  
+
   {% block head_tags %}
   {% endblock head_tags %}
-  
-  {% load static %}
+
+  <!-- Carregamento do código css do bootstrap hospedado no própio servidor -->
+  <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
+
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="{% static "css/template_master/estilo_template_master.css" %}">
+  <link rel="stylesheet" href="{% static 'css/template_master/estilo_template_master.css' %}">
+
+  <!-- Carregamento do código js do bootstrap hospedado no própio servidor -->
+  <script src=" {% static 'bootstrap/bootstrap.bundle.min.js' %}">
+  </script>
 
   <!-- Carregamento de cada página -->
-
+  <title>Storemobile - Ecommerce</title>
 </head>
+
 <body>
   <header>
     <!-- Navbar fixa -->
     <nav class="navbar navbar-expand-md navbar-dark" style="background-color: black !important;">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">BR</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Alternar navegação">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Alternar navegação">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mx-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active text-center" aria-current="page" href="#">FRETE GRÁTIS EM TODO PARÁ! DEZEMBRO. 15–28.</a>
+              <a class="nav-link active text-center" aria-current="page" href="#">FRETE GRÁTIS EM TODO PARÁ! DEZEMBRO.
+                15–28.</a>
             </li>
           </ul>
           <div class="d-flex">
@@ -43,7 +52,7 @@
         </div>
       </div>
     </nav>
-    
+
     <!-- Barra de pesquisa secundária -->
     <div class="bg-body shadow-sm">
       <div class="container d-flex justify-content-between align-items-center my-2">
@@ -58,12 +67,13 @@
             <span class="input-group-text border-0 bg-body">
               <i class="fas fa-search"></i>
             </span>
-            <input class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar" aria-label="Procurar">
+            <input class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar"
+              aria-label="Procurar">
           </div>
           <span class="contador-sacola">0</span> <!-- Contador sem fundo -->
           <button class="botao-sem-borda ms-2" type="button">
             <i class="bi bi-handbag"></i> <!-- Ícone de sacola -->
-          </button> 
+          </button>
           <button class="botao-sem-borda ms-2" type="button">Logar</button> <!-- Botão Logar -->
         </form>
       </div>
@@ -81,12 +91,14 @@
   <!-- Seção de Inscreva-se -->
   <div class="secao-inscricao">
     <div class="container">
-      <h2 class="titulo-inscricao" style="font-size: 2em; font-weight: bold;">Inscreva-se no nosso informativo</h2> <!-- Título em negrito e maior -->
+      <h2 class="titulo-inscricao" style="font-size: 2em; font-weight: bold;">Inscreva-se no nosso informativo</h2>
+      <!-- Título em negrito e maior -->
       <p class="texto-inscricao">Seja o primeiro a saber sobre nossas ofertas especiais, novidades e atualizações.</p>
       <div class="d-flex flex-wrap align-items-center">
         <div class="input-group me-2" style="max-width: 400px;"> <!-- Limita a largura -->
           <input type="email" class="form-control" placeholder="Insira seu e-mail" aria-label="Inscreva-se">
-          <button class="botao-negrito-simples input-group-text">Inscreva-se</button> <!-- Botão simplificado dentro do input group -->
+          <button class="botao-negrito-simples input-group-text">Inscreva-se</button>
+          <!-- Botão simplificado dentro do input group -->
         </div>
         <div class="container-botao">
           <div class="coluna-botao">
@@ -108,6 +120,6 @@
     <p>© 2024 STORE MOBILE. TODOS OS DIREITOS RESERVADOS.</p>
   </footer>
 
-  {% bootstrap_javascript %}
 </body>
+
 </html>
