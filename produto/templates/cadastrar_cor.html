@@ -1,0 +1,22 @@
+{% extends "master.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>Cadastrar Cor</h1>
+
+        <form action="{% url 'cadastrar_cor' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome da Cor</label>
+                <input type="text" id="nome" name="nome" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="codigo_hex" class="form-label">Código Hexadecimal</label>
+                <input type="color" id="codigo_hex" name="codigo_hex" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-dark">Cadastrar Cor</button>
+            <a href="{% url 'atualizar_cor' %}" class="btn btn-dark">Cancelar</a>
+        </form>
+    </div>
+{% endblock %}
