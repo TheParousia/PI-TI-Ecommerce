@@ -1,14 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from usuario.forms import FormularioLogin, ClienteForm
+from .forms import FormularioLogin
+from usuario.forms import FormularioLogin  # Certifique-se de que o nome do formulário está correto
+from .forms import ClienteForm
 from django.contrib.auth.hashers import make_password
+
+# Administração de usuario
+from django.contrib.auth.models import User
 
 # views.py
 from .models import Cliente
 
 def registrar(request):
     if request.method == 'POST':
+
+
         # Obtém os dados do formulário
         nome = request.POST.get('nome')
         username = request.POST.get('username')
@@ -37,6 +44,16 @@ def registrar(request):
             messages.error(request, 'Este nome de usuário já está em uso. Tente outro.')
             return render(request, 'registrar.html')  # Volta para a página de registro
 
+        # Create user and save to the database
+        user = User.objects.create_user(username, email, senha)
+
+        # Update fields and then save again
+        user.first_name = nome
+        user.last_name = nome
+
+        user.save()
+
+
         # Cria o cliente (hashing a senha para segurança)
         cliente = Cliente(
             nome=nome,
@@ -57,6 +74,9 @@ def registrar(request):
         if usuario is not None:
             login(request, usuario)
             return redirect('conta_criada')  # Redireciona para a página de sucesso
+        else:
+            return render(request, 'registrar.html')
+            
 
     # Caso o método não seja POST, renderiza a página de registro
     return render(request, 'registrar.html')
