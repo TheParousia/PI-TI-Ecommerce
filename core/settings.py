@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-^9y!r9)o*td12i$)-b7d(2&xhdh-s&t7c=11=guz1cu9oh)-dk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.16.0.8', 'homolog.ecommerce.lab202.cst']
+ALLOWED_HOSTS = ['*', '172.16.0.8', 'homolog.ecommerce.lab202.cst']
 
 
 # Application definition
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/') ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

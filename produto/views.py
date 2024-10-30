@@ -1,5 +1,26 @@
+from multiprocessing import context
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from django.template import loader
+from produto import models
 from django.shortcuts import render, redirect
 from .models import Produto, Marca, Modelo, Cor
+
+def detalhesProduto(request, produto_id):
+    # Tenta buscar o produto pelo ID ou retorna um erro 404 se não encontrado
+    produto = get_object_or_404(Produto, id=produto_id)
+    
+    # Dados do produto a serem passados para o template
+    context = {
+        'produto': produto
+    }
+    # Renderiza o template 'produto_detalhes.html' com o contexto do produto
+    return render(request, 'produto_detalhes.html', context)
+
+    # return HttpResponse("template.render()")
+
+def add_infor(request):
+    return render(request, 'add_infor', context)
 
 def tela_produto(request):
     if request.method == "POST":
@@ -45,4 +66,3 @@ def tela_produto(request):
 # View de teste da branch de template master
 def template(request):
     return render(request, "template.html") 
-
