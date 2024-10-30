@@ -1,0 +1,133 @@
+{% extends "master.html" %}
+
+{% load static %}
+
+{% block head_tags %}
+<link rel="stylesheet" href="{% static 'css/produto/criacao/styles.css' %}">
+<title>Cadastrar Produto</title>
+{% endblock head_tags %}
+
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+            <h1>Cadastrar Produto</h1>
+            <form action="{% url 'tela_produto' %}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <label for="modelo" class="form-label">Modelo:</label>
+                    <input type="text" class="form-control" id="modelo" name="modelo" required title="Por favor, use texto." onfocus="this.removeAttribute('title'); updatePreview()">
+                </div>
+                <div class="mb-2">
+                    <label for="descricao" class="form-label">Descrição:</label>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="2" required title="Por favor, use texto." onfocus="this.removeAttribute('title'); updatePreview()"></textarea>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <label for="capacidade1" class="form-label">Capacidade 1:</label>
+                        <input type="number" class="form-control" id="capacidade1" name="capacidade1" oninput="updatePreview()" title="Por favor, use números." onfocus="this.removeAttribute('title');">
+                    </div>
+                    <div class="col">
+                        <label for="capacidade2" class="form-label">Capacidade 2:</label>
+                        <input type="number" class="form-control" id="capacidade2" name="capacidade2" oninput="updatePreview()" title="Por favor, use números." onfocus="this.removeAttribute('title');">
+                    </div>
+                    <div class="col">
+                        <label for="capacidade3" class="form-label">Capacidade 3:</label>
+                        <input type="number" class="form-control" id="capacidade3" name="capacidade3" oninput="updatePreview()" title="Por favor, use números." onfocus="this.removeAttribute('title');">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <label for="estoque" class="form-label">Quantidade no Estoque:</label>
+                        <input type="number" class="form-control" id="estoque" name="qtd_estoque" required oninput="updatePreview()" title="Por favor, use números." onfocus="this.removeAttribute('title');">
+                    </div>
+                    <div class="col">
+                        <label for="preco" class="form-label">Preço:</label>
+                        <input type="number" class="form-control" id="preco" name="preco" required oninput="updatePreview()" title="Por favor, use números." onfocus="this.removeAttribute('title');">
+                    </div>
+                    <div class="col">
+                        <label for="cor" class="form-label">Cor:</label>
+                        <input type="text" class="form-control" id="cor" name="cor" required oninput="updatePreview()" title="Por favor, use texto." onfocus="this.removeAttribute('title');">
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="marca" class="form-label">Marca:</label>
+                    <input type="text" class="form-control" id="marca" name="marca" required oninput="updatePreview()" title="Por favor, use texto." onfocus="this.removeAttribute('title');">
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Imagens do Produto:</label>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="file" class="form-control mb-2" id="imagem1" name="imagem" accept="image/*" onchange="previewImage(this, 'preview1'); updatePreview()" required>
+                            <div id="preview1"></div>
+                        </div>
+                        <div class="col-6">
+                            <input type="file" class="form-control mb-2" id="imagem2" name="imagem2" accept="image/*" onchange="previewImage(this, 'preview2'); updatePreview()" required>
+                            <div id="preview2"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="file" class="form-control mb-2" id="imagem3" name="imagem3" accept="image/*" onchange="previewImage(this, 'preview3'); updatePreview()" required>
+                            <div id="preview3"></div>
+                        </div>
+                        <div class="col-6">
+                            <input type="file" class="form-control mb-2" id="imagem4" name="imagem4" accept="image/*" onchange="previewImage(this, 'preview4'); updatePreview()" required>
+                            <div id="preview4"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Campo oculto de acessos -->
+                <input type="hidden" id="acessos" name="acessos" value="0">
+
+                <div class="mb-2">
+                    <label class="form-label">Frete:</label>
+                    <div class="d-flex" required>
+                        <div class="form-check me-2">
+                            <input type="radio" class="form-check-input" id="freteSim" name="frete" value="sim" onchange="updatePreview()" required>
+                            <label class="form-check-label" for="freteSim">Sim</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="freteNao" name="frete" value="nao" onchange="updatePreview()" required>
+                            <label class="form-check-label" for="freteNao">Não</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label">Devolução:</label>
+                    <div class="d-flex" required>
+                        <div class="form-check me-2">
+                            <input type="radio" class="form-check-input" id="devolucaoSim" name="devolucao" value="sim" onchange="updatePreview()" required>
+                            <label class="form-check-label" for="devolucaoSim">Sim</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="devolucaoNao" name="devolucao" value="nao" onchange="updatePreview()" required>
+                            <label class="form-check-label" for="devolucaoNao">Não</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-dark botao-personalizado">Cadastrar Produto</button>
+            </form>
+    </div>
+
+    <div class="preview-container">
+            <h2>Pré-visualização do Produto</h2>
+            <div id="previewContent">
+                <h4 id="previewModelo">Modelo: </h4>
+                <p id="previewDescricao">Descrição: </p>
+                <p id="previewCapacidade">Capacidades: </p>
+                <p id="previewEstoque">Quantidade no Estoque: </p>
+                <p id="previewPreco">Preço: </p>
+                <p id="previewCor">Cor: </p>
+                <p id="previewMarca">Marca: </p>
+                <p id="previewFrete">Frete: </p>
+                <p id="previewDevolucao">Devolução: </p>
+                <div id="previewImages" class="mt-2"></div>
+            </div>
+        </div>
+    </div>
+</div >
+<script src="{% static 'js/script.js' %}"></script>
+
+{% endblock %}
