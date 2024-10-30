@@ -6,6 +6,9 @@ from produto import models
 from django.shortcuts import render, redirect
 from .models import Produto, Marca, Modelo, Cor
 
+def pagina_home(request):
+    return render(request, 'pagina_home.html')
+
 def detalhesProduto(request, produto_id):
     # Tenta buscar o produto pelo ID ou retorna um erro 404 se não encontrado
     produto = get_object_or_404(Produto, id=produto_id)
