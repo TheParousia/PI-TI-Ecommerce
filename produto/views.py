@@ -14,7 +14,9 @@ def produtos(request):
     cor_id = request.GET.get('cor')
     preco_min = float(request.GET.get('precoMin', 0))
     preco_max = float(request.GET.get('precoMax', 20000))
-    ordenar_por = request.GET.get('ordenar_por')
+    ordenar_por = request.GET.get('ordenar_produto')
+    
+    print("ordenar_por: ",ordenar_por)
     
     precoMin = 0
     precoMax = 10000
@@ -23,7 +25,6 @@ def produtos(request):
         precoMin = preco_min
         precoMax = preco_max
     
-    print(request.GET)
     
     print("preco_min: ",preco_min)
     print("preco_max: ",preco_max)

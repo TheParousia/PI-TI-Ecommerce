@@ -319,7 +319,9 @@
         <div class="filters">
             <h1>Filtros</h1>
             <p>Categoria</p> <br>
-            <form action="" method="get"> 
+            <form id="formFiltros" action="" method="get">
+                <input type="hidden" name="test" value="123" id="">
+                <input type="hidden" id="ordenar_produto" name="ordenar_produto">
                 <div>
                     <label for="marca" class="label-style">Marca</label>
                     <select id="marca" name="marca" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
@@ -365,11 +367,10 @@
                         <span class="caret"></span>
                     </button>
                 </div>
-                <input type="hidden" id="ordenar_por" name="ordenar_por">
                 
                 <div class="estrutura-filtros">
                     <button type="submit" class="botao-filtro" ="aplicarFiltros">Aplicar</button>
-                    <button type="reset" class="botao-filtro" ="limparFiltros">Limpar</button>
+                    <button type="reset" class="botao-filtro" id="btnLimparFiltros">Limpar</button>
                     
                 </div>
             </form>    
@@ -378,10 +379,10 @@
             <div class="products-header">
                 <div class="sort-options">
                     Ordenar por 
-                    <select id="ordenar" name="ordenar" style="background-color: #EFF2F6; border: none; color: black; font-family: 'Inter', sans-serif; font-weight: bold;">
+                    <select id="ordenar" name="ordenar_por" style="background-color: #EFF2F6; border: none; color: black; font-family: 'Inter', sans-serif; font-weight: bold;">
                         <option value="">Selecione</option>
-                        <option value="populares">Mais Populares</option>
-                        <option value="menos_populares">Menos Populares</option>
+                        <option value="preco_asc">Do Mais Barato</option>
+                        <option value="preco_desc">Do Mais Caro</option>
                     </select>
                 </div>
             </div>
@@ -602,10 +603,33 @@ function rangeInputReload(e){
     }
 
 
+
+    
+    formFiltros = document.getElementById('formFiltros');
+    btnLimparFiltros = document.getElementById('btnLimparFiltros');
+    btnLimparFiltros.addEventListener('click', function() { 
+        rangeInput[0].value = 0;
+        rangeInput[1].value = 10000;
+        rangeInputReload();
+        formFiltros.submit();
+    });
+    
+    ordenarPor = document.getElementById('ordenar_produto');
+    selectOrdenar = document.getElementById('ordenar');
+    selectOrdenar.addEventListener('change', function() {
+        ordenarPor.value = selectOrdenar.value;
+    });
+    
+
     rangeInputReload();
 
+    // Reaplica os filtros ao recarregar a página
+    selectOrdenar.value = {{ordenar_por}};
 
+    
     </script>
-
+    <script>
+        
+    </script>
 </body>
 </html>
