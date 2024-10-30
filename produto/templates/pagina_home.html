@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "master.html" %}
+
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
+
+{% block head_tags %}
     <title>Página Home</title>
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
+    <!-- Carregamento do código css do bootstrap hospedado no própio servidor -->
+    
     <style>
         body {
             margin: 0;
@@ -29,7 +30,7 @@
             padding: 20px;
             list-style: none;
         }
-
+        
         .categorias {
             text-align: center; /* Centralizado */
             margin: 60px 0;
@@ -99,8 +100,9 @@
             justify-content: center;
         }
     </style>
-</head>
-<body>
+{% endblock head_tags %}
+
+{% block content %}
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
@@ -202,5 +204,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
