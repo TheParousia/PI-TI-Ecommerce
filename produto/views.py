@@ -13,7 +13,7 @@ def produtos(request):
     marca_id = request.GET.get('marca')
     cor_id = request.GET.get('cor')
     preco_min = float(request.GET.get('precoMin', 0))
-    preco_max = float(request.GET.get('precoMax', 20000))
+    preco_max = float(request.GET.get('precoMax', 10000))
     ordenar_por = request.GET.get('ordenar_produto')
     
     print("ordenar_por: ",ordenar_por)
@@ -47,7 +47,7 @@ def produtos(request):
         preco_min = float(preco_min)
         preco_max = float(preco_max)
     except ValueError:
-        preco_min, preco_max = 0, 20000  # Valores padrão em caso de erro
+        preco_min, preco_max = 0, 10000  # Valores padrão em caso de erro
 
     produtos = produtos.filter(preco__gte=preco_min, preco__lte=preco_max)
 
