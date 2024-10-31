@@ -17,10 +17,12 @@ def excluir_produtos(request, produto_id):
 
 def atualizar_produtos(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
+
     if request.method == 'POST':
         #paramos aqui fresco
 
         nomeModelo = request.POST.get('modelo', produto.modelo)
+        
         modelo = Modelo()
         modelo.nome = nomeModelo
         modelo.save()
@@ -61,10 +63,21 @@ def atualizar_produtos(request, produto_id):
 
         # Atualiza a imagem se uma nova for enviada
         if request.FILES.get('imagem1'):
-            produto.imagem = request.FILES['imagem1']
-            produto.imagem = request.FILES['imagem2']
-            produto.imagem = request.FILES['imagem3']
-            produto.imagem = request.FILES['imagem4']
+            produto.imagem1.delete()
+            produto.imagem1 = request.FILES['imagem1']
+
+
+        if request.FILES.get('imagem2'):
+            produto.imagem2.delete()
+            produto.imagem2 = request.FILES['imagem2']
+        
+        if request.FILES.get('imagem3'):
+            produto.imagem3.delete()
+            produto.imagem3 = request.FILES['imagem3']
+        
+        if request.FILES.get('imagem4'):
+            produto.imagem4.delete()
+            produto.imagem4 = request.FILES['imagem4']
 
         produto.save()
         return redirect('pagina_adm')
