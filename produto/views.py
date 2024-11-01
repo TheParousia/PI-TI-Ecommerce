@@ -18,8 +18,14 @@ def produtos(request):
     
     print("ordenar_por: ",ordenar_por)
     
+    if preco_min - preco_max < 10:
+        preco_min = 0
+        preco_max = 10000
+    
     precoMin = 0
     precoMax = 10000
+    
+    
     
     if preco_min != None:
         precoMin = preco_min
