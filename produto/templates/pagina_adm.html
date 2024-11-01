@@ -31,6 +31,11 @@
             align-items: center; /* Centralizar os botões */
             gap: 5px; /* Espaçamento entre os botões */
         }
+        .carousel-inner img {
+            width: 100%; /* Para garantir que a imagem ocupe toda a largura do carrossel */
+            height: 100px; /* Altura reduzida */
+            object-fit: cover; /* Para cortar as imagens mantendo a proporção */
+        }
     </style>
 </head>
 <body>
@@ -75,11 +80,24 @@
                             <td>
                                 <div id="carouselImages{{ produto.id }}" class="carousel slide" data-bs-ride="carousel">
                                     <div class="carousel-inner">
-                                        {% for imagem in produto.imagens %}
-                                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                                                <img src="{{ imagem }}" class="d-block w-100" alt="Imagem do produto {{ produto.id }}">
-                                            </div>
-                                        {% endfor %}
+                                        <div class="carousel-item active">
+                                            <img src="{{ produto.imagem1.url }}" class="d-block w-100" alt="Imagem 1 do produto {{ produto.id }}">
+                                        </div>
+                                        {% if produto.imagem2 %}
+                                        <div class="carousel-item">
+                                            <img src="{{ produto.imagem2.url }}" class="d-block w-100" alt="Imagem 2 do produto {{ produto.id }}">
+                                        </div>
+                                        {% endif %}
+                                        {% if produto.imagem3 %}
+                                        <div class="carousel-item">
+                                            <img src="{{ produto.imagem3.url }}" class="d-block w-100" alt="Imagem 3 do produto {{ produto.id }}">
+                                        </div>
+                                        {% endif %}
+                                        {% if produto.imagem4 %}
+                                        <div class="carousel-item">
+                                            <img src="{{ produto.imagem4.url }}" class="d-block w-100" alt="Imagem 4 do produto {{ produto.id }}">
+                                        </div>
+                                        {% endif %}
                                     </div>
                                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages{{ produto.id }}" data-bs-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -93,10 +111,6 @@
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <button class="btn btn-info btn-sm" 
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#imageModal" 
-                                            data-imagens="{{ produto.imagens|join:',' }}">Visualizar</button>
                                     <a href="{% url 'atualizar_produto' produto.id %}" class="btn btn-warning btn-sm">Atualizar</a>
                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="{{ produto.id }}">Excluir</button>
                                 </div>
@@ -110,6 +124,7 @@
                 {% endif %}
             </tbody>
         </table>
+        
     </div>
 
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
@@ -133,32 +148,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-custom">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="imageModalLabel">Visualizar Imagens</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="modalCarouselImages" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner" id="modal-image-container">
-                            <!-- As imagens serão adicionadas aqui -->
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#modalCarouselImages" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Anterior</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#modalCarouselImages" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Próximo</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         var deleteModal = document.getElementById('confirmDeleteModal');
         deleteModal.addEventListener('show.bs.modal', function (event) {
@@ -166,33 +155,6 @@
             var id = button.getAttribute('data-id');
             var form = document.getElementById('deleteForm');
             form.action = '{% url "excluir_produto" 0 %}'.replace('0', id);
-        });
-
-        var imageModal = document.getElementById('imageModal');
-        imageModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-            var imagens = button.getAttribute('data-imagens').split(',');
-
-            var modalImageContainer = document.getElementById('modal-image-container');
-            modalImageContainer.innerHTML = '';
-
-            imagens.forEach(function(imagem, index) {
-                if (imagem) {
-                    var itemClass = index === 0 ? 'carousel-item active' : 'carousel-item';
-                    var divElement = document.createElement('div');
-                    divElement.className = itemClass;
-                    var imgElement = document.createElement('img');
-                    imgElement.src = imagem;
-                    imgElement.className = 'd-block w-100';
-                    imgElement.alt = "Imagem " + (index + 1);
-                    divElement.appendChild(imgElement);
-                    modalImageContainer.appendChild(divElement);
-                }
-            });
-
-            // Reiniciar o carrossel
-            var carousel = new bootstrap.Carousel(modalCarouselImages);
-            carousel.to(0); // Iniciar no primeiro item
         });
     </script>
     
