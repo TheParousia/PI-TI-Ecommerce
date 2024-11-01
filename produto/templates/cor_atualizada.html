@@ -1,9 +1,0 @@
-{% extends "master.html" %}
-
-{% block content %}
-    <div class="container">
-        <h1>Sua cor foi atualizada para "{{ nome_da_cor }}"!</h1>
-        <a href="{% url 'cadastrar_cor' %}" class="btn btn-dark">Cadastrar Nova Cor</a>
-        <a href="{% url 'atualizar_cor' %}" class="btn btn-dark">Voltar</a>
-    </div>
-{% endblock %}
