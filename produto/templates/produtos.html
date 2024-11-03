@@ -1,14 +1,7 @@
-{%load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    
-    
+{% extends "master.html" %}
+{% load static %}
+
+{% block head_tags %}
     <link rel="stylesheet" href="{% static 'listagem_produto/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'listagem_produto/css/range.css' %}">
     
@@ -18,12 +11,10 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
     
-    
-
     <link rel="stylesheet" href="{% static 'listagem_produto/css/principal.css' %}">
+{%endblock%}
 
-</head>
-<body>
+{% block content %}
     <div class="new-div" style="text-align: left; padding: 0; margin: 0;">
         <h1>Comprar</h1>
         <p>Junte-se aos milhares de clientes satisfeitos que já<br>
@@ -112,7 +103,7 @@
                 {% for produto in produtos %}
                 <div class="cartao" style="display: none;" data-popularidade="{{ produto.popularidade }}">
                     <a href="{% url 'produto_detalhes' produto.id %}">
-                        <img src="{{ produto.imagem1 }}" width="260px" height="260px" alt="{{ produto.modelo }}" style="display: block;">
+                        <img src="/media/{{ produto.imagem1 }}" width="260px" height="260px" alt="{{ produto.modelo }}" style="display: block;">
                     </a>
                     <h2>{{ produto.modelo }}</h2>
                     <p><strong>Marca:</strong>{{ produto.marca }}</p>
@@ -379,5 +370,4 @@
 */
         
     </script>
-</body>
-</html>
+{% endblock%}
