@@ -1,0 +1,47 @@
+{% extends "master.html" %}  <!-- Extende o layout base -->
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="col-md-6">
+    <div class="card" style="border: none; border-radius: 10px;">  <!-- Removendo borda e aplicando um raio de borda suave -->
+      <div class="card-body">
+        <h2 class="text-center" style="font-family: 'Outfit', sans-serif; font-weight: bold;">Login</h2>  <!-- Aplica a fonte Outfit ao título e define em negrito -->
+
+        <!-- Exibe mensagens de erro, se existirem -->
+        {% if messages %}
+          <div class="alert alert-danger">
+            {% for message in messages %}
+              <p>{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- Formulário de login -->
+        <form method="POST">
+          {% csrf_token %}  <!-- Token de segurança do Django -->
+
+          <!-- Campo de nome de usuário -->
+          <div class="form-group mb-3">
+            {{ form.nome_usuario }}  <!-- Campo de input já com classes definidas -->
+          </div>
+
+          <!-- Campo de senha -->
+          <div class="form-group mb-3">
+            {{ form.senha }}  <!-- Campo de input já com classes definidas -->
+          </div>
+
+          <!-- Link para registro e botão para submeter o formulário -->
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <p class="mb-0">Não tem uma conta? <a href="{% url 'registrar' %}">Cadastre-se</a></p>  <!-- Texto de registro -->
+            <div class="d-grid ms-2">  <!-- Adiciona margem à esquerda do botão -->
+              <button type="submit" class="btn btn-dark rounded-pill" style="width: 100px;">Entrar</button>  <!-- Botão com borda arredondada e tamanho reduzido -->
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
