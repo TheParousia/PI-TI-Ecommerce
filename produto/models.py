@@ -1,5 +1,11 @@
 from django.db import models
 
+class Marca(models.Model):
+    nome = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.nome
+      
 class Cliente(models.Model):
     nome = models.CharField(max_length=255)
     username = models.CharField(max_length=150, unique=True)
@@ -11,15 +17,6 @@ class Cliente(models.Model):
     numero = models.CharField(max_length=10)
     bairro = models.CharField(max_length=255)
     senha = models.CharField(max_length=128)  # Considere usar hashing
-
-    def __str__(self):
-        return self.nome
-
-class Marca(models.Model):
-    nome = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.nome
 
 class Modelo(models.Model):
     nome = models.CharField(max_length=50)

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        .modal-custom {
+            max-width: 600px;
+            width: 90%;
+        }
+        .container {
+            max-width: 90%; /* Largura do container */
+            margin: auto; /* Centralizando o container */
+        }
+        .table {
+            width: 100%; /* A tabela ocupa 100% do contêiner */
+            table-layout: fixed; /* Colunas com largura fixa */
+        }
+        .table th, .table td {
+            min-width: 100px; /* Largura mínima para as colunas */
+            word-wrap: break-word; /* Quebrar palavras longas */
+            text-align: center; /* Centralizando o texto */
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column; /* Botões em coluna */
+            align-items: center; /* Centralizar os botões */
+            gap: 5px; /* Espaçamento entre os botões */
+        }
+        .carousel-inner img {
+            width: 100%; /* Para garantir que a imagem ocupe toda a largura do carrossel */
+            height: 100px; /* Altura reduzida */
+            object-fit: cover; /* Para cortar as imagens mantendo a proporção */
+        }
+    </style>
+</head>
+<body>
+    {% block conteudo %}
+    <div class="container">
+        <h2>Lista de Produtos</h2>
+        <a href="/" class="btn btn-primary mb-3">Criar novo produto</a>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Modelo</th>
+                    <th>Descrição</th>
+                    <th>Capacidade 1</th>
+                    <th>Capacidade 2</th>
+                    <th>Capacidade 3</th>
+                    <th>Quantidade em Estoque</th>
+                    <th>Preço</th>
+                    <th>Cor</th>
+                    <th>Marca</th>
+                    <th>Acessos</th>
+                    <th>Imagens</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if produtos %}
+                    {% for produto in produtos %}
+                        <tr>
+                            <td>{{ produto.id }}</td>
+                            <td>{{ produto.modelo }}</td>
+                            <td>{{ produto.descricao }}</td>
+                            <td>{{ produto.capacidade1 }}</td>
+                            <td>{{ produto.capacidade2 }}</td>
+                            <td>{{ produto.capacidade3 }}</td>
+                            <td>{{ produto.qtd_estoque }}</td>
+                            <td>R$ {{ produto.preco|floatformat:2 }}</td>
+                            <td>{{ produto.cor }}</td>
+                            <td>{{ produto.marca }}</td>
+                            <td>{{ produto.acessos }}</td>
+                            <td>
+                                <div id="carouselImages{{ produto.id }}" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="{{ produto.imagem1.url }}" class="d-block w-100" alt="Imagem 1 do produto {{ produto.id }}">
+                                        </div>
+                                        {% if produto.imagem2 %}
+                                        <div class="carousel-item">
+                                            <img src="{{ produto.imagem2.url }}" class="d-block w-100" alt="Imagem 2 do produto {{ produto.id }}">
+                                        </div>
+                                        {% endif %}
+                                        {% if produto.imagem3 %}
+                                        <div class="carousel-item">
+                                            <img src="{{ produto.imagem3.url }}" class="d-block w-100" alt="Imagem 3 do produto {{ produto.id }}">
+                                        </div>
+                                        {% endif %}
+                                        {% if produto.imagem4 %}
+                                        <div class="carousel-item">
+                                            <img src="{{ produto.imagem4.url }}" class="d-block w-100" alt="Imagem 4 do produto {{ produto.id }}">
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselImages{{ produto.id }}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Anterior</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselImages{{ produto.id }}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Próximo</span>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{% url 'atualizar_produto' produto.id %}" class="btn btn-warning btn-sm">Atualizar</a>
+                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="{{ produto.id }}">Excluir</button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="13" class="text-center">Nenhum produto encontrado.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        
+    </div>
+
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja excluir este produto?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                    <form id="deleteForm" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Sim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var deleteModal = document.getElementById('confirmDeleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+            var form = document.getElementById('deleteForm');
+            form.action = '{% url "excluir_produto" 0 %}'.replace('0', id);
+        });
+    </script>
+    
+    {% endblock %}
+</body>
+</html>
