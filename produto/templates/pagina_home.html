@@ -1,17 +1,18 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "master.html" %}
+
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
+
+{% block head_tags %}
     <title>Página Home</title>
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
+    <!-- Carregamento do código css do bootstrap hospedado no própio servidor -->
+    
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #d3d3d3;
+            background-color: #E7EEF1; /* Cor de fundo da página */
         }
         .promo {
             width: 100%;
@@ -31,40 +32,41 @@
         }
         
         .categorias {
-            text-align: center;
+            text-align: center; /* Centralizado */
             margin: 60px 0;
         }
         .categorias-container {
             display: flex;
             justify-content: center;
-            gap: 60px;
+            gap: 20px; /* Espaçamento entre categorias */
             margin-top: 40px;
         }
         .categoria {
-            width: 200px;
-            height: 300px;
-            background-color: lightgray;
+            width: 368.64px; /* Largura */
+            height: 319.76px; /* Altura */
+            background-color: #E7EEF1; /* Cor de fundo igual à página */
             display: flex;
             flex-direction: column;
-            align-items: flex-start; 
+            align-items: center; 
             justify-content: flex-start;
             position: relative;
             padding: 5px; 
         }
         .categoria img {
-            max-width: 100%;
-            max-height: 200px;
-            display: block;
+            width: 100%;
+            height: 100%; /* Ajusta a altura para preencher o container */
+            object-fit: cover; /* Mantém a proporção da imagem */
         }
         .categoria h3 {
             font-size: 14px;
-            margin: 5px 0 0 0;
-            text-align: left; 
+            margin-top: 5px; /* Margem acima do título */
+            text-align: center; /* Alinhamento central */
+            width: 100%; /* Garante que o título ocupe toda a largura */
         }
         .categoria p {
             font-size: 12px;
-            margin-top: 3px;
-            text-align: left; 
+            text-align: center; /* Alinhamento central */
+            width: 100%; /* Garante que o preço ocupe toda a largura */
         }
         .novidades {
             text-align: center;
@@ -73,13 +75,13 @@
         .novidades-container {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 30px; /* Espaçamento entre novidades */
             margin-top: 20px;
         }
         .novidade {
-            width: 250px;
-            height: 300px;
-            background-color: lightblue;
+            width: 368px; /* Largura */
+            height: 521px; /* Altura */
+            background-color: #E7EEF1; /* Cor de fundo igual à página */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -90,16 +92,17 @@
             max-height: 100%;
         }
         .novidade-central {
-            width: 250px;
-            height: 300px;
-            background-color: lightcoral;
+            width: 368px; /* Largura */
+            height: 521px; /* Altura */
+            background-color: #E7EEF1; /* Cor de fundo igual à página */
             display: flex;
             align-items: center;
             justify-content: center;
         }
     </style>
-</head>
-<body>
+{% endblock head_tags %}
+
+{% block content %}
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
@@ -143,6 +146,9 @@
 
     <div class="categorias">
         <h2>Categorias</h2>
+        <p style="text-align: center; max-width: 600px; margin: 0 auto;">
+            É essencial cuidar do cliente durante a experiência de compra. Embora escolher um novo celular possa ser um desafio, nossa equipe está aqui para ajudar. Desde a seleção do modelo certo até o suporte pós-venda, garantimos que você se sinta seguro em sua decisão. O seu conforto e satisfação são nossa prioridade, e estamos prontos para transformar essa jornada em algo fácil e agradável.
+        </p>
         <div class="categorias-container">
             <div class="categoria">
                 <img src="https://a-static.mlcdn.com.br/450x450/celular-lg-b220-3g-de-botao-para-idoso-2-chip-radio-fm-rural-nokia/wwtecnocell/89edce208eb111eeae614201ac185040/344c39d6d94a2b8994a35e225df943cc.jpeg" />
@@ -161,6 +167,9 @@
 
     <div class="novidades">
         <h2>Nossas últimas novidades</h2>
+        <p style="text-align: center; max-width: 600px; margin: 0 auto;">
+            Ficar por dentro das últimas novidades em celulares é essencial para quem busca tecnologia e inovação. Nossa seleção traz os modelos mais recentes, garantindo desempenho excepcional e adaptação ao seu estilo de vida. Explore nossas opções e escolha com confiança o smartphone perfeito para você!
+        </p>
         <div class="novidades-container">
             <div class="novidade">
                 <img src="https://down-br.img.susercontent.com/file/sg-11134201-7rbkw-lq1qvwel9y62b7_tn.webp" style="width: 100%; height: 300px;" />
@@ -176,23 +185,23 @@
 
     <div class="categorias">
         <h2>Nossos produtos</h2>
+        <p style="text-align: center; max-width: 600px; margin: 0 auto;">Explore nossa seleção de smartphones, com opções que atendem a todas as suas necessidades. Desde modelos acessíveis até os mais avançados, garantimos qualidade e inovação em cada produto. Encontre o celular ideal que combina com seu estilo de vida!</p>
         <div class="categorias-container">
             <div class="categoria">
                 <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" alt="Produto 1"/>
-                <h3>GALAXY A03</h3>
-                <p>R$ 999,99</p>
+                <h3 style="text-align: left;">GALAXY A03</h3>
+                <p style="text-align: left;">R$ 999,99</p>
             </div>
             <div class="categoria">
                 <img src="https://ss7.vzw.com/is/image/VerizonWireless/apple-iphone-16-pro-max-desert-titanium?wid=465&hei=465&fmt=webp" alt="Produto 2"/>
-                <h3>IPHONE 16 PRO MAX</h3>
-                <p>R$ 12.999,00</p>
+                <h3 style="text-align: left;">IPHONE 16 PRO MAX</h3>
+                <p style="text-align: left;">R$ 12.999,00</p>
             </div>
             <div class="categoria">
                 <img src="https://imgs.casasbahia.com.br/55058056/1g.jpg" alt="Produto 3"/>
-                <h3>GALAXY S20 ULTRA</h3>
-                <p>R$ 6.899,00</p>
+                <h3 style="text-align: left;">GALAXY S20 ULTRA</h3>
+                <p style="text-align: left;">R$ 6.899,00</p>
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: "Poppins", sans-serif;
+}
+.caixa-entrada {
+position: relative;
+height: 76px;
+max-width: 900px;
+width: 100%;
+background: #fff;
+margin: 0 20px;
+border-radius: 8px;
+box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.caixa-entrada i,
+.caixa-entrada .button {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+}
+.caixa-entrada i {
+left: 20px;
+font-size: 30px;
+color: #707070;
+}
+.caixa-entrada input {
+height: 100%;
+width: 100%;
+outline: none;
+font-size: 18px;
+font-weight: 400;
+border: none;
+padding: 0 155px 0 65px;
+background-color: transparent;
+}
+.caixa-entrada .button {
+right: 20px;
+font-size: 16px;
+font-weight: 400;
+color: #fff;
+border: none;
+padding: 12px 30px;
+border-radius: 6px;
+background-color: #646569;
+cursor: pointer;
+}
+.input-box .button:active {
+transform: translateY(-50%) scale(0.98);
+}
+/* Responsive */
+@media screen and (max-width: 500px) {
+.caixa-entrada {
+height: 66px;
+margin: 0 8px;
+}
+.caixa-entrada i {
+left: 12px;
+font-size: 25px;
+}
+.caixa-entrada input {
+padding: 0 112px 0 50px;
+}
+.caixa-entrada .button {
+right: 12px;
+font-size: 14px;
+padding: 8px 18px;
+}
+}
