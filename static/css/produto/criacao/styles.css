@@ -1,0 +1,82 @@
+.container {
+    display: flex;
+    /* Utilizando flexbox para organizar os elementos lado a lado */
+    justify-content: space-between;
+    /* Espaçamento igual entre os dois containers */
+    flex-wrap: wrap;
+    /* Permite que os elementos se movam para a linha seguinte em telas pequenas */
+}
+
+.form-container,
+.preview-container {
+    flex: 1;
+    /* Faz os dois containers ocuparem espaço igual */
+    padding: 20px;
+    margin: 10px;
+    /* Margem entre os containers */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Sombra para efeito de profundidade */
+    background-color: #fff;
+    /* Fundo branco para os containers */
+}
+
+.preview-container {
+    max-width: 600px;
+    /* Aumenta a largura máxima para a pré-visualização */
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.botao-personalizado {
+    /* Cor do botão */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+/* Media Queries para responsividade */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        /* Empilha os elementos verticalmente */
+        align-items: stretch;
+        /* Faz os containers ocuparem a largura total */
+    }
+
+    .form-container,
+    .preview-container {
+        flex: none;
+        /* Permite que os containers tenham a largura total */
+        margin: 10px 0;
+        /* Adiciona margem vertical entre os containers */
+        width: 100%;
+        /* Faz com que ocupem a largura total */
+    }
+
+    .preview-container {
+        order: -1;
+        /* Coloca a pré-visualização acima do formulário */
+    }
+}
