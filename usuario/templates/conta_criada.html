@@ -1,0 +1,18 @@
+<!-- conta_criada.html -->
+{% extends 'master.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body p-4 text-center">
+                    <h2 class="card-title mb-4">Conta criada com sucesso!</h2>
+                    <p>Sua conta foi registrada com sucesso. Você agora está autenticado.</p>
+                    <a href="{% url 'produtos' %}" class="btn btn-dark">Ver Produtos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
