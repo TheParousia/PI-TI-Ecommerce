@@ -5,12 +5,15 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;700&display=swap');
     
+    /*Código para o seletor body removido pois conflita com template master*/
+    {% comment %}
     body {
         background-color: #E7EEF1;
         font-family: 'Public Sans', Arial, Helvetica, sans-serif;
         margin: 0;
         padding: 20px;
     }
+    {% endcomment %}
 
     .container {
         display: flex;
@@ -92,7 +95,7 @@
         font-size: 14px;
         text-align: center;
         text-decoration: none;
-        height: 18px;
+        /*height: 18px;  Esta regra foi retirada pois deixou a altura do botão tão pequena que impediu o texto de ser lido completamente*/
     }
 
     .btn-btn-primary:hover {
@@ -254,16 +257,16 @@
 <div class="container">
     <div class="imgs">
         <div class="foto-produto">
-            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+            <img src="{{ produto.imagem1.url }}" alt="Imagem do Produto">
         </div>
         <div class="foto-produto">
-            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+            <img src="{{ produto.imagem2.url }}" alt="Imagem do Produto">
         </div>
         <div class="foto-produto">
-            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+            <img src="{{ produto.imagem3.url }}" alt="Imagem do Produto">
         </div>
         <div class="foto-produto">
-            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+            <img src="{{ produto.imagem4.url }}" alt="Imagem do Produto">
         </div>
     </div>
 
