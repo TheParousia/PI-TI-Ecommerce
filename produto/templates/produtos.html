@@ -1,7 +1,383 @@
-{% extends "master.html" %}
+{%load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    
+    
+    <link rel="stylesheet" href="{% static 'listagem_produto/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'listagem_produto/css/range.css' %}">
+    
+    
+    <script defer src="{% static 'listagem_produto/js/script.js' %}"></script>
+    <script defer src="{% static 'listagem_produto/js/range.js' %}"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    
 
-{% block content %}
-    <h1>
-        Conteúdo das páginas
-    </h1>
-{% endblock %}
+    <link rel="stylesheet" href="{% static 'listagem_produto/css/principal.css' %}">
+
+</head>
+<body>
+    <div class="new-div" style="text-align: left; padding: 0; margin: 0;">
+        <h1>Comprar</h1>
+        <p>Junte-se aos milhares de clientes satisfeitos que já<br>
+            escolheram nossa loja e descubra por que somos a<br>
+            escolha número um para todas as suas necessidades!</p>    
+    </div>
+    <div class="caixa-entrada">
+        <i class="uil uil-search"></i>
+        <input type="text" placeholder="Pesquise aqui..." />
+        <button class="button">Buscar</button>
+    </div>
+    <div class="main-content">
+        <div class="filters">
+            <h1>Filtros</h1>
+            <p>Categoria</p> <br>
+            <form id="formFiltros" action="" method="get">
+                <input type="hidden" id="ordenar_produto" name="ordenar_produto" value="{{ ordenar_por }}">
+                <div>
+                    <label for="marca" class="label-style">Marca</label>
+                    <select id="marca" name="marca" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
+                        <option value="">Todas</option>
+                        {% for marca in marcas %}
+                            <option value="{{ marca.id }}">{{ marca.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="cor" class="label-style">Cor</label>
+                    <select id="cor" name="cor" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
+                        <option value="">Todas</option>
+                        {% for cor in cores %}
+                            <option value="{{ cor.id }}">{{ cor.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            
+                <div class="price-input">
+                    <div class="field">
+                        <span>Min</span>
+                        <input type="number" class="input-min" name="precoMin" id="preco_min" value="{{precoMin}}" min="0" max="10000">
+                    </div>
+                    <div class="field">
+                        <span>Max</span>
+                        <input type="number" class="input-max" name="precoMax" id="preco_max" value="{{precoMax}}" min="0" max="10000">
+                    </div>
+                </div>
+                <br>
+                <div class="slider">
+                    <div class="progress" style="left: 25%; right: 25%;"></div>
+                </div>
+                <div class="range-input">
+                    <input type="range" class="range-min"  min="0" max="10000" value="{{precoMin}}" step="100">
+                    <input type="range" class="range-max"  min="0" max="10000" value="{{precoMax}}" step="100">
+                </div>
+                <br>
+            
+                <div class="dropdown">
+                    <button id="bordenarpor" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="fa fa-exchange fa-rotate-90" aria-hidden="true"></span> Ordenar por
+                        <span class="caret"></span>
+                    </button>
+                </div>
+                
+                <div class="estrutura-filtros">
+                    <button type="submit" class="botao-filtro" id="aplicarFiltros">Aplicar</button>
+                    <button type="reset" class="botao-filtro" id="btnLimparFiltros">Limpar</button>
+                    
+                </div>
+            </form>    
+        </div>
+        <div class="products-section">
+            <div class="products-header">
+                <div class="sort-options">
+                    Ordenar por 
+                    <select id="ordenar" name="ordenar_por" style="background-color: #EFF2F6; border: none; color: black; font-family: 'Inter', sans-serif; font-weight: bold;">
+                        <option value="">Selecione</option>
+                        <option value="preco_asc">Do Mais Barato</option>
+                        <option value="preco_desc">Do Mais Caro</option>
+                    </select>
+                </div>
+            </div>
+            <div class="Qtd" style="text-align: right;">
+                <p>Mostrando {{ total_produtos }} Produtos</p>
+            </div>
+            <div class="products">
+                {% for produto in produtos %}
+                <div class="cartao" style="display: none;" data-popularidade="{{ produto.popularidade }}">
+                    <a href="{% url 'produto_detalhes' produto.id %}">
+                        <img src="{{ produto.imagem1 }}" width="260px" height="260px" alt="{{ produto.modelo }}" style="display: block;">
+                    </a>
+                    <h2>{{ produto.modelo }}</h2>
+                    <p><strong>Marca:</strong>{{ produto.marca }}</p>
+                    <p><strong>Cor:</strong> {{ produto.cor }}</p>
+                    <p><strong>Disponíveis:</strong> {{ produto.qtd_estoque }}</p>
+                    <p class="price"><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <button class="load-more common-button">Carregar mais produtos</button>
+    <button class="show-less common-button" style="display: none;">Mostrar menos produtos</button>
+
+    <script>
+                
+        
+    // Função para definir a ordem de classificação ao selecionar uma opção
+    function setSortOrder(value) {
+        document.getElementById('ordenar_por').value = value;
+        // Opcionalmente, feche o menu suspenso aqui se necessário
+    }
+    // Adiciona um evento de clique ao botão que abre o menu suspenso de ordenação
+    document.getElementById('bordenarpor').addEventListener('click', function() {
+        document.querySelector('.dropdown-menu').classList.toggle('show');
+    });
+
+    // Adiciona um evento de clique a cada item do menu suspenso
+    document.querySelectorAll('.dropdown-menu li').forEach(function(item) {
+        item.addEventListener('click', function() {
+            document.querySelector('.dropdown-menu').classList.remove('show');
+            document.getElementById('ordenar_por').value = this.getAttribute('data-value');
+            // Adicionar a lógica para ordenar os produtos
+            console.log('Ordenar por:', this.getAttribute('data-value'));
+        });
+    });
+
+    let visibleProducts = 6; // Número de produtos visíveis inicialmente
+    const products = document.querySelectorAll('.cartao');
+
+    // Mostrar os primeiros 6 produtos
+    for (let i = 0; i < visibleProducts; i++) {
+        if (products[i]) {
+            products[i].style.display = 'block'; // Exibe o produto
+        }
+    }
+
+    // Carregar mais produtos ao clicar no botão "Carregar mais produtos"
+    document.querySelector('.load-more').addEventListener('click', function() {
+        const totalProducts = products.length;
+        const nextVisibleProducts = visibleProducts + 6;
+
+        for (let i = visibleProducts; i < nextVisibleProducts && i < totalProducts; i++) {
+            products[i].style.display = 'block';
+        }
+
+        visibleProducts = nextVisibleProducts; // Atualiza o contador de produtos visíveis
+
+        // Mostrar botão "Mostrar menos" se houver mais produtos para mostrar
+        if (visibleProducts < totalProducts) {
+            document.querySelector('.show-less').style.display = 'block';
+        }
+
+        // Ocultar botão "Carregar mais" se todos os produtos estiverem visíveis
+        if (visibleProducts >= totalProducts) {
+            this.style.display = 'none';
+        }
+    });
+
+    // Mostrar menos produtos ao clicar no botão "Mostrar menos"
+    document.querySelector('.show-less').addEventListener('click', function() {
+        const productsToHide = 6;
+
+        // Ocultar os últimos 6 produtos visíveis
+        for (let i = visibleProducts - 1; i >= visibleProducts - productsToHide && i >= 0; i--) {
+            products[i].style.display = 'none';
+        }
+
+        visibleProducts -= productsToHide; // Atualiza o contador de produtos visíveis
+
+        // Ocultar o botão "Mostrar menos" se não houver produtos a mostrar
+        if (visibleProducts <= 6) {
+            this.style.display = 'none';
+        }
+
+        // Mostrar o botão "Carregar mais" se não estiver exibindo todos os produtos
+        if (visibleProducts < totalProducts) {
+            document.querySelector('.load-more').style.display = 'block';
+        }
+    });
+
+    // Campo de popularidade
+    document.addEventListener('DOMContentLoaded', function () {
+        const ordenarSelect = document.getElementById('ordenar');
+        const produtos = Array.from(document.querySelectorAll('.cartao'));
+
+        // Adiciona um evento de mudança ao seletor de ordenação
+        ordenarSelect.addEventListener('change', function () {
+            const sortBy = this.value;
+
+            // Lógica para ordenar produtos com base na popularidade
+            if (sortBy === 'populares') {
+                produtos.sort((a, b) => {
+                    return b.dataset.popularidade - a.dataset.popularidade; // Ordenar do mais popular para o menos popular
+                });
+            } else if (sortBy === 'menos_populares') {
+                produtos.sort((a, b) => {
+                    return a.dataset.popularidade - b.dataset.popularidade; // Ordenar do menos popular para o mais popular
+                });
+            }
+
+            // Limpa a seção de produtos antes de adicionar os produtos ordenados
+            const productsContainer = document.querySelector('.products');
+            productsContainer.innerHTML = '';
+
+            // Adiciona os produtos ordenados ao DOM
+            produtos.forEach(produto => {
+                productsContainer.appendChild(produto);
+            });
+        });
+    });
+
+    // Campo de filtragem
+    document.addEventListener('DOMContentLoaded', function () {
+        const aplicarFiltrosBtn = document.getElementById('aplicarFiltros');
+        const limparFiltrosBtn = document.getElementById('btnLimparFiltros');
+        const marcaSelect = document.getElementById('marca');
+        const corSelect = document.getElementById('cor');
+        const precoMinInput = document.getElementById('precoMin');
+        const precoMaxInput = document.getElementById('precoMax');
+        const produtos = Array.from(document.querySelectorAll('.cartao'));
+
+        // Função para filtrar produtos com base em critérios selecionados
+        function applyFilters() {
+            const selectedMarca = marcaSelect.value;
+            const selectedCor = corSelect.value;
+            const precoMin = Number(precoMinInput.value);
+            const precoMax = Number(precoMaxInput.value);
+
+            produtos.forEach(produto => {
+                const marcaMatch = selectedMarca === '' || produto.dataset.marca === selectedMarca;
+                const corMatch = selectedCor === '' || produto.dataset.cor === selectedCor;
+                const precoProduto = Number(produto.dataset.preco);
+                const precoMatch = precoProduto >= precoMin && precoProduto <= precoMax;
+
+                produto.style.display = (marcaMatch && corMatch && precoMatch) ? 'block' : 'none';
+            });
+        }
+
+    // Função para limpar todos os filtros
+        function clearFilters() {
+            marcaSelect.value = '';
+            corSelect.value = '';
+            precoMinInput.value = precoMinInput.min; // Redefinir para o mínimo
+            precoMaxInput.value = precoMaxInput.max; // Redefinir para o máximo
+
+            produtos.forEach(produto => {
+                produto.style.display = 'block'; // Mostrar todos os produtos
+            });
+        }
+
+        aplicarFiltrosBtn.addEventListener('click', applyFilters);
+        limparFiltrosBtn.addEventListener('click', clearFilters);
+    });
+
+
+    // Script do range de preço
+    const rangeInput = document.querySelectorAll(".range-input input"),
+    priceInput = document.querySelectorAll(".price-input input"),
+    range = document.querySelector(".slider .progress");
+    let priceGap = 10;
+
+    // Atualiza o slider e os campos de preço ao digitar nos inputs
+    priceInput.forEach(input =>{
+        input.addEventListener("input", e =>{
+            let minPrice = parseInt(priceInput[0].value),
+            maxPrice = parseInt(priceInput[1].value);
+
+            if((maxPrice - minPrice >= 1) && maxPrice <= rangeInput[1].max){
+                if(e.target.className === "input-min"){
+                    rangeInput[0].value = minPrice;
+                    range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
+                }else{
+                    rangeInput[1].value = maxPrice;
+                    range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                }
+            }
+
+            //rangeInputReload();
+        });
+    });
+
+    // Atualiza o slider ao alterar o range
+    rangeInput.forEach(input =>{
+        input.addEventListener("input", rangeInputReload);
+    });
+
+    // Função para aplicar alterações do range
+    function rangeInputReload(e){
+            let minVal = parseInt(rangeInput[0].value),
+            maxVal = parseInt(rangeInput[1].value);
+
+            if((maxVal - minVal) < priceGap){
+                if(e.target.className === "range-min"){
+                    rangeInput[0].value = maxVal - priceGap; // Ajusta o valor mínimo
+                }else{
+                    rangeInput[1].value = minVal + priceGap; // Ajusta o valor máximo
+                }
+            }else{
+                priceInput[0].value = minVal; // Atualiza o input de preço mínimo
+                priceInput[1].value = maxVal; // Atualiza o input de preço máximo
+                range.style.left = ((minVal / rangeInput[0].max) * 100) + "%"; // Atualiza a posição do slider
+                range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%"; // Atualiza a posição do slider
+            }
+        }
+
+
+
+    // Limpa filtros e redefine o range ao clicar no botão "Limpar filtros"
+    formFiltros = document.getElementById('formFiltros');
+    btnLimparFiltros = document.getElementById('btnLimparFiltros');
+    btnLimparFiltros.addEventListener('click', function() { 
+        rangeInput[0].value = 0; // Redefine o valor mínimo
+        rangeInput[1].value = 10000; // Redefine o valor máximo
+        rangeInputReload(); // Atualiza o slider
+        formFiltros.submit(); // Submete o formulário
+    });
+    
+    // Sincroniza o valor do campo de ordenação ao alterar o seletor
+    ordenarPor = document.getElementById('ordenar_produto');
+    selectOrdenar = document.getElementById('ordenar');
+    selectOrdenar.addEventListener('change', function() {
+        ordenarPor.value = selectOrdenar.value; // Atualiza o valor do campo oculto
+    });
+    
+
+    // Aplica o estado inicial do range
+    rangeInputReload();
+
+    // Reaplica os filtros ao recarregar a página
+    selectOrdenar.value = ordenarPor.value; // Sincroniza o seletor com o valor inicial
+
+/*
+    // Sincroniza o valor do campo de marca ao alterar o seletor
+    const selecionarMarca = document.getElementById('marca');
+    const marcaOculta = document.getElementById('marca'); // Supondo que você tenha um campo oculto com o mesmo id
+
+    selecionarMarca.addEventListener('change', function() {
+        marcaOculta.value = selecionarMarca.value; // Atualiza o valor do campo oculto
+    });
+
+    // Sincroniza o valor do campo de cor ao alterar o seletor
+    const selecionarCor = document.getElementById('cor');
+    const corOculta = document.getElementById('cor'); // Supondo que você tenha um campo oculto com o mesmo id
+
+    selecionarCor.addEventListener('change', function() {
+        corOculta.value = selecionarCor.value; // Atualiza o valor do campo oculto
+    });
+
+    // Reaplica os valores iniciais ao recarregar a página
+    marcaOculta.value = selecionarMarca.value; // Sincroniza o seletor de marca com o valor inicial
+    corOculta.value = selecionarCor.value; // Sincroniza o seletor de cor com o valor inicial
+
+*/
+        
+    </script>
+</body>
+</html>
