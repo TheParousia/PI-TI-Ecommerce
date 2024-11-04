@@ -2,7 +2,7 @@ from django.db import models
 
 class Marca(models.Model):
     nome = models.CharField(max_length=50)
-    
+
     def __str__(self):
         return self.nome
       
@@ -26,9 +26,10 @@ class Modelo(models.Model):
 
 class Cor(models.Model):
     nome = models.CharField(max_length=50)
+    codigo_hex = models.CharField(max_length=7)  # Código hexadecimal da cor
 
     def __str__(self):
-        return self.nome
+        return f"{self.nome} ({self.codigo_hex})"  # Exibindo o nome e o código hexadecimal
 
 class Produto(models.Model):
     modelo = models.ForeignKey(Modelo, on_delete=models.CASCADE)
@@ -47,4 +48,9 @@ class Produto(models.Model):
     acessos = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.marca} {self.modelo} ({self.cor}) - R${self.preco}"
+        return f"{self.marca} {self.modelo} - Cor: {self.cor.nome} - R${self.preco:.2f}"  # Informações detalhadas do produto
+
+    class Meta:
+        verbose_name = 'Produto'
+        verbose_name_plural = 'Produtos'
+        ordering = ['marca', 'modelo']  # Ordenar produtos por marca e modelo

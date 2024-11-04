@@ -16,6 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('nome', models.CharField(max_length=50)),
+                ('codigo_hex', models.CharField(max_length=7)),
             ],
         ),
         migrations.CreateModel(
@@ -50,6 +51,12 @@ class Migration(migrations.Migration):
                 ('cor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='produto.cor')),
                 ('marca', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='produto.marca')),
                 ('modelo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='produto.modelo')),
+            ],
+            options={
+                'verbose_name': 'Produto',
+                'verbose_name_plural': 'Produtos',
+                'ordering': ['marca', 'modelo'],
+            },
             name='Cliente',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),

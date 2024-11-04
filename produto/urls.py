@@ -6,6 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('atualizar-cor/', views.atualizar_cor, name='atualizar_cor'),  # Rota para atualizar cor
     path('', views.pagina_home, name='pagina_home'),
     path('', views.produtos, name='produtos'), # Verificar validade
     path('produtos/', views.produtos, name='produtos'),
@@ -18,6 +19,11 @@ urlpatterns = [
     path('produtos/atualizar/<int:produto_id>/', atualizar_produtos, name='atualizar_produto'),  # Atualização de produto
     path('produtos/excluir/<int:produto_id>/', excluir_produtos, name='excluir_produto'),  # Exclusão de produto
     
+    # Adm Cores
+    path('cor/listar', views.cadastrar_cor, name='cadastrar_cor'),  # Mudado para a função de cadastro de cor
+    path('cor/cadastrar_atualizar/', views.cor_cadastrar_atualizar, name='cor_cadastrar_atualizar'),  # Rota para a página de confirmação
+    path('cor/deletar/<int:id>', views.cor_deletar, name='cor_deletar'),  # Rota para atualizar cor  
+
     # Informações da esquipe
     path('add_infor', views.add_infor, name="add_infor"),
 ]
