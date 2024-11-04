@@ -6,11 +6,21 @@ class Marca(models.Model):
     def __str__(self):
         return self.nome
 
+    class Meta:
+        verbose_name = 'Marca'
+        verbose_name_plural = 'Marcas'
+
+
 class Modelo(models.Model):
     nome = models.CharField(max_length=50)
 
     def __str__(self):
         return self.nome
+
+    class Meta:
+        verbose_name = 'Modelo'
+        verbose_name_plural = 'Modelos'
+
 
 class Cor(models.Model):
     nome = models.CharField(max_length=50)
@@ -18,6 +28,11 @@ class Cor(models.Model):
 
     def __str__(self):
         return f"{self.nome} ({self.codigo_hex})"
+
+    class Meta:
+        verbose_name = 'Cor'
+        verbose_name_plural = 'Cores'
+
 
 class Produto(models.Model):
     modelo = models.ForeignKey(Modelo, on_delete=models.CASCADE)
@@ -41,4 +56,4 @@ class Produto(models.Model):
     class Meta:
         verbose_name = 'Produto'
         verbose_name_plural = 'Produtos'
-        ordering = ['marca', 'modelo']  # Ordenar produtos por marca e modelo
+        ordering = ['marca', 'modelo']  # Ordena produtos por marca e modelo

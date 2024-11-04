@@ -7,12 +7,11 @@ def cadastrar_marca(request):
     marcas = Marca.objects.all()  # Busca todas as marcas no banco de dados
 
     if request.method == 'POST':
-        nome = request.POST.get('nome')
-        descricao = request.POST.get('descricao')  # Inclui o campo descrição
+        nome = request.POST.get('nome')  # Pega apenas o nome
 
-        # Verifica se os campos foram preenchidos corretamente
-        if nome and descricao:
-            nova_marca = Marca(nome=nome, descricao=descricao)  # Cria uma nova instância de Marca
+        # Verifica se o campo nome foi preenchido corretamente
+        if nome:  
+            nova_marca = Marca(nome=nome)  # Cria uma nova instância de Marca
             nova_marca.save()  # Salva a nova marca no banco de dados
             messages.success(request, "Marca cadastrada com sucesso!")  # Mensagem de sucesso
             return redirect('cadastrar_marca')  # Redireciona para a página de cadastro de marca
@@ -34,19 +33,17 @@ def atualizar_marca(request):
 def marca_cadastrar_atualizar(request):
     if request.method == 'POST':
         id = request.POST.get("id")
-        nome = request.POST.get("nome")
-        descricao = request.POST.get("descricao")  # Inclui o campo descrição
+        nome = request.POST.get("nome")  # Apenas verifica o campo nome
 
         if id and id != "-1":  # Se o id for diferente de -1, significa que é uma atualização
             marca = get_object_or_404(Marca, id=id)  # Busca a marca no banco de dados
             marca.nome = nome  # Atualiza o nome da marca
-            marca.descricao = descricao  # Atualiza a descrição da marca
             marca.save()  # Salva as alterações no banco de dados
             messages.success(request, "Marca atualizada com sucesso!")  # Mensagem de sucesso
         else:
             # Se o id for -1 ou não estiver presente, significa que é um novo cadastro
-            if nome and descricao:
-                nova_marca = Marca(nome=nome, descricao=descricao)  # Cria uma nova instância de Marca
+            if nome:  # Apenas verifica o campo nome
+                nova_marca = Marca(nome=nome)  # Cria uma nova instância de Marca
                 nova_marca.save()  # Salva a nova marca no banco de dados
                 messages.success(request, "Marca cadastrada com sucesso!")  # Mensagem de sucesso
             else:

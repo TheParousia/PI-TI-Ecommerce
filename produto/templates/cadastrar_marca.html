@@ -5,13 +5,12 @@
 <div class="container">
     <h1 id="titulo">Cadastrar Marca</h1>
 
+    <!-- Formulário de cadastro/atualização -->
     <form action="{% url 'marca_cadastrar_atualizar' %}" method="POST">
         {% csrf_token %}
+        <input type="hidden" id="id_da_marca" name="id" value="-1">  <!-- Campo oculto para o id da marca -->
         <div class="mb-3">
             <input type="text" id="nome" name="nome" class="form-control" placeholder="Digite aqui o nome da marca" required>
-        </div>
-        <div class="mb-3">
-            <textarea id="descricao" name="descricao" class="form-control" placeholder="Descrição da marca" required></textarea>
         </div>
         <div class="mb-3 d-flex justify-content-start align-items-center">
             <button type="submit" class="btn btn-dark me-2" id="btnSalvar">Cadastrar Marca</button>
@@ -25,7 +24,6 @@
             <tr>
                 <th>Id</th>
                 <th>Nome</th>
-                <th>Descrição</th>
                 <th>Controles</th>
             </tr>
         </thead>
@@ -34,9 +32,8 @@
                 <tr id="marca{{ marca.id }}">
                     <td>{{ marca.id }}</td>
                     <td>{{ marca.nome }}</td>
-                    <td>{{ marca.descricao }}</td>
                     <td>
-                        <button class="btn btn-primary btnAtualizar" data-id="{{ marca.id }}">Editar</button>
+                        <button class="btn btn-primary btnAtualizar" data-id="{{ marca.id }}" data-nome="{{ marca.nome }}">Editar</button>
                         <a class="btn btn-danger" href="{% url 'marca_deletar' marca.id %}" onclick="return confirm('Tem certeza que deseja excluir esta marca?');">Deletar</a>
                     </td>
                 </tr>
@@ -45,5 +42,5 @@
     </table>
 </div>
 
-<script src="{% static 'CRUD MARCA/js/script.js' %}"></script>
+<script src="{% static '/js/script.js' %}"></script>
 {% endblock %}
