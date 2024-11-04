@@ -15,7 +15,7 @@
         }
         .promo {
             width: 100%;
-            height: 300px;
+            height: 18.75rem; /* Aproximadamente 300px */
             background-color: #ffffff;
             display: flex;
             justify-content: center;
@@ -26,30 +26,31 @@
             max-height: 100%;
         }
         .promocoes-list {
-            padding: 20px;
+            padding: 1.25rem; /* Aproximadamente 20px */
             list-style: none;
         }
 
         .categorias {
             text-align: center; /* Centralizado */
-            margin: 60px 0;
+            margin: 3.75rem 0; /* Aproximadamente 60px */
         }
         .categorias-container {
             display: flex;
             justify-content: center;
-            gap: 20px; /* Espaçamento entre categorias */
-            margin-top: 40px;
+            gap: 1.25rem; /* Aproximadamente 20px */
+            margin-top: 2.5rem; /* Aproximadamente 40px */
+            flex-wrap: wrap; /* Permite que as categorias quebrem para a linha abaixo em telas menores */
         }
         .categoria {
-            width: 368.64px; /* Largura */
-            height: 319.76px; /* Altura */
+            width: 23rem; /* Aproximadamente 368.64px */
+            height: 19.98rem; /* Aproximadamente 319.76px */
             background-color: #E7EEF1; /* Cor de fundo igual à página */
             display: flex;
             flex-direction: column;
             align-items: center; 
             justify-content: flex-start;
             position: relative;
-            padding: 5px; 
+            padding: 0.3125rem; /* Aproximadamente 5px */
         }
         .categoria img {
             width: 100%;
@@ -57,46 +58,63 @@
             object-fit: cover; /* Mantém a proporção da imagem */
         }
         .categoria h3 {
-            font-size: 14px;
-            margin-top: 5px; /* Margem acima do título */
+            font-size: 0.875rem; /* Aproximadamente 14px */
+            margin-top: 0.3125rem; /* Aproximadamente 5px */
             text-align: center; /* Alinhamento central */
             width: 100%; /* Garante que o título ocupe toda a largura */
         }
         .categoria p {
-            font-size: 12px;
+            font-size: 0.75rem; /* Aproximadamente 12px */
             text-align: center; /* Alinhamento central */
             width: 100%; /* Garante que o preço ocupe toda a largura */
         }
         .novidades {
             text-align: center;
-            margin: 60px 0;
+            margin: 3.75rem 0; /* Aproximadamente 60px */
         }
         .novidades-container {
             display: flex;
             justify-content: center;
-            gap: 30px; /* Espaçamento entre novidades */
-            margin-top: 20px;
+            gap: 1.875rem; /* Aproximadamente 30px */
+            margin-top: 1.25rem; /* Aproximadamente 20px */
+            flex-wrap: wrap; /* Permite que as novidades quebrem para a linha abaixo em telas menores */
         }
         .novidade {
-            width: 368px; /* Largura */
-            height: 521px; /* Altura */
+            width: 23rem; /* Aproximadamente 368px */
+            height: 32.5625rem; /* Aproximadamente 521px */
             background-color: #E7EEF1; /* Cor de fundo igual à página */
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 1.875rem; /* Aproximadamente 30px */
         }
         .novidade img {
             max-width: 100%;
-            max-height: 100%;
+            height: auto; /* Mantém a proporção da imagem */
+            object-fit: cover; /* Garante que a imagem não fique esticada */
         }
         .novidade-central {
-            width: 368px; /* Largura */
-            height: 521px; /* Altura */
+            width: 23rem; /* Aproximadamente 368px */
+            height: 32.5625rem; /* Aproximadamente 521px */
             background-color: #E7EEF1; /* Cor de fundo igual à página */
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        /* Estilos específicos para dispositivos móveis */
+        @media (max-width: 768px) {
+            .categoria {
+                width: 100%; /* Cada categoria ocupa 100% da largura */
+                height: auto; /* Altura automática para manter a proporção */
+            }
+            .novidade {
+                width: 100%; /* Cada novidade ocupa 100% da largura */
+                height: auto; /* Altura automática para manter a proporção */
+            }
+            .novidade img {
+                height: 200px; /* Altura fixa para imagens em dispositivos móveis */
+            }
         }
     </style>
 </head>
@@ -109,7 +127,7 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="https://media.moneytimes.com.br/uploads/2023/11/celulares-black-friday.jpg" style="width: 100%; height: 300px; object-fit: cover; object-position: center;">
+                <img src="https://media.moneytimes.com.br/uploads/2023/11/celulares-black-friday.jpg" style="width: 100%; height: 18.75rem; object-fit: cover; object-position: center;">
                 <div class="container">
                     <div class="carousel-caption text-start">
                         
@@ -117,7 +135,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="https://s.zst.com.br/cms-assets/2022/06/capa_a52.webp" style="width: 100%; height: 300px; object-fit: cover; object-position: center;">
+                <img src="https://s.zst.com.br/cms-assets/2022/06/capa_a52.webp" style="width: 100%; height: 18.75rem; object-fit: cover; object-position: center;">
                 <div class="container">
                     <div class="carousel-caption">
                         
@@ -125,7 +143,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="https://img.freepik.com/fotos-premium/uma-fileira-de-smartphones-em-exposicao-em-uma-loja-exibindo-varias-cores-e-desenhos_14117-745595.jpg" style="width: 100%; height: 300px; object-fit: cover; object-position: center;">
+                <img src="https://img.freepik.com/fotos-premium/uma-fileira-de-smartphones-em-exposicao-em-uma-loja-exibindo-varias-cores-e-desenhos_14117-745595.jpg" style="width: 100%; height: 18.75rem; object-fit: cover; object-position: center;">
                 <div class="container">
                     <div class="carousel-caption text-end">
                     </div>
@@ -144,16 +162,16 @@
 
     <div class="categorias">
         <h2>Categorias</h2>
-        <p style="text-align: center; max-width: 600px; margin: 0 auto;">
+        <p style="text-align: center; max-width: 37.5rem; margin: 0 auto;">
             É essencial cuidar do cliente durante a experiência de compra. Embora escolher um novo celular possa ser um desafio, nossa equipe está aqui para ajudar. Desde a seleção do modelo certo até o suporte pós-venda, garantimos que você se sinta seguro em sua decisão. O seu conforto e satisfação são nossa prioridade, e estamos prontos para transformar essa jornada em algo fácil e agradável.
         </p>
         <div class="categorias-container">
             <div class="categoria">
-                <img src="https://a-static.mlcdn.com.br/450x450/celular-lg-b220-3g-de-botao-para-idoso-2-chip-radio-fm-rural-nokia/wwtecnocell/89edce208eb111eeae614201ac185040/344c39d6d94a2b8994a35e225df943cc.jpeg" />
+                <img src="https://www.jornaljoca.com.br/wp-content/uploads/2023/05/GettyImages-1471807009.jpeg" />
                 <h3>Celulares de entrada</h3>
             </div>
             <div class="categoria">
-                <img src="https://eldorado.hubsell.com.br/media/catalog/product/3/1/3175230_UX1D032BRAZL_G1_1.jpg" />
+                <img src="https://www.jornaljoca.com.br/wp-content/uploads/2023/05/GettyImages-1471807009.jpeg" />
                 <h3>Celulares intermediários</h3>
             </div>
             <div class="categoria">
@@ -165,25 +183,25 @@
 
     <div class="novidades">
         <h2>Nossas últimas novidades</h2>
-        <p style="text-align: center; max-width: 600px; margin: 0 auto;">
+        <p style="text-align: center; max-width: 37.5rem; margin: 0 auto;">
             Ficar por dentro das últimas novidades em celulares é essencial para quem busca tecnologia e inovação. Nossa seleção traz os modelos mais recentes, garantindo desempenho excepcional e adaptação ao seu estilo de vida. Explore nossas opções e escolha com confiança o smartphone perfeito para você!
         </p>
         <div class="novidades-container">
             <div class="novidade">
-                <img src="https://down-br.img.susercontent.com/file/sg-11134201-7rbkw-lq1qvwel9y62b7_tn.webp" style="width: 100%; height: 300px;" />
+                <img src="https://down-br.img.susercontent.com/file/sg-11134201-7rbkw-lq1qvwel9y62b7_tn.webp" style="width: 100%; height: auto;" />
             </div>
             <div class="novidade-central">
-                <img src="https://down-br.img.susercontent.com/file/br-11134207-7qukw-lgmr1az39kz957" style="width: 100%; height: 300px;" />
+                <img src="https://down-br.img.susercontent.com/file/br-11134207-7qukw-lgmr1az39kz957" style="width: 100%; height: auto;" />
             </div>
             <div class="novidade">
-                <img src="https://down-br.img.susercontent.com/file/sg-11134201-7rdxx-lxxqmry6lg0w43_tn.webp" style="width: 100%; height: 300px;" />
+                <img src="https://down-br.img.susercontent.com/file/sg-11134201-7rdxx-lxxqmry6lg0w43_tn.webp" style="width: 100%; height: auto;" />
             </div>
         </div>
     </div>
 
     <div class="categorias">
         <h2>Nossos produtos</h2>
-        <p style="text-align: center; max-width: 600px; margin: 0 auto;">Explore nossa seleção de smartphones, com opções que atendem a todas as suas necessidades. Desde modelos acessíveis até os mais avançados, garantimos qualidade e inovação em cada produto. Encontre o celular ideal que combina com seu estilo de vida!</p>
+        <p style="text-align: center; max-width: 37.5rem; margin: 0 auto;">Explore nossa seleção de smartphones, com opções que atendem a todas as suas necessidades. Desde modelos acessíveis até os mais avançados, garantimos qualidade e inovação em cada produto. Encontre o celular ideal que combina com seu estilo de vida!</p>
         <div class="categorias-container">
             <div class="categoria">
                 <img src="https://m.media-amazon.com/images/I/31L7XXkNawL._SS520_.jpg" alt="Produto 1"/>
