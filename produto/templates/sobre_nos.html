@@ -1,0 +1,94 @@
+{% extends "master.html" %}
+{% load static %}
+
+
+{% block tag_head %}
+    <style>
+    body { 
+        font-family: Public Sans; 
+        margin: 30px; 
+        display: flex; 
+    }
+
+    .column {
+        flex: 1;
+        padding: 30px;
+        text-align: center; /* Centraliza o conteúdo da coluna */
+        margin-right: 10vw;
+        margin-left: 10vw;
+
+    } 
+
+    #texto{
+        text-align: justify;
+    }
+
+    
+    .column img {
+        max-width: 100%; /* A imagem se ajusta à largura da coluna */
+        height: auto; /* Mantém a proporção da imagem */
+    }
+    
+    .full-image {
+        width: 100%; /* A imagem ocupará 100% da largura da coluna */
+        height: auto; /* Mantém a proporção da imagem */
+    }
+    h1 { 
+        color: #333; 
+    }
+</style>
+{% endblock tag_head %}
+
+
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <div class="card">
+                <img
+                class="card-img-top" 
+                src="{% static 'img/turma3.jpg' %}" 
+                alt="Turma 3, Turma 5" 
+                loading="lazy">
+
+                <div class="card-body">
+                  <p class="card-text">Processo de criação do PI.</p>
+                </div>
+            </div>
+          
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="card">
+                <img
+                class="card-img-top" 
+                src="{% static 'img/turma5.jpg' %}" 
+                alt="Turma 3, Turma 5" 
+                loading="lazy">
+
+                <div class="card-body">
+                  <p class="card-text">Testes de apresentação do trabalho.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="column">
+    <source srcset="{% static 'img/turma3.webp, turma5.webp' %}" type="image/webp">
+</div>
+
+<div class="column">
+    <h1>Sobre nós</h1>
+    <p id="texto"> 
+        Nosso projeto visa desenvolver uma simulação de um sistema de vendas e-commerce, proporcionando uma experiência prática e abrangente no campo da tecnologia da informação.
+        A equipe é composta por 11 membros do curso técnico de informática, cada um com um papel fundamental que contribui para o sucesso do projeto.
+        Desde o início na UC 16 (Unidade Curricular), temos trabalhado de forma colaborativa, dividindo as responsabilidades para garantir que todas as áreas do projeto sejam bem atendidas.
+        Alguns membros se dedicam à estruturação do código e ao desenvolvimento do banco de dados, garantindo que a base técnica do sistema seja sólida e eficiente.
+        Outros focam no design, criando uma interface intuitiva e atraente que melhore a experiência do usuário.
+        Este projeto não apenas nos permite aplicar os conhecimentos adquiridos em sala de aula, mas também nos ensina a importância do trabalho em equipe, da comunicação e da resolução de problemas.
+        Estamos animados com o resultado final e confiantes de que ele refletirá nosso esforço e aprendizado ao longo do processo.
+        
+        
+    </p>
+</div>
+{% endblock %}  

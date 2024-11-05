@@ -462,3 +462,8 @@ def tela_produto(request):
         return redirect("tela_produto")  # Redireciona após salvar
 
     return render(request, "tela_produto.html")
+
+# Create your views here.
+# View de teste da branch de template master
+def template(request):
+    return render(request, "sobre_nos.html") 
