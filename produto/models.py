@@ -5,11 +5,23 @@ class Marca(models.Model):
 
     def __str__(self):
         return self.nome
-
+      
     class Meta:
         verbose_name = 'Marca'
         verbose_name_plural = 'Marcas'
 
+      
+class Cliente(models.Model):
+    nome = models.CharField(max_length=255)
+    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(unique=True)
+    telefone = models.CharField(max_length=15)
+    cpf_cnpj = models.CharField(max_length=18)  # Pode ser CPF ou CNPJ
+    cep = models.CharField(max_length=10)
+    rua = models.CharField(max_length=255)
+    numero = models.CharField(max_length=10)
+    bairro = models.CharField(max_length=255)
+    senha = models.CharField(max_length=128)  # Considere usar hashing
 
 class Modelo(models.Model):
     nome = models.CharField(max_length=50)
@@ -53,7 +65,9 @@ class Produto(models.Model):
     def __str__(self):
         return f"{self.marca} {self.modelo} - Cor: {self.cor.nome} - R${self.preco:.2f}"
 
+
     class Meta:
         verbose_name = 'Produto'
         verbose_name_plural = 'Produtos'
-        ordering = ['marca', 'modelo']  # Ordena produtos por marca e modelo
+        ordering = ['marca', 'modelo']  # Ordenar produtos por marca e modelo
+
