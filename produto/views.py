@@ -17,6 +17,9 @@ fs = FileSystemStorage()
 # views.py
 from .models import Cliente
 
+def menu_adm(request):
+    return render(request, 'menu_adm.html')
+
 
 def cadastrar_cor(request):
     cores = Cor.objects.all()

@@ -14,8 +14,10 @@ urlpatterns = [
     path('produtos/detalhes/<int:produto_id>', views.detalhesProduto, name="detalhesProdutos"),
     path('produtos/criar/', views.tela_produto,name="tela_produto"),
     
+    path('menu_adm/', views.menu_adm, name='menu_adm'),
+
     # Adm de produtos
-    path('produtos/listar/', pagina_adm, name='pagina_adm'),  # Listagem de produtos
+    path('produtos/listar/', pagina_adm, name='adm_produtos'),  # Listagem de produtos
     path('produtos/atualizar/<int:produto_id>/', atualizar_produtos, name='atualizar_produto'),  # Atualização de produto
     path('produtos/excluir/<int:produto_id>/', excluir_produtos, name='excluir_produto'),  # Exclusão de produto
     
