@@ -1,3 +1,4 @@
+
 """
 Django settings for exemplo1 project.
 
@@ -28,7 +29,6 @@ SECRET_KEY = 'django-insecure-^9y!r9)o*td12i$)-b7d(2&xhdh-s&t7c=11=guz1cu9oh)-dk
 DEBUG = True
 
 ALLOWED_HOSTS = ['*', '172.16.0.8', 'homolog.ecommerce.lab202.cst']
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -73,6 +73,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -83,6 +84,7 @@ DATABASES = {
         'PORT': 3306,
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

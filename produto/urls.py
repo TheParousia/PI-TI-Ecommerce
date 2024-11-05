@@ -21,6 +21,12 @@ urlpatterns = [
     path('produtos/atualizar/<int:produto_id>/', atualizar_produtos, name='atualizar_produto'),  # Atualização de produto
     path('produtos/excluir/<int:produto_id>/', excluir_produtos, name='excluir_produto'),  # Exclusão de produto
     
+    # Adm marca
+    path('marca/listar', views.cadastrar_marca, name='cadastrar_marca'),  # Página de cadastro de marca
+    path('marca/cadastrar-atualizar/', views.marca_cadastrar_atualizar, name='marca_cadastrar_atualizar'),  # Rota para cadastrar ou atualizar marca
+    path('marca/deletar/<int:id>/', views.marca_deletar, name='marca_deletar'),  # Rota para deletar marca
+    path('atualizar-marca/', views.atualizar_marca, name='atualizar_marca'),  # Rota para visualizar marcas e suas informações
+
     # Adm Cores
     path('cor/listar', views.cadastrar_cor, name='cadastrar_cor'),  # Mudado para a função de cadastro de cor
     path('cor/cadastrar_atualizar/', views.cor_cadastrar_atualizar, name='cor_cadastrar_atualizar'),  # Rota para a página de confirmação
