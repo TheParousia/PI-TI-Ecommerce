@@ -1,0 +1,43 @@
+{% extends "master.html" %}
+
+{% block title %}Menu administrativo{% endblock %}
+
+{% block head_tags %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+{% endblock head_tags %}
+
+{% block content %}
+
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 50vh;">
+    <div class="row">
+        <!-- Cartão de Produtos -->
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <i class="bi-box-seam" style="font-size: 10rem; margin: auto;"></i>
+                <a href="{% url 'adm_produtos' %}" class="btn btn-dark">PRODUTOS</a>
+            </div>
+        </div>
+
+        <!-- Cartão de Marcas (Smartphone) -->
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <i class="bi-phone" style="font-size: 10rem; margin: auto;"></i>
+                <a href="{% url 'cadastrar_cor' %}" class="btn  btn-dark">MARCAS</a>
+            </div>
+        </div>
+
+        <!-- Cartão de Cores -->
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <i class="bi-palette" style="font-size: 10rem; margin: auto;"></i>
+                <a href="{% url 'cadastrar_cor' %}" class="btn btn-dark">CORES</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+   
+{% endblock %} 

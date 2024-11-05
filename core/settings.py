@@ -1,3 +1,4 @@
+
 """
 Django settings for exemplo1 project.
 
@@ -9,15 +10,15 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
 import os
 from pathlib import Path
+import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+SECRET_KEY = 'sua_chave_secreta_aqui'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -26,13 +27,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SECRET_KEY = 'django-insecure-^9y!r9)o*td12i$)-b7d(2&xhdh-s&t7c=11=guz1cu9oh)-dk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 
 ALLOWED_HOSTS = ['*', '172.16.0.8', 'homolog.ecommerce.lab202.cst']
-
-
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -75,20 +73,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ecommerce_v2',
+        'NAME': 'homolog',
         'USER': 'sys_ecommerce',
         'PASSWORD': 'DbPi@2024',
-        'HOST': '172.16.0.113',
+        'HOST': '172.16.0.40',
         'PORT': 3306,
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -115,9 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 # Configurações de rotas na autenticação
@@ -127,14 +123,6 @@ LOGIN_URL = '/login/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = '/static/'
-
-# Diretório onde o Django vai procurar os arquivos estáticos da aplicação durante o desenvolvimento
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
 # Diretório onde os arquivos estáticos serão coletados quando 'collectstatic' for executado
 STATIC_ROOT = BASE_DIR / 'files'
 STATIC_URL = 'static/'
