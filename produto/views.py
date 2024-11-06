@@ -90,9 +90,48 @@ def produto_detalhes(request, produto_id):
 
     return render(request, 'produtos.html', context)
 
-def produto_detalhes(request, produto_id):
+def produto_detalhes(request, produto_id):  
+    
     produto = get_object_or_404(Produto, id=produto_id)
     produto.acessos += 1
     produto.save()
     
     return render(request, 'produto_detalhes.html', {'produto': produto})
+
+# def search(request):
+#     query = request.GET.get('q', '').strip()  # Adicionando um valor padrão e removendo espaços
+#     resultados = []
+
+#     if query:
+#         # Buscando produtos que correspondam à consulta
+#         resultados = Produto.objects.filter(
+#             models.Q(marca__nome__icontains=query) |
+#             models.Q(modelo__nome__icontains=query) |
+#             models.Q(cor__nome__icontains=query) |
+#             models.Q(descricao__icontains=query)
+#         )
+
+#     return render(request, 'search.html', {'resultados': resultados, 'query': query})
+# 
+
+# def search(request):
+    # query = request.GET.get('q')
+    # resultados = Produto.objects.filter(marca__icontains=query) if query else []
+    # return render(request, 'search.html', {'resultados': resultados, 'query': query})
+
+def search(request):
+    query = request.GET.get('q')  # Obtém o parâmetro 'q' da URL
+    if query:
+        # Se houver um termo de pesquisa, realiza a busca
+        resultados = Produto.objects.filter(marca__nome__icontains=query)
+    else:
+        # Se não houver termo de pesquisa, define resultados como uma lista vazia
+        # E uma mensagem informativa para o usuário
+        resultados = []
+        mensagem = "Por favor, insira um termo de pesquisa."
+    
+    return render(request, 'search.html', {
+        'resultados': resultados,  # Lista de produtos encontrados
+        'query': query,            # O termo de pesquisa usado
+        'mensagem': mensagem if not query else None  # Mensagem se não houver termo de pesquisa
+    })
