@@ -210,8 +210,8 @@ def detalhesProduto(request, produto_id):
 def pagina_home(request):
     return render(request, 'pagina_home.html')
 
-def add_infor(request):
-    return render(request, 'add_infor', context)
+def sobre_nos(request):
+    return render(request, 'sobre_nos.html')
 
 def tela_produto(request):
     if request.method == "POST":
@@ -256,8 +256,4 @@ def tela_produto(request):
 # Create your views here.
 # View de teste da branch de template master
 def template(request):
-<<<<<<< HEAD
     return render(request, "sobre_nos.html") 
-=======
-    return render(request, "template.html") 
->>>>>>> fee56e2cb06e326d3c88430ce515af65c7588a97
