@@ -2,8 +2,10 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.template import loader
 from django.core.files.storage import FileSystemStorage
+from produto import models
 from .models  import Cor, Marca, Modelo, Produto
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
+from multiprocessing import context
 
 fs = FileSystemStorage()
 
@@ -98,6 +100,7 @@ def produto_detalhes(request, produto_id):
     
     return render(request, 'produto_detalhes.html', {'produto': produto})
 
+<<<<<<< HEAD
 # def search(request):
 #     query = request.GET.get('q', '').strip()  # Adicionando um valor padrão e removendo espaços
 #     resultados = []
@@ -135,3 +138,70 @@ def search(request):
         'query': query,            # O termo de pesquisa usado
         'mensagem': mensagem if not query else None  # Mensagem se não houver termo de pesquisa
     })
+=======
+def detalhesProduto(request, produto_id):
+    # Tenta buscar o produto pelo ID ou retorna um erro 404 se não encontrado
+    produto = get_object_or_404(Produto, id=produto_id)
+    produto.acessos += 1
+    produto.save()    
+
+    # Dados do produto a serem passados para o template
+    context = {
+        'produto': produto
+    }
+    # Renderiza o template 'produto_detalhes.html' com o contexto do produto
+    return render(request, 'produto_detalhes.html', context)
+
+    # return HttpResponse("template.render()")
+
+def pagina_home(request):
+    return render(request, 'pagina_home.html')
+
+def add_infor(request):
+    return render(request, 'add_infor', context)
+
+def tela_produto(request):
+    if request.method == "POST":
+        # Obtém ou cria as instâncias de Marca, Modelo e Cor
+        modelo_nome = request.POST['modelo']
+        cor_nome = request.POST['cor']
+        marca_nome = request.POST['marca']
+
+        # Procura a marca, modelo e cor, ou cria novos se não existirem
+        marca, created = Marca.objects.get_or_create(nome=marca_nome)
+        modelo, created = Modelo.objects.get_or_create(nome=modelo_nome)
+        cor, created = Cor.objects.get_or_create(nome=cor_nome)
+
+        produto = Produto(
+            modelo=modelo,
+            descricao=request.POST['descricao'],
+            capacidade1=request.POST['capacidade1'],
+            capacidade2=request.POST['capacidade2'],
+            capacidade3=request.POST['capacidade3'],
+            qtd_estoque=request.POST['qtd_estoque'],
+            preco=request.POST['preco'],
+            cor=cor,
+            marca=marca,
+            acessos=0  # O campo de acessos é definido automaticamente como 0
+        )
+
+        # Salva as imagens
+        if 'imagem' in request.FILES:
+            produto.imagem1 = request.FILES['imagem']
+        if 'imagem2' in request.FILES:
+            produto.imagem2 = request.FILES['imagem2']
+        if 'imagem3' in request.FILES:
+            produto.imagem3 = request.FILES['imagem3']
+        if 'imagem4' in request.FILES:
+            produto.imagem4 = request.FILES['imagem4']
+
+        produto.save()
+        return redirect("tela_produto")  # Redireciona após salvar
+
+    return render(request, "tela_produto.html")
+
+# Create your views here.
+# View de teste da branch de template master
+def template(request):
+    return render(request, "template.html") 
+>>>>>>> a4b2bf59af5a59fdcad1b7d902036edd3c777c80
