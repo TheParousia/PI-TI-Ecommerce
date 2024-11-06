@@ -1,0 +1,66 @@
+{% extends "master.html" %}
+{% load static %}  {# Carrega a tag static #}
+
+{% block content %}
+    <div class="container">
+        <h1 id="titulo">Cadastrar Cor</h1>
+
+        <form action="{% url 'cor_cadastrar_atualizar' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="id" id="id_da_cor" value="-1">
+            <div class="mb-3">
+                <input type="text" id="nome" name="nome" class="form-control" placeholder="Digite aqui o nome da cor que você quer cadastrar" required>
+            </div>
+            <div class="mb-3 d-flex justify-content-start align-items-center">
+                <button type="button" id="btnSelecionarCor" class="btn btn-dark me-2" style="background-color: black; color: white;">Selecionar Cor</button>
+                <button type="submit" class="btn btn-dark me-2" id="btnSalvar">Cadastrar Cor</button>
+                <input type="button" class="btn btn-dark" id="btnCancelar" value="Cancelar" />
+            </div>
+            <div id="mensagem" style="display: none; margin-top: 5px; color: #555;">
+                Clique abaixo para selecionar a cor
+            </div>
+            <div id="corPalette" style="display: none; margin-top: 10px;">
+                <input type="color" id="codigo_hex" name="codigo_hex" class="form-control" required>
+            </div>
+        </form>
+
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Nome da Cor</td>
+                    <td>Cor</td>
+                    <td>Controles</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cor in cores %}
+                    <tr id="cor{{ cor.id }}">
+                        <td>{{ cor.id }}</td>
+                        <td>{{ cor.nome }}</td>
+                        <td>
+                            <div class="cor-circulo" style="background-color: {{ cor.codigo_hex }};"></div>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btnAtualizar" data-id="{{ cor.id }}">Atualizar</button>
+                            <a class="btn btn-danger" href="{% url 'cor_deletar' cor.id %}">Deletar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        .cor-circulo {
+            width: 30px; /* Largura do círculo */
+            height: 30px; /* Altura do círculo */
+            border-radius: 50%; /* Faz o círculo */
+            display: inline-block; /* Permite que o círculo seja exibido em linha */
+            border: 1px solid #000; /* Borda opcional */
+        }
+    </style>
+
+    <script src="{% static 'CRUD COR/js/script.js' %}"></script>
+{% endblock %}
