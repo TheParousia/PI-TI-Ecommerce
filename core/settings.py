@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'homolog',
         'USER': 'sys_ecommerce',
         'PASSWORD': 'DbPi@2024',
-        'HOST': '172.16.0.40',
+        'HOST': '127.0.0.1',
         'PORT': 3306,
     }
 }
@@ -107,6 +107,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
