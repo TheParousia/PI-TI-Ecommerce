@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from .models import Cor
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from usuario.forms import FormularioLogin, ClienteForm
@@ -13,7 +15,126 @@ from multiprocessing import context
 fs = FileSystemStorage()
 
 # views.py
-from .models import Cliente
+from django.contrib import messages
+
+# View para cadastrar uma nova marca
+def cadastrar_marca(request):
+    marcas = Marca.objects.all()  # Busca todas as marcas no banco de dados
+
+    if request.method == 'POST':
+        nome = request.POST.get('nome')  # Pega apenas o nome
+
+        # Verifica se o campo nome foi preenchido corretamente
+        if nome:  
+            nova_marca = Marca(nome=nome)  # Cria uma nova instância de Marca
+            nova_marca.save()  # Salva a nova marca no banco de dados
+            messages.success(request, "Marca cadastrada com sucesso!")  # Mensagem de sucesso
+            return redirect('cadastrar_marca')  # Redireciona para a página de cadastro de marca
+
+        messages.error(request, "Por favor, preencha todos os campos.")  # Mensagem de erro
+
+    contexto = {
+        "marcas": marcas  # Passa todas as marcas para o template
+    }
+
+    return render(request, "cadastrar_marca.html", contexto)  # Renderiza a página de cadastro
+
+# View para atualizar a marca (mostra todas as marcas cadastradas)
+def atualizar_marca(request):
+    marcas = Marca.objects.all()  # Busca todas as marcas do banco de dados
+    return render(request, "atualizar_marca.html", {"marcas": marcas})  # Renderiza a página de atualização com as marcas
+
+# View para cadastrar ou atualizar uma marca
+def marca_cadastrar_atualizar(request):
+    if request.method == 'POST':
+        id = request.POST.get("id")
+        nome = request.POST.get("nome")  # Apenas verifica o campo nome
+
+        if id and id != "-1":  # Se o id for diferente de -1, significa que é uma atualização
+            marca = get_object_or_404(Marca, id=id)  # Busca a marca no banco de dados
+            marca.nome = nome  # Atualiza o nome da marca
+            marca.save()  # Salva as alterações no banco de dados
+            messages.success(request, "Marca atualizada com sucesso!")  # Mensagem de sucesso
+        else:
+            # Se o id for -1 ou não estiver presente, significa que é um novo cadastro
+            if nome:  # Apenas verifica o campo nome
+                nova_marca = Marca(nome=nome)  # Cria uma nova instância de Marca
+                nova_marca.save()  # Salva a nova marca no banco de dados
+                messages.success(request, "Marca cadastrada com sucesso!")  # Mensagem de sucesso
+            else:
+                messages.error(request, "Por favor, preencha todos os campos.")  # Mensagem de erro
+
+    return redirect('cadastrar_marca')  # Redireciona de volta para a página de cadastro
+
+# View para deletar uma marca
+def marca_deletar(request, id):
+    marca = get_object_or_404(Marca, id=id)  # Obtém a marca a ser deletada
+    marca.delete()  # Deleta a marca
+    messages.success(request, "Marca deletada com sucesso!")  # Mensagem de sucesso
+    return redirect('cadastrar_marca')  # Redireciona de volta para a página de cadastro de marcas
+
+def menu_adm(request):
+    return render(request, 'menu_adm.html')
+
+
+def cadastrar_cor(request):
+    cores = Cor.objects.all()
+
+    if request.method == 'POST':
+        nome = request.POST.get('nome')
+        codigo_hex = request.POST.get('codigo_hex')
+
+        if nome and codigo_hex:
+            nova_cor = Cor(nome=nome, codigo_hex=codigo_hex)
+            nova_cor.save()  # Salva a nova cor no banco de dados
+            messages.success(request, "Cor cadastrada com sucesso!")  # Mensagem de sucesso
+            return redirect('atualizar_cor')  # Redireciona para a página de atualização de cor
+
+        messages.error(request, "Por favor, preencha todos os campos.")  # Mensagem de erro
+
+    contexto = {
+        "cores": cores
+    }
+
+    return render(request, "cadastrar_cor.html", contexto)  # Renderiza a página de cadastro
+
+def atualizar_cor(request):
+    cores = Cor.objects.all()  # Busca todas as cores do banco de dados
+    return render(request, "atualizar_cor.html", {"cores": cores})  # Renderiza a página de atualização com as cores
+
+def cor_cadastrar_atualizar(request):
+    if request.method == 'POST':
+        id = request.POST.get("id")
+        nome = request.POST.get("nome")
+        codigo_hex = request.POST.get("codigo_hex")
+
+        print("id: ", id)
+
+        if id != "-1":
+            print("Atualizar")
+            
+            cor = get_object_or_404(Cor, id=id)
+
+            cor.nome = request.POST.get("nome")
+            cor.codigo_hex = request.POST.get("codigo_hex")
+
+            cor.save()
+            
+        else:
+            if nome and codigo_hex:
+                nova_cor = Cor(nome=nome, codigo_hex=codigo_hex)
+                nova_cor.save()  # Salva a nova cor no banco de dados
+                messages.success(request, "Cor cadastrada com sucesso!")  # Mensagem de sucesso
+
+         
+    
+    return redirect('cadastrar_cor')  # Redireciona para a página de atualização se não for uma requisição POST
+
+def cor_deletar(request, id):  # Obtém a cor selecionada
+    cor = get_object_or_404(Cor, id=id)
+    cor.delete()
+    
+    return redirect('cadastrar_cor')  # Redireciona para a página de atualização se não for uma requisição POST
 
 def registrar(request):
     if request.method == 'POST':
@@ -212,6 +333,97 @@ def pagina_home(request):
 
 def sobre_nos(request):
     return render(request, 'sobre_nos.html')
+def pagina_adm(request):
+    produtos = Produto.objects.all()
+    return render(request, 'pagina_adm.html', {'produtos': produtos})
+
+def excluir_produtos(request, produto_id):
+    produto = get_object_or_404(Produto, id=produto_id)
+    if request.method == 'POST':
+        produto.delete()
+        return redirect('pagina_adm')
+    return render(request, 'excluir_produtos.html', {'produto': produto})
+
+def atualizar_produtos(request, produto_id):
+    produto = get_object_or_404(Produto, id=produto_id)
+
+    if request.method == 'POST':
+        #paramos aqui fresco
+
+        nomeModelo = request.POST.get('modelo', produto.modelo)
+        
+        modelo = Modelo()
+        modelo.nome = nomeModelo
+        modelo.save()
+
+        produto.modelo = modelo
+
+        idCor = int(request.POST.get('cor', produto.cor))
+        cor = Cor.objects.get(id=idCor)
+
+        # produto.cor = Cor.objects.get(nome=nomeCor)
+        produto.cor = cor
+        
+        
+        idMarca = request.POST.get('marca', produto.marca)
+        marca = Marca.objects.get(id=idMarca)
+        
+
+        produto.marca = marca
+
+
+        produto.descricao = request.POST.get('descricao', produto.descricao)
+        produto.capacidade1 = request.POST.get('capacidade1', produto.capacidade1)
+        produto.capacidade2 = request.POST.get('capacidade2', produto.capacidade2)
+        produto.capacidade3 = request.POST.get('capacidade3', produto.capacidade3)
+        
+        # Convertendo qtd_estoque para inteiro
+        produto.qtd_estoque = int(request.POST.get('qtd_estoque', produto.qtd_estoque))
+        
+        # Convertendo preco para float, substituindo vírgula por ponto
+        preco_str = request.POST.get('preco', produto.preco)
+        if preco_str:
+            preco_str = preco_str.replace(',', '.')
+            produto.preco = float(preco_str)
+
+        
+        # Acessos pode ser um campo inteiro também
+        produto.acessos = int(request.POST.get('acessos', produto.acessos))
+
+        # Atualiza a imagem se uma nova for enviada
+        if request.FILES.get('imagem1'):
+            produto.imagem1.delete()
+            produto.imagem1 = request.FILES['imagem1']
+
+
+        if request.FILES.get('imagem2'):
+            produto.imagem2.delete()
+            produto.imagem2 = request.FILES['imagem2']
+        
+        if request.FILES.get('imagem3'):
+            produto.imagem3.delete()
+            produto.imagem3 = request.FILES['imagem3']
+        
+        if request.FILES.get('imagem4'):
+            produto.imagem4.delete()
+            produto.imagem4 = request.FILES['imagem4']
+
+        produto.save()
+        return redirect('pagina_adm')
+
+    cores = Cor.objects.all().values()
+    marcas = Marca.objects.all().values()
+
+    context = {
+        'produto': produto,
+        'cores': cores,
+        'marcas': marcas,
+    }
+
+    return render(request, 'atualizar_produtos.html', context)
+
+def add_infor(request):
+    return render(request, 'add_infor', context)
 
 def tela_produto(request):
     if request.method == "POST":

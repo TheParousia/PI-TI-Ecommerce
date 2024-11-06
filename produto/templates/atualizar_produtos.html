@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atualizar Produto</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    
+    <link rel="stylesheet" href="{% static 'img_preview.css' %}">
+</head>
+<body>
+    {% block conteudo %}
+    <div class="container">
+        <h2>Atualizar Produto: {{ produto.descricao }}</h2>
+        <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="modelo" class="form-label">Modelo:</label>
+                <input type="text" name="modelo" value="{{ produto.modelo }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição:</label>
+                <input type="text" name="descricao" value="{{ produto.descricao }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="capacidade1" class="form-label">Capacidade 1:</label>
+                <input type="text" name="capacidade1" value="{{ produto.capacidade1 }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="capacidade2" class="form-label">Capacidade 2:</label>
+                <input type="text" name="capacidade2" value="{{ produto.capacidade2 }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="capacidade3" class="form-label">Capacidade 3:</label>
+                <input type="text" name="capacidade3" value="{{ produto.capacidade3 }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="qtd_estoque" class="form-label">Quantidade em Estoque:</label>
+                <input type="number" name="qtd_estoque" value="{{ produto.qtd_estoque }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="preco" class="form-label">Preço:</label>
+                <input type="text" name="preco" value="{{ produto.preco|floatformat:2 }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="cor" class="form-label">Cor:</label>
+                <select name="cor" class="form-select" aria-label="Selecione uma cor" required>
+                    <option value="" disabled selected>Selecione uma cor</option>
+                    {% for cor in cores %}
+                        <option value="{{ cor.id }}">{{ cor.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="marca" class="form-label">Marca:</label>
+                <select name="marca" class="form-select" aria-label="Selecione uma marca" required>
+                    <option value="" disabled selected>Selecione uma marca</option>
+                    {% for marca in marcas %}
+                        <option value="{{ marca.id }}">{{ marca.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="acessos" class="form-label">Acessos:</label>
+                <input type="number" name="acessos" value="{{ produto.acessos }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="imagem1" class="form-label">Selecionar Imagem 1:</label>
+                <input type="file" name="imagem1" class="form-control" accept="image/*" onchange="previewImage1(event)">
+                <img class="img-preview" id="imagem-preview1" src="{{ produto.imagem1 }}" alt="Pré-visualização da Imagem 1" />
+            </div>
+            <div class="mb-3">
+                <label for="imagem2" class="form-label">Selecionar Imagem 2:</label>
+                <input type="file" name="imagem2" class="form-control" accept="image/*" onchange="previewImage2(event)">
+                <img class="img-preview" id="imagem-preview2" src="{{ produto.imagem2 }}" alt="Pré-visualização da Imagem 2" />
+            </div>
+            <div class="mb-3">
+                <label for="imagem3" class="form-label">Selecionar Imagem 3:</label>
+                <input type="file" name="imagem3" class="form-control" accept="image/*" onchange="previewImage3(event)">
+                <img class="img-preview" id="imagem-preview3" src="{{ produto.imagem3 }}" alt="Pré-visualização da Imagem 3" />
+            </div>
+            <div class="mb-3">
+                <label for="imagem4" class="form-label">Selecionar Imagem 4:</label>
+                <input type="file" name="imagem4" class="form-control" accept="image/*" onchange="previewImage4(event)">
+                <img class="img-preview" id="imagem-preview4" src="{{ produto.imagem4 }}" alt="Pré-visualização da Imagem 4" />
+            </div>
+            <button type="submit" class="btn btn-success">Atualizar Produto</button>
+            <a href="{% url 'pagina_adm' %}" class="btn btn-secondary">Voltar</a>
+        </form>
+    </div>
+
+    <script>
+        function previewImage1(event) {
+            const preview = document.getElementById('imagem-preview1');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewImage2(event) {
+            const preview = document.getElementById('imagem-preview2');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewImage3(event) {
+            const preview = document.getElementById('imagem-preview3');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewImage4(event) {
+            const preview = document.getElementById('imagem-preview4');
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function validateForm() {
+            const inputs = document.querySelectorAll('input[required], select[required]');
+            let valid = true;
+
+            inputs.forEach(input => {
+                if (!input.value) {
+                    valid = false;
+                    input.setCustomValidity("Preencha esse campo"); // Mensagem personalizada
+                    input.reportValidity(); // Exibe a mensagem
+                } else {
+                    input.setCustomValidity(""); // Limpa a mensagem de erro
+                }
+            });
+
+            return valid;
+        }
+    </script>
+    {% endblock %}
+</body>
+</html>
