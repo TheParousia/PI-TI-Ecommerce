@@ -373,6 +373,8 @@ def detalhesProduto(request, produto_id):
 def pagina_home(request):
     return render(request, 'pagina_home.html')
 
+def sobre_nos(request):
+    return render(request, 'sobre_nos.html')
 
 def pagina_adm(request):
     produtos = Produto.objects.all()
@@ -514,4 +516,5 @@ def tela_produto(request):
 
 
 def template(request):
-    return render(request, "sobre_nos.html")
+    return render(request, "sobre_nos.html") 
+
