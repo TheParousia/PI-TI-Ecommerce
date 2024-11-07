@@ -272,6 +272,7 @@
 
     <div class="produto-detalhes">
         <h1>{{ produto.modelo }}</h1>
+        <p >Id:  <span id="idProduto">{{ produto.id }}</span></p>
         <p>R$ {{ produto.preco }}</p>
         <p>{{ produto.descricao }}</p>
 
@@ -287,7 +288,7 @@
         </div>
 
         <div class="compra-container">
-            <a href="#" class="btn-btn-primary">Adicionar ao Carrinho - R$ {{ produto.preco }}</a>
+            <button id="btnAddCarrinho" class="btn-btn-primary">Adicionar ao Carrinho - R$ {{ produto.preco }}</button>
 
             <div class="quantidade-wrapper">
                 <div class="quantidade-control">
@@ -307,13 +308,41 @@
 </div>
 
 <script>
+    var qtdProduto = document.getElementById('quantidade');
+    const btnAddCarrinho = document.getElementById("btnAddCarrinho");
+    const idProduto = document.getElementById("idProduto");
+
     function changeQuantity(change) {
-        var input = document.getElementById('quantidade');
-        var currentValue = parseInt(input.value);
+        var currentValue = parseInt(qtdProduto.value);
         var newValue = currentValue + change;
         if (newValue >= 1) {
-            input.value = newValue;
+            qtdProduto.value = newValue;
         }
     }
+
+    btnAddCarrinho.addEventListener("click", async ()=>{
+        var _csrftoken = Cookies.get('csrftoken'); // Captura o token CSRF, caso necessário.
+    
+        var _response = await fetch('/carrinho/add/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': _csrftoken,
+            },
+            body: JSON.stringify({
+                id_produto: parseInt(idProduto.textContent),
+                quantidade: parseInt(qtdProduto.value)
+            })
+        });
+    
+        if (_response.ok) {
+            const data = await _response.json();
+            console.log("Produto adicionado ao carrinho:", data);
+        } else {
+            console.error("Erro ao adicionar ao carrinho:", await _response.json());
+        }
+    });
+
 </script>
 {% endblock content %}
+
