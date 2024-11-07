@@ -23,6 +23,9 @@
   <!-- Carregamento do código js do bootstrap hospedado no próprio servidor -->
   <script src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"></script>
 
+  <!-- Carrega a biblioteca para manipulação de cookies no lado do cliente -->
+  <script defer src="{% static 'js-cookie/js.cookie.min.js' %}"></script>
+
   <!-- Carregamento de cada página -->
   <title>Storemobile - Ecommerce</title>
 
@@ -34,6 +37,10 @@
       gap: 8vw;
       flex-wrap: nowrap;
       flex-direction: row;
+    }
+
+    .botao-sem-borda{
+      border:none;
     }
 
     /* Ajuste de tamanho para botões em telas pequenas */
@@ -74,14 +81,19 @@
     <div class="bg-body shadow-sm">
       <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center my-2">
         <div class="d-flex flex-wrap justify-content-center">
-          <a href="{% url "pagina_home" %}" class="botao-sem-borda me-2 mb-2 mb-md-0" style="text-decoration: none; margin: auto 1.5em;">Website</a>
-          <a href="{% url "produtos" %}" class="botao-sem-borda me-2 mb-2 mb-md-0" style="text-decoration: none; margin: auto 1.5em;">Loja</a>
-          <a href="" class="botao-sem-borda me-2 mb-2 mb-md-0" style="text-decoration: none; margin: auto 1.5em;">Compras</a>
-          <a href="{% url "add_infor" %}" class="botao-sem-borda mb-2 mb-md-0" style="text-decoration: none; margin: auto 1.5em;">Contato</a>
+          <a href='{% url "pagina_home" %}' class="botao-sem-borda me-2 mb-2 mb-md-0"
+            style="text-decoration: none; margin: auto 1.5em;">Website</a>
+          <a href='{% url "produtos" %}' class="botao-sem-borda me-2 mb-2 mb-md-0"
+            style="text-decoration: none; margin: auto 1.5em;">Loja</a>
+          <a href="" class="botao-sem-borda me-2 mb-2 mb-md-0"
+            style="text-decoration: none; margin: auto 1.5em;">Compras</a>
+          <a href='{% url "add_infor" %}' class="botao-sem-borda mb-2 mb-md-0"
+            style="text-decoration: none; margin: auto 1.5em;">Contato</a>
           |
-          <a href="{% url "menu_adm" %}" class="botao-sem-borda mb-2 mb-md-0" style="text-decoration: none; margin: auto 1.5em;">Menu Administrativo</a>
+          <a href='{% url "menu_adm" %}' class="botao-sem-borda mb-2 mb-md-0"
+            style="text-decoration: none; margin: auto 1.5em;">Menu Administrativo</a>
         </div>
-        <form class="d-flex align-items-center">
+        <div class="d-flex align-items-center">
           <div class="input-group me-2">
             <span class="input-group-text border-0 bg-body">
               <i class="fas fa-search"></i>
@@ -89,21 +101,22 @@
             <input class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar"
               aria-label="Procurar">
           </div>
-          <span class="contador-sacola">0</span> <!-- Contador sem fundo -->
-          <button class="botao-sem-borda ms-2" type="button">
+          <span class="contador-sacola"></span> <!-- Contador sem fundo -->
+          <a style="text-decoration:none;" href='{% url "carrinho" %}' class="botao-sem-borda ms-2" type="button">
             <i class="bi bi-handbag"></i> <!-- Ícone de sacola -->
-          </button>
-          {% if user.is_authenticated %}
-          <a href="/logout/">
-            <button class="botao-sem-borda ms-2" type="button">Deslogar</button> <!-- Botão Logar -->
           </a>
+          {% if user.is_authenticated %}
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <input id="logout" type="submit" class="botao-sem-borda ms-2" value="Deslogar" > <!-- Botão Logar -->
+          </form>
           {% else %}
           <a href="/login">
             <button class="botao-sem-borda ms-2" type="button">Logar</button> <!-- Botão Logar -->
           </a>
 
           {% endif %}
-        </form>
+        </div>
       </div>
     </div>
   </header>
