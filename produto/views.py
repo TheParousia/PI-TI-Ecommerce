@@ -100,27 +100,7 @@ def produto_detalhes(request, produto_id):
     
     return render(request, 'produto_detalhes.html', {'produto': produto})
 
-<<<<<<< HEAD
-# def search(request):
-#     query = request.GET.get('q', '').strip()  # Adicionando um valor padrão e removendo espaços
-#     resultados = []
 
-#     if query:
-#         # Buscando produtos que correspondam à consulta
-#         resultados = Produto.objects.filter(
-#             models.Q(marca__nome__icontains=query) |
-#             models.Q(modelo__nome__icontains=query) |
-#             models.Q(cor__nome__icontains=query) |
-#             models.Q(descricao__icontains=query)
-#         )
-
-#     return render(request, 'search.html', {'resultados': resultados, 'query': query})
-# 
-
-# def search(request):
-    # query = request.GET.get('q')
-    # resultados = Produto.objects.filter(marca__icontains=query) if query else []
-    # return render(request, 'search.html', {'resultados': resultados, 'query': query})
 
 def search(request):
     query = request.GET.get('q')  # Obtém o parâmetro 'q' da URL
@@ -138,7 +118,7 @@ def search(request):
         'query': query,            # O termo de pesquisa usado
         'mensagem': mensagem if not query else None  # Mensagem se não houver termo de pesquisa
     })
-=======
+
 def detalhesProduto(request, produto_id):
     # Tenta buscar o produto pelo ID ou retorna um erro 404 se não encontrado
     produto = get_object_or_404(Produto, id=produto_id)
@@ -204,4 +184,3 @@ def tela_produto(request):
 # View de teste da branch de template master
 def template(request):
     return render(request, "template.html") 
->>>>>>> a4b2bf59af5a59fdcad1b7d902036edd3c777c80
