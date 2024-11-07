@@ -15,6 +15,8 @@ from pathlib import Path
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 SECRET_KEY = 'sua_chave_secreta_aqui'
 
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'produto',
     'usuario',
+    'venda',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +83,7 @@ DATABASES = {
         'NAME': 'homolog',
         'USER': 'sys_ecommerce',
         'PASSWORD': 'DbPi@2024',
-        'HOST': '172.16.0.40',
+        'HOST': '172.16.0.113',
         'PORT': 3306,
     }
 }
@@ -104,6 +107,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ]
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
