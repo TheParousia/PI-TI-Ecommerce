@@ -39,6 +39,10 @@
       flex-direction: row;
     }
 
+    .botao-sem-borda{
+      border:none;
+    }
+
     /* Ajuste de tamanho para botões em telas pequenas */
     @media (max-width: 40vw) {
       .container-botao button {
@@ -97,14 +101,14 @@
             <input class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar"
               aria-label="Procurar">
           </div>
-          <span class="contador-sacola">0</span> <!-- Contador sem fundo -->
-          <button class="botao-sem-borda ms-2" type="button">
+          <span class="contador-sacola"></span> <!-- Contador sem fundo -->
+          <a style="text-decoration:none;" href='{% url "carrinho" %}' class="botao-sem-borda ms-2" type="button">
             <i class="bi bi-handbag"></i> <!-- Ícone de sacola -->
-          </button>
+          </a>
           {% if user.is_authenticated %}
           <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="botao-sem-borda ms-2">Deslogar</button> <!-- Botão Logar -->
+            <input id="logout" type="submit" class="botao-sem-borda ms-2" value="Deslogar" > <!-- Botão Logar -->
           </form>
           {% else %}
           <a href="/login">
