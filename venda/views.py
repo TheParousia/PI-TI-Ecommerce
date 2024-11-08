@@ -8,6 +8,7 @@ from produto.models import Produto
 from usuario.models import Cliente
 from venda.models import ItemVenda, Venda
 from .serializers import ItemCarrinhoSerializer
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -68,6 +69,7 @@ class DeletarDoCarrinhoAPI(APIView):
             return Response({"error": "Item não encontrado no carrinho."}, status=status.HTTP_404_NOT_FOUND)
 
 
+@login_required
 def carrinho(request):
 
     cliente = Cliente.objects.get(id=request.user.id)

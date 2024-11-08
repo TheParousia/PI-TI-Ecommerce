@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca de Produtos</title>
+    <style>
+        /* Reset básico para garantir consistência entre navegadores */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;  /* Define uma fonte limpa e legível */
+            background-color: #EFF2F6;  /* Cor de fundo alterada para #EFF2F6 */
+            color: #333;  /* Texto em cinza escuro */
+            line-height: 1.6;  /* Aumenta a legibilidade do texto */
+            padding: 20px;
+        }
+
+        /* Cabeçalho */
+        h1 {
+            color: #000;  /* Cor preta para o título */
+            font-size: 2rem;  /* Define um tamanho maior para o título */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Formulário de Busca */
+        form {
+            background-color: #fff;  /* Fundo branco para o formulário */
+            border: 1px solid #ddd;  /* Borda sutil em cinza claro */
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* Sombra suave para destaque */
+            margin-bottom: 20px;
+            max-width: 600px;
+            margin: 0 auto;  /* Centraliza o formulário na tela */
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;  /* Borda cinza claro para o campo de busca */
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;  /* Fundo cinza claro para o campo */
+        }
+
+        button[type="submit"] {
+            background-color: #000;  /* Cor preta para o botão */
+            color: #fff;  /* Texto branco no botão */
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;  /* Animação suave ao passar o mouse */
+            width: 100%;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #444;  /* Cor cinza escuro ao passar o mouse */
+        }
+
+        /* Lista de Resultados */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        ul li {
+            background-color: #fff;  /* Fundo branco para cada item da lista */
+            border: 1px solid #ddd;  /* Borda cinza claro */
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        ul li h3 {
+            font-size: 1.25rem;
+            color: #000;  /* Título de cada produto em preto */
+            margin-bottom: 10px;
+        }
+
+        ul li p {
+            color: #555;  /* Texto em cinza médio para descrição e detalhes */
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        ul li img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        /* Mensagens de erro e instruções */
+        p {
+            color: #888;  /* Texto em cinza claro */
+            font-size: 1rem;
+        }
+
+        #emptySearchMessage {
+            color: red;  /* Mensagem de erro em vermelho */
+            font-weight: bold;
+        }
+
+        /* Responsividade para telas pequenas */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;  /* Título menor em dispositivos móveis */
+            }
+
+            form {
+                width: 90%;
+                padding: 10px;
+            }
+
+            ul li {
+                flex-direction: column;
+                align-items: center;  /* Centraliza os itens no celular */
+                text-align: center;
+            }
+
+            button[type="submit"] {
+                width: 100%;  /* Botão ocupa toda a largura no mobile */
+            }
+
+            ul li img {
+                max-width: 200px;  /* Limita o tamanho da imagem para telas menores */
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2rem;  /* Título ainda menor em dispositivos muito pequenos */
+            }
+
+            form {
+                width: 100%;  /* Formulário ocupa toda a largura da tela */
+            }
+
+            button[type="submit"] {
+                font-size: 0.9rem;  /* Tamanho do texto no botão reduzido */
+            }
+
+            ul li img {
+                max-width: 180px;  /* Imagem ainda menor em telas muito pequenas */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Busca de Produtos</h1>
+
+    <!-- Formulário de busca -->
+    <form id="searchForm" method="get" action="{% url 'search' %}">
+        <input type="text" name="q" id="searchInput" placeholder="Pesquisar..." value="{{ query }}">
+        <button type="submit" id="searchButton">Buscar</button>
+    </form>
+
+    <!-- Mensagem exibida quando não há resultados ou se a pesquisa estiver vazia -->
+    {% if mensagem %}
+        <p id="emptySearchMessage">{{ mensagem }}</p>
+    {% endif %}
+
+    <!-- Lista de resultados -->
+    <ul>
+        {% if resultados %}
+            {% for produto in resultados %}
+                <li>
+                    <!-- Link para a página de detalhes do produto -->
+                    <a href="{% url 'produto_detalhes' produto.id %}" style="text-decoration: none; color: inherit;">
+                        <h3>{{ produto }}</h3>
+                        <!-- Link para a imagem do produto -->
+                        <a href="{% url 'produto_detalhes' produto.id %}">
+                            <img src="{{ produto.imagem1.url }}" alt="{{ produto.modelo }}" style="display: block;">
+                        </a>
+                    </a>
+                    <p><strong>Marca:</strong> {{ produto.marca }}</p>
+                    <p><strong>Cor:</strong> {{ produto.cor }}</p>
+                    <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
+                    <p><strong>Preço: R$</strong> R${{ produto.preco }}</p>
+                    <p><strong>Estoque:</strong> {{ produto.qtd_estoque }}</p>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>Nenhum produto encontrado para "{{ query }}".</li>
+        {% endif %}
+    </ul>
+
+    <!-- Mensagem de instrução -->
+    {% if not resultados and not mensagem %}
+        <p>Digite um termo de pesquisa para começar.</p>
+    {% endif %}
+
+    <script>
+        // Função JavaScript para manipular a busca e a exibição de resultados
+        document.addEventListener('DOMContentLoaded', function() {
+            // Referência aos elementos do DOM
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const emptySearchMessage = document.getElementById('emptySearchMessage');
+
+            // Quando o formulário for enviado (ao clicar no botão ou pressionar Enter)
+            searchForm.addEventListener('submit', function(event) {
+                // Verifica se o campo de pesquisa está vazio
+                if (!searchInput.value.trim()) {
+                    event.preventDefault();  // Impede o envio do formulário
+                    // Exibe uma mensagem de erro, se necessário
+                    if (!emptySearchMessage) {
+                        const messageElement = document.createElement('p');
+                        messageElement.id = 'emptySearchMessage';
+                        messageElement.textContent = 'Por favor, insira um termo de pesquisa.';
+                        messageElement.style.color = 'red'; // Adiciona cor para a mensagem de erro
+                        searchForm.insertBefore(messageElement, searchInput); // Adiciona a mensagem antes do campo de pesquisa
+                    }
+                } else {
+                    // Remove a mensagem de erro se houver um termo válido
+                    if (emptySearchMessage) {
+                        emptySearchMessage.remove();
+                    }
+                }
+            });
+
+            // Se o usuário pressionar "Enter" no campo de busca, envia o formulário
+            searchInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    searchForm.submit();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

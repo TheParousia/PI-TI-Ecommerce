@@ -8,7 +8,7 @@
 
 {% block content %}
 
-
+{% if user.is_authenticated %}
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 50vh;">
     <div class="row">
         <!-- Cartão de Produtos -->
@@ -36,8 +36,10 @@
         </div>
     </div>
 </div>
+{% else %}
+    <div class="alert alert-warning text-center">
+        Você precisa estar autenticado para acessar este conteúdo. <a href="{% url 'login' %}">Clique aqui para fazer login.</a>
+    </div>
+{% endif %}
 
-
-
-   
-{% endblock %} 
+{% endblock %}

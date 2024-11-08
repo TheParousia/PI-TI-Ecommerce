@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+{% if user.is_authenticated %}
 <div class="container">
     <h1 id="titulo">Cadastrar Marca</h1>
 
@@ -43,4 +44,11 @@
 </div>
 
 <script src="{% static '/js/script.js' %}"></script>
+
+{% else %}
+<div class="container">
+    <h2>Você precisa estar logado para acessar esta página.</h2>
+    <a href="{% url 'login' %}" class="btn btn-dark">Fazer Login</a>
+</div>
+{% endif %}
 {% endblock %}

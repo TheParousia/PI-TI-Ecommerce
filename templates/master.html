@@ -52,7 +52,6 @@
     }
   </style>
 </head>
-
 <body>
   <header>
     <!-- Navbar fixa -->
@@ -89,17 +88,22 @@
             style="text-decoration: none; margin: auto 1.5em;">Compras</a>
           <a href='{% url "add_infor" %}' class="botao-sem-borda mb-2 mb-md-0"
             style="text-decoration: none; margin: auto 1.5em;">Contato</a>
-          |
-          <a href='{% url "menu_adm" %}' class="botao-sem-borda mb-2 mb-md-0"
+            {% if user.is_authenticated and user.is_superuser %}
+            |
+            <a href='{% url "menu_adm" %}' class="botao-sem-borda mb-2 mb-md-0"
             style="text-decoration: none; margin: auto 1.5em;">Menu Administrativo</a>
-        </div>
+          </div>
+          {% endif %}
         <div class="d-flex align-items-center">
           <div class="input-group me-2">
             <span class="input-group-text border-0 bg-body">
               <i class="fas fa-search"></i>
             </span>
-            <input class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar"
+            <form action="{% url 'produtos' %}" method="get">
+              <input name="q" class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar"
               aria-label="Procurar">
+            </form>
+
           </div>
           <span class="contador-sacola"></span> <!-- Contador sem fundo -->
           <a style="text-decoration:none;" href='{% url "carrinho" %}' class="botao-sem-borda ms-2" type="button">
@@ -142,7 +146,7 @@
         <div class="container-botao mt-3 mt-md-0" style="margin-left: 5vw;margin-botton: 10px;">
           <button class="botao-sem-borda font-weight-bold">Website</button>
           <button class="botao-sem-borda font-weight-bold">Loja</button>
-          <button class="botao-sem-borda font-weight-bold">Contato</button>
+          <button class="botao-sem-borda font-weight-bold">Sobre nós</button>
         </div>
       </div>
     </div>

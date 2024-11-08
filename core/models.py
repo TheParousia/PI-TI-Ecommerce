@@ -29,6 +29,7 @@ class Modelo(models.Model):
 
 class Cor(models.Model):
     nome = models.CharField(max_length=100)
+    codigo_hex = models.CharField(max_length=7)  # Código hexadecimal da cor
 
     def __str__(self):
         return self.nome
