@@ -1,0 +1,313 @@
+{% extends "master.html" %}
+{% load static %}
+
+
+{% block head_tags %}
+    <style>
+    body { 
+        font-family: Public Sans; 
+        margin: 30px; 
+        display: flex; 
+    }
+
+    .column {
+        flex: 1;
+        padding: 30px;
+        margin-right: 10vw;
+        margin-left: 10vw;
+        
+    }
+
+    #titulo{
+        
+        text-align: center; /* Centraliza o conteúdo da coluna */
+        
+    }
+    
+    #texto{
+        text-align: justify;
+    }
+
+    
+    .column img {
+        max-width: 100%; /* A imagem se ajusta à largura da coluna */
+        height: auto; /* Mantém a proporção da imagem */
+    }
+    
+    .full-image {
+        width: 100%; /* A imagem ocupará 100% da largura da coluna */
+        height: auto; /* Mantém a proporção da imagem */
+    }
+    h1 { 
+        color: #333; 
+    }
+</style>
+{% endblock head_tags %}
+
+
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <div class="card">
+                <img
+                class="card-img-top" 
+                src="{% static 'img/turma3.jpg' %}" 
+                alt="Turma 3, Turma 5" 
+                loading="lazy">
+
+                <div class="card-body">
+                  <p class="card-text">Processo de criação do PI.</p>
+                </div>
+            </div>
+          
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="card">
+                <img
+                class="card-img-top" 
+                src="{% static 'img/turma5.jpg' %}" 
+                alt="Turma 3, Turma 5" 
+                loading="lazy">
+
+                <div class="card-body">
+                  <p class="card-text">Testes de apresentação do trabalho.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="column">
+    <source srcset="{% static 'img/turma3.webp, turma5.webp' %}" type="image/webp">
+</div>
+<br>
+<div class="container">
+
+    <div class="column">
+        <h1 id="titulo">Sobre nós</h1>
+        <br>
+        <p id="texto"> 
+            Nosso projeto visa desenvolver uma simulação de um sistema de vendas e-commerce, proporcionando uma experiência prática e abrangente no campo da tecnologia da informação.
+            A equipe é composta por 11 membros do curso técnico de informática, cada um com um papel fundamental que contribui para o sucesso do projeto.
+            Desde o início na UC 16 (Unidade Curricular), temos trabalhado de forma colaborativa, dividindo as responsabilidades para garantir que todas as áreas do projeto sejam bem atendidas.
+            Alguns membros se dedicam à estruturação do código e ao desenvolvimento do banco de dados, garantindo que a base técnica do sistema seja sólida e eficiente.
+            Outros focam no design, criando uma interface intuitiva e atraente que melhore a experiência do usuário.
+            Este projeto não apenas nos permite aplicar os conhecimentos adquiridos em sala de aula, mas também nos ensina a importância do trabalho em equipe, da comunicação e da resolução de problemas.
+            Estamos animados com o resultado final e confiantes de que ele refletirá nosso esforço e aprendizado ao longo do processo.  
+        </p>
+    </div>
+</div>
+
+<style>
+    
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px; /* Espaçamento entre as imagens */
+    }
+    
+    .container img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3"> 
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Alekssandro Igreja.jpg' %}" 
+                    alt="Ronald Monteiro" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Alekssandro Igreja</p> 
+                        <p class="card-text">responsável em mandar o pessoal comprar refrigerante</p>
+                        <p class="card-text"> Não sei como e quando a gente está pra morrer, mas não quero me arrepender do meu jeito de viver</p>
+                        <p><i>
+                            a frase aqui
+                        </i></p>
+                    </div>    
+            </div>
+        </div>
+
+        <div class="col-3"> 
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Eduardo.jpg' %}" 
+                    alt="Ronald Monteiro" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Eduardo</p>
+                        <p class="card-text">responsável em mandar o pessoal comprar refrigerante</p>
+                        <p><i>
+                            a frase aqui
+                        </i></p>
+                    </div>    
+            </div>
+        </div>
+        
+
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Elian Thiago.jpg' %}" 
+                    alt="Elian Thiago" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Elian Thiago</p>
+                        <p class="card-text">responsável em desenvolver o banco de dados</p>
+                        <p class="card-text">Ninguém baterá tão forte quanto a vida. Porém, não se trata de quão forte pode bater, se trata de quão forte pode ser atingido e continuar seguindo em frente. É assim que a vitória é conquistada.</p>
+
+                    </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Erik Santos.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Erik Santos</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                        <p class="card-text"> São suas decisões, e não suas condições, que determinam seu destino</p>
+                    </div>
+            </div>
+        </div>
+
+
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/José Pantoja.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">José Pantoja</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                    </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Kevin Clark.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Kevin Clark</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                        <p class="card-text">A jornada da programação web é cheia de erros e acertos, mas cada bug corrigido é uma vitória no caminho do sucesso.</p>
+                    </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Luciano Almeida.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Luciano Almeida</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                        <p class="card-text">"Não existe sucesso sem esforço"</p>
+                    </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Nickolas Lima.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Nickolas Lima</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                        <p class="card-text">Você pode até perder a fé nos outros, mas nunca em si mesmo.</p>
+                    </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Rian Kaik.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Rian Kaik</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                    </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Rodrigo Souza.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Rodrigo Souza</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                    </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Ronald Monteiro.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Ronald Monteiro</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                    </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<div class="clearfix">
+    <img src="..." class="col-md-6 float-md-end mb-3 ms-md-3" alt="...">
+  
+    <p>
+      A paragraph of placeholder text. We're using it here to show the use of the clearfix class. We're adding quite a few meaningless phrases here to demonstrate how the columns interact here with the floated image.
+    </p>
+  
+    <p>
+      As you can see the paragraphs gracefully wrap around the floated image. Now imagine how this would look with some actual content in here, rather than just this boring placeholder text that goes on and on, but actually conveys no tangible information at. It simply takes up space and should not really be read.
+    </p>
+  
+    <p>
+      And yet, here you are, still persevering in reading this placeholder text, hoping for some more insights, or some hidden easter egg of content. A joke, perhaps. Unfortunately, there's none of that here.
+    </p>
+  </div>
+{% endblock %}  

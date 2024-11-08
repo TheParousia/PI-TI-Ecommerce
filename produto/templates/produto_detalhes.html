@@ -5,12 +5,15 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;700&display=swap');
     
+    /*Código para o seletor body removido pois conflita com template master*/
+    {% comment %}
     body {
         background-color: #E7EEF1;
         font-family: 'Public Sans', Arial, Helvetica, sans-serif;
         margin: 0;
         padding: 20px;
     }
+    {% endcomment %}
 
     .container {
         display: flex;
@@ -92,7 +95,7 @@
         font-size: 14px;
         text-align: center;
         text-decoration: none;
-        height: 18px;
+        /*height: 18px;  Esta regra foi retirada pois deixou a altura do botão tão pequena que impediu o texto de ser lido completamente*/
     }
 
     .btn-btn-primary:hover {
@@ -254,21 +257,22 @@
 <div class="container">
     <div class="imgs">
         <div class="foto-produto">
-            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+            <img src="{{ produto.imagem1.url }}" alt="Imagem do Produto">
         </div>
         <div class="foto-produto">
-            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+            <img src="{{ produto.imagem2.url }}" alt="Imagem do Produto">
         </div>
         <div class="foto-produto">
-            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+            <img src="{{ produto.imagem3.url }}" alt="Imagem do Produto">
         </div>
         <div class="foto-produto">
-            <img src="{{ produto.imagem.url }}" alt="Imagem do Produto">
+            <img src="{{ produto.imagem4.url }}" alt="Imagem do Produto">
         </div>
     </div>
 
     <div class="produto-detalhes">
         <h1>{{ produto.modelo }}</h1>
+        <p >Id:  <span id="idProduto">{{ produto.id }}</span></p>
         <p>R$ {{ produto.preco }}</p>
         <p>{{ produto.descricao }}</p>
 
@@ -284,7 +288,7 @@
         </div>
 
         <div class="compra-container">
-            <a href="#" class="btn-btn-primary">Adicionar ao Carrinho - R$ {{ produto.preco }}</a>
+            <button id="btnAddCarrinho" class="btn-btn-primary">Adicionar ao Carrinho - R$ {{ produto.preco }}</button>
 
             <div class="quantidade-wrapper">
                 <div class="quantidade-control">
@@ -304,13 +308,41 @@
 </div>
 
 <script>
+    var qtdProduto = document.getElementById('quantidade');
+    const btnAddCarrinho = document.getElementById("btnAddCarrinho");
+    const idProduto = document.getElementById("idProduto");
+
     function changeQuantity(change) {
-        var input = document.getElementById('quantidade');
-        var currentValue = parseInt(input.value);
+        var currentValue = parseInt(qtdProduto.value);
         var newValue = currentValue + change;
         if (newValue >= 1) {
-            input.value = newValue;
+            qtdProduto.value = newValue;
         }
     }
+
+    btnAddCarrinho.addEventListener("click", async ()=>{
+        var _csrftoken = Cookies.get('csrftoken'); // Captura o token CSRF, caso necessário.
+    
+        var _response = await fetch('/carrinho/add/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': _csrftoken,
+            },
+            body: JSON.stringify({
+                id_produto: parseInt(idProduto.textContent),
+                quantidade: parseInt(qtdProduto.value)
+            })
+        });
+    
+        if (_response.ok) {
+            const data = await _response.json();
+            console.log("Produto adicionado ao carrinho:", data);
+        } else {
+            console.error("Erro ao adicionar ao carrinho:", await _response.json());
+        }
+    });
+
 </script>
 {% endblock content %}
+

@@ -5,18 +5,36 @@ class Marca(models.Model):
 
     def __str__(self):
         return self.nome
+      
+    class Meta:
+        verbose_name = 'Marca'
+        verbose_name_plural = 'Marcas'
 
-class Modelo(models.Model):
-    nome = models.CharField(max_length=50)
+      
+class Cliente(models.Model):
+    nome = models.CharField(max_length=255)
+    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(unique=True)
+    telefone = models.CharField(max_length=15)
+    cpf_cnpj = models.CharField(max_length=18)  # Pode ser CPF ou CNPJ
+    cep = models.CharField(max_length=10)
+    rua = models.CharField(max_length=255)
+    numero = models.CharField(max_length=10)
+    bairro = models.CharField(max_length=255)
+    senha = models.CharField(max_length=128)  # Considere usar hashing
 
-    def __str__(self):
-        return self.nome
 
 class Cor(models.Model):
     nome = models.CharField(max_length=50)
+    codigo_hex = models.CharField(max_length=7)  # Código hexadecimal da cor
 
     def __str__(self):
-        return self.nome
+        return f"{self.nome} ({self.codigo_hex})"
+
+    class Meta:
+        verbose_name = 'Cor'
+        verbose_name_plural = 'Cores'
+
 
 class Produto(models.Model):
     modelo = models.CharField(max_length=50)
@@ -35,4 +53,11 @@ class Produto(models.Model):
     marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.marca} {self.modelo} ({self.cor}) - R${self.preco}"
+        return f"{self.marca} {self.modelo} - Cor: {self.cor.nome} - R${self.preco:.2f}"
+
+
+    class Meta:
+        verbose_name = 'Produto'
+        verbose_name_plural = 'Produtos'
+        ordering = ['marca', 'modelo']  # Ordenar produtos por marca e modelo
+
