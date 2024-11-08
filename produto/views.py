@@ -16,10 +16,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 fs = FileSystemStorage()
 
-# views.py
-
-# View para cadastrar uma nova marca
-
 
 @login_required
 # Apenas o usuario adm pode acessar

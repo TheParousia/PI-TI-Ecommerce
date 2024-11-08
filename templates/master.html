@@ -88,10 +88,12 @@
             style="text-decoration: none; margin: auto 1.5em;">Compras</a>
           <a href='{% url "add_infor" %}' class="botao-sem-borda mb-2 mb-md-0"
             style="text-decoration: none; margin: auto 1.5em;">Contato</a>
-          |
-          <a href='{% url "menu_adm" %}' class="botao-sem-borda mb-2 mb-md-0"
+            {% if user.is_authenticated and user.is_superuser %}
+            |
+            <a href='{% url "menu_adm" %}' class="botao-sem-borda mb-2 mb-md-0"
             style="text-decoration: none; margin: auto 1.5em;">Menu Administrativo</a>
-        </div>
+          </div>
+          {% endif %}
         <div class="d-flex align-items-center">
           <div class="input-group me-2">
             <span class="input-group-text border-0 bg-body">
