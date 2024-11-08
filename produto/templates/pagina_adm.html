@@ -38,6 +38,7 @@
 </head>
 <body>
     {% block conteudo %}
+    {% if user.is_authenticated %}
     <div class="container">
         <h2>Lista de Produtos</h2>
         <a href="/" class="btn btn-primary mb-3">Criar novo produto</a>
@@ -155,7 +156,12 @@
             form.action = '{% url "excluir_produto" 0 %}'.replace('0', id);
         });
     </script>
-    
+    {% else %}
+    <div class="container">
+        <h2>Você precisa estar logado para acessar esta página.</h2>
+        <a href="{% url 'login' %}" class="btn btn-dark">Fazer Login</a>
+    </div>
+    {% endif %}
     {% endblock %}
 </body>
 </html>

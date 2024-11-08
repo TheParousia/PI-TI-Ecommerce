@@ -23,16 +23,6 @@ class Cliente(models.Model):
     bairro = models.CharField(max_length=255)
     senha = models.CharField(max_length=128)  # Considere usar hashing
 
-class Modelo(models.Model):
-    nome = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.nome
-
-    class Meta:
-        verbose_name = 'Modelo'
-        verbose_name_plural = 'Modelos'
-
 
 class Cor(models.Model):
     nome = models.CharField(max_length=50)
@@ -47,7 +37,7 @@ class Cor(models.Model):
 
 
 class Produto(models.Model):
-    modelo = models.ForeignKey(Modelo, on_delete=models.CASCADE)
+    modelo = models.CharField(max_length=50)
     descricao = models.CharField(max_length=100)
     capacidade1 = models.CharField(max_length=10)
     capacidade2 = models.CharField(max_length=10)

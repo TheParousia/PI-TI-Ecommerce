@@ -9,8 +9,10 @@ from django.http import HttpResponse
 from django.template import loader
 from django.core.files.storage import FileSystemStorage
 from produto import models
-from .models  import Cor, Marca, Modelo, Produto
+from .models  import Cor, Marca, Produto
+from usuario.models import Cliente
 from multiprocessing import context
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 fs = FileSystemStorage()
 
@@ -18,6 +20,8 @@ fs = FileSystemStorage()
 from django.contrib import messages
 
 # View para cadastrar uma nova marca
+@login_required
+@user_passes_test(lambda u: u.is_superuser) # Apenas o usuario adm pode acessar
 def cadastrar_marca(request):
     marcas = Marca.objects.all()  # Busca todas as marcas no banco de dados
 
@@ -40,11 +44,13 @@ def cadastrar_marca(request):
     return render(request, "cadastrar_marca.html", contexto)  # Renderiza a página de cadastro
 
 # View para atualizar a marca (mostra todas as marcas cadastradas)
+@login_required
 def atualizar_marca(request):
     marcas = Marca.objects.all()  # Busca todas as marcas do banco de dados
     return render(request, "atualizar_marca.html", {"marcas": marcas})  # Renderiza a página de atualização com as marcas
 
 # View para cadastrar ou atualizar uma marca
+@user_passes_test(lambda u: u.is_superuser)
 def marca_cadastrar_atualizar(request):
     if request.method == 'POST':
         id = request.POST.get("id")
@@ -65,18 +71,17 @@ def marca_cadastrar_atualizar(request):
                 messages.error(request, "Por favor, preencha todos os campos.")  # Mensagem de erro
 
     return redirect('cadastrar_marca')  # Redireciona de volta para a página de cadastro
-
+@login_required
 # View para deletar uma marca
 def marca_deletar(request, id):
     marca = get_object_or_404(Marca, id=id)  # Obtém a marca a ser deletada
     marca.delete()  # Deleta a marca
     messages.success(request, "Marca deletada com sucesso!")  # Mensagem de sucesso
     return redirect('cadastrar_marca')  # Redireciona de volta para a página de cadastro de marcas
-
+@user_passes_test(lambda u: u.is_superuser)
 def menu_adm(request):
     return render(request, 'menu_adm.html')
-
-
+@user_passes_test(lambda u: u.is_superuser)
 def cadastrar_cor(request):
     cores = Cor.objects.all()
 
@@ -97,11 +102,11 @@ def cadastrar_cor(request):
     }
 
     return render(request, "cadastrar_cor.html", contexto)  # Renderiza a página de cadastro
-
+@user_passes_test(lambda u: u.is_superuser)
 def atualizar_cor(request):
     cores = Cor.objects.all()  # Busca todas as cores do banco de dados
     return render(request, "atualizar_cor.html", {"cores": cores})  # Renderiza a página de atualização com as cores
-
+@user_passes_test(lambda u: u.is_superuser)
 def cor_cadastrar_atualizar(request):
     if request.method == 'POST':
         id = request.POST.get("id")
@@ -129,13 +134,13 @@ def cor_cadastrar_atualizar(request):
          
     
     return redirect('cadastrar_cor')  # Redireciona para a página de atualização se não for uma requisição POST
-
+@user_passes_test(lambda u: u.is_superuser)
 def cor_deletar(request, id):  # Obtém a cor selecionada
     cor = get_object_or_404(Cor, id=id)
     cor.delete()
     
     return redirect('cadastrar_cor')  # Redireciona para a página de atualização se não for uma requisição POST
-
+@user_passes_test(lambda u: u.is_superuser)
 def registrar(request):
     if request.method == 'POST':
         # Obtém os dados do formulário
@@ -189,11 +194,11 @@ def registrar(request):
 
     # Caso o método não seja POST, renderiza a página de registro
     return render(request, 'registrar.html')
-
+@user_passes_test(lambda u: u.is_superuser)
 # Create your views here.
 def produtos(request):
     return render(request, "produtos.html") 
-
+@login_required
 def login_view(request):
     form = FormularioLogin()
     if request.method == 'POST':
@@ -219,11 +224,10 @@ def login_view(request):
 
     # Renderiza o template de login com o formulário
     return render(request, 'login_independente.html', {'form': form})
-
-
+@login_required
 def conta_criada(request):
     return render(request, 'conta_criada.html')  # Página de sucesso após a criação da conta
-
+@login_required
 def produtos(request):
     # Obtendo os parâmetros de consulta
     marca_id = request.GET.get('marca')
@@ -296,7 +300,7 @@ def produtos(request):
     }
 
     return render(request, 'produtos.html', context)
-
+@login_required
 def produto_detalhes(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
     produto.acessos += 1
@@ -305,14 +309,14 @@ def produto_detalhes(request, produto_id):
     return render(request, 'produto_detalhes.html', {'produto': produto})
 
     return render(request, 'produtos.html', context)
-
+@login_required
 def produto_detalhes(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
     produto.acessos += 1
     produto.save()
     
     return render(request, 'produto_detalhes.html', {'produto': produto})
-
+@login_required
 def detalhesProduto(request, produto_id):
     # Tenta buscar o produto pelo ID ou retorna um erro 404 se não encontrado
     produto = get_object_or_404(Produto, id=produto_id)
@@ -327,21 +331,21 @@ def detalhesProduto(request, produto_id):
     return render(request, 'produto_detalhes.html', context)
 
     # return HttpResponse("template.render()")
-
+@login_required
 def pagina_home(request):
     return render(request, 'pagina_home.html')
-
+@login_required
 def pagina_adm(request):
     produtos = Produto.objects.all()
     return render(request, 'pagina_adm.html', {'produtos': produtos})
-
+@user_passes_test(lambda u: u.is_superuser)
 def excluir_produtos(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
     if request.method == 'POST':
         produto.delete()
         return redirect('pagina_adm')
     return render(request, 'excluir_produtos.html', {'produto': produto})
-
+@user_passes_test(lambda u: u.is_superuser)
 def atualizar_produtos(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
 
@@ -350,11 +354,7 @@ def atualizar_produtos(request, produto_id):
 
         nomeModelo = request.POST.get('modelo', produto.modelo)
         
-        modelo = Modelo()
-        modelo.nome = nomeModelo
-        modelo.save()
-
-        produto.modelo = modelo
+        produto.modelo = nomeModelo
 
         idCor = int(request.POST.get('cor', produto.cor))
         cor = Cor.objects.get(id=idCor)
@@ -419,10 +419,10 @@ def atualizar_produtos(request, produto_id):
     }
 
     return render(request, 'atualizar_produtos.html', context)
-
+@user_passes_test(lambda u: u.is_superuser)
 def add_infor(request):
     return render(request, 'add_infor', context)
-
+@user_passes_test(lambda u: u.is_superuser)
 def tela_produto(request):
     if request.method == "POST":
         # Obtém ou cria as instâncias de Marca, Modelo e Cor

@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'homolog',
         'USER': 'sys_ecommerce',
         'PASSWORD': 'DbPi@2024',
-        'HOST': '172.16.0.40',
+        'HOST': '172.16.0.113',
         'PORT': 3306,
     }
 }
