@@ -11,310 +11,9 @@
 <script defer src="{% static 'listagem_produto/js/range.js' %}"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'listagem_produto/css/principal.css' %}">
 
 
-<style>
-
-    #conteudo_interno_especifico {
-        background-color: #EFF2F6; 
-    }
-
-    #conteudo_interno_especifico section {
-        font-family: 'Public Sans', sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #EFF2F6; 
-        color: #000000;
-    }
-
-    #conteudo_interno_especifico .header,
-    #conteudo_interno_especifico .filters,
-    #conteudo_interno_especifico .products {
-        width: 100%;
-        max-width: 1200px;
-        padding: 20px;
-    }
-
-
-.main-content {
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
-    justify-content: space-between; /* Espaçamento entre os itens */
-}
-.filters {
-    background-color: #EFF2F6;
-    padding: 10px;
-    margin-right: 20px;
-    width: 250px;
-    flex: 0 0 250px; /* Largura fixa para filtros */
-}
-.filters h1 {
-    font-size: 25px;
-}
-.filters div {
-    margin-bottom: 10px;
-}
-.filters label {
-    margin-right: 10px;
-}
-.filters select, .filters input {
-    margin-right: 20px;
-    width: 100%;
-}
-.products-section {
-    flex-grow: 1;
-}
-.products-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.products-header .sort-options {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-}
-.products-header .sort-options select {
-    flex: 1; /* Faz o select ocupar o espaço disponível */
-    min-width: 150px; /* Largura mínima para o select */
-    margin-left: 10px; /* Espaço à esquerda */
-}
-
-.common-button {
-    padding: 10px 20px;
-    margin: 20px auto;
-    background-color: #EFF2F6;
-    color: black;
-    border: 2px solid black;
-    cursor: pointer;
-    display: block;
-}
-.cartao {
-    margin: 10px;
-    padding: 20px;
-    width: 300px;
-    text-align: left;
-}
-.cartao img{
-    border: 2px solid #d6dfe0;
-    
-    
-}
-img {
-    width: 260px;
-    height: 260px;
-    aspect-ratio: 1 / 1; /* Isso mantém a proporção */
-}
-.cartao h2 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    white-space: normal; 
-    overflow: visible; 
-    text-overflow: clip; 
-}
-.cartao p {
-    margin: 5px 0;
-}
-.cartao .price {
-    font-size: 1.4em;
-    color: #000;
-}
-.label-style {
-    font-family: 'Public Sans', sans-serif;
-    color: #000; /* cor preta */
-}
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    background-color: black;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    padding: 10px;
-    list-style: none;
-}
-.dropdown-menu.show {
-    display: block;
-}
-.dropdown-menu li {
-    padding: 5px 10px;
-    cursor: pointer;
-}
-.dropdown-menu li:hover {
-    background-color: #f1f1f1;
-}
-.dropdown button {
-    display: none;
-}
-.new-div {
-    display: left;
-    width: 100%;
-    align-items: flex-start; 
-}
-.new-div h1 {
-    color: #000000;
-}
-.new-div p {
-    color: #979797;
-}
-.sort-options {
-    display: flex;
-    align-items: center;
-    border: 2px solid #000; 
-    padding: 10px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-form div:last-child {
-    display: flex;
-    gap: 10px;
-}
-button[type="submit"],
-button[type="reset"] {
-    background-color: rgba(0, 0, 0, 0);
-    border: 2px solid black;
-    color: black;
-    padding: 7px 18px;
-    cursor: pointer; 
-    opacity: 0.7;
-    flex: 1;
-    
-}
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-::selection {
-    color: #fff;
-    background: #17A2B8;
-}
-.price-input {
-    width: 100%;
-    display: flex;
-    margin: 30px 0 35px;
-}
-.price-input .field {
-    display: block;
-    width: 100%;
-    height: 23px;
-    align-items: center;
-}
-.field input {
-    width: 70px;
-    height: 110%;
-    outline: none;
-    font-size: 15px;
-    background-color: transparent;
-    border-radius: 5px;
-    text-align: center;
-    border-radius: 10%;
-    -moz-appearance: textfield;
-}
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-.slider {
-    height: 10px;
-    position: relative;
-    background: #ddd;
-    border-radius: 10px;
-}
-.slider .progress {
-    height: 100%;
-    left: 25%;
-    right: 25%;
-    position: absolute;
-    border-radius: 5px;
-    background: #8f8e8e;
-}
-.range-input {
-    position: relative;
-}
-.range-input input {
-    position: absolute;
-    width: 100%;
-    height: 10px;
-    top: -20px;
-    background: none;
-    pointer-events: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-    height: 17px;
-    width: 17px;
-    border-radius: 50%;
-    background: #4f5050;
-    pointer-events: auto;
-    -webkit-appearance: none;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-}
-input[type="range"]::-moz-range-thumb {
-    height: 17px;
-    width: 17px;
-    border: none;
-    border-radius: 50%;
-    background: #4f5050;
-    pointer-events: auto;
-    -moz-appearance: none;
-}
-.botao-filtro {
-    background-color: transparent;
-    border: 2px solid black;
-    color: black;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 10px; /* Espaço entre os botões */
-}
-.estrutura-filtros {
-    display: flex;
-    align-items: center;
-}
-.cartao a{
-    display: block;
-    width: 260px;
-    height: 260px;
-}
-.products {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 produtos por linha em telas grandes */
-    gap: 20px; 
-    justify-items: start;
-}
-
-@media (max-width: 1024px) {
-    .products {
-        grid-template-columns: repeat(2, 1fr); /* 2 produtos por linha em telas médias */
-    }
-}
-
-@media (max-width: 720px) {
-    .products {
-        grid-template-columns: repeat(2, 1fr); /* 2 produtos por linha em telas pequenas */
-    }
-    .filters {
-        width: 90%; /* Filtros ocupam toda a largura em telas menores */
-        margin: 0;
-    }
-    .products-section {
-        width: 100%; /* Produtos ocupam toda a largura */
-    }
-    .sort-options {
-        flex-direction: column; /* Coloca os itens em coluna em telas menores */
-        align-items: flex-start; /* Alinha os itens à esquerda */
-    }
-}
-
-</style>
 {% endblock head_tags %}
 {% block content %}
 <section>
@@ -326,7 +25,7 @@ input[type="range"]::-moz-range-thumb {
     </div>
     
     <div class="main-content">
-        <div class="filters">
+        <div id="filtro_desktop" class="filters">
             <h1>Filtros</h1>
             <p>Categoria</p> <br>
             <form id="formFiltros" action="" method="get">
@@ -384,6 +83,7 @@ input[type="range"]::-moz-range-thumb {
                 </div>
             </form>    
         </div>
+
         <div class="products-section">
             <div class="products-header">
                 <div class="sort-options">
@@ -399,25 +99,29 @@ input[type="range"]::-moz-range-thumb {
                 <p>Mostrando {{ total_produtos }} Produtos</p>
             </div>
             <div class="products">
-                {% for produto in produtos %}
-                <div class="col-lg-3 col-md-6 col-sm-12">
-                    <div class="cartao" style="display: none;" data-popularidade="{{ produto.popularidade }}">
-                        <a href="{% url 'produto_detalhes' produto.id %}">
-                            <img src="{{ produto.imagem1 }}" width="260px" height="260px" alt="{{ produto.modelo }}" style="display: block;">
-                        </a>
-                        <h2>{{ produto.modelo }}</h2>
-                        <p><strong>Marca:</strong>{{ produto.marca }}</p>
-                        <p><strong>Cor:</strong> {{ produto.cor }}</p>
-                        <p><strong>Disponíveis:</strong> {{ produto.qtd_estoque }}</p>
-                        <p class="price"><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+            <div class="container">
+                <div class="row">
+                    {% for produto in produtos %}
+                    <div class="cartao_produto col-lg-4 col-md-8 col-sm-12">
+                        <div class="card" style="background-color: transparent; border: none;" data-popularidade="{{ produto.popularidade }}">
+                            <a href="{% url 'produto_detalhes' produto.id %}">
+                                <img style="border: 2px solid #d6dfe0;" src="/media/{{ produto.imagem1 }}" alt="{{ produto.modelo }}" style="display: block;">
+                            </a>
+                            <h2>{{ produto.modelo }}</h2>
+                            <p><strong>Marca:</strong>{{ produto.marca }}</p>
+                            <p><strong>Cor:</strong> {{ produto.cor }}</p>
+                            <p><strong>Disponíveis:</strong> {{ produto.qtd_estoque }}</p>
+                            <p class="price"><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
+            </div>
             </div>
         </div>
     </div>
-    <button class="load-more common-button">Carregar mais produtos</button>
-    <button class="show-less common-button" style="display: none;">Mostrar menos produtos</button>
+    <button id="load-more" class="load-more common-button">Carregar mais produtos</button>
+    <button id="show-less" class="show-less common-button" style="display: none;">Mostrar menos produtos</button>
 
     
     <script>
@@ -444,12 +148,14 @@ input[type="range"]::-moz-range-thumb {
     });
 
     let visibleProducts = 6; // Número de produtos visíveis inicialmente
-    const products = document.querySelectorAll('.cartao');
+    const products = document.querySelectorAll('.cartao_produto');
 
     // Mostrar os primeiros 6 produtos
-    for (let i = 0; i < visibleProducts; i++) {
-        if (products[i]) {
+    for (let i = 0; i < products.length; i++) {
+        if (i < visibleProducts) {
             products[i].style.display = 'block'; // Exibe o produto
+        }else{
+            products[i].style.display = 'none'; // Oculta o produto
         }
     }
 
@@ -467,6 +173,7 @@ input[type="range"]::-moz-range-thumb {
         // Mostrar botão "Mostrar menos" se houver mais produtos para mostrar
         if (visibleProducts < totalProducts) {
             document.querySelector('.show-less').style.display = 'block';
+            document.querySelector('#show-less').style.display = 'block';
         }
 
         // Ocultar botão "Carregar mais" se todos os produtos estiverem visíveis
@@ -479,17 +186,24 @@ input[type="range"]::-moz-range-thumb {
     document.querySelector('.show-less').addEventListener('click', function() {
         const productsToHide = 6;
 
-        // Ocultar os últimos 6 produtos visíveis
-        for (let i = visibleProducts - 1; i >= visibleProducts - productsToHide && i >= 0; i--) {
-            products[i].style.display = 'none';
+        for (let i = products.length-1; i >= products.length - productsToHide; i--) {
+            products[i].style.display = 'none'; // Oculta o produto
         }
 
-        visibleProducts -= productsToHide; // Atualiza o contador de produtos visíveis
+        // // Ocultar os últimos 6 produtos visíveis
+        // for (
+        //     let i = visibleProducts - 1;
+        //     i >= visibleProducts - productsToHide && i >= 0;
+        //     i--) {
+        //     products[i].style.display = 'none';
+        // }
 
-        // Ocultar o botão "Mostrar menos" se não houver produtos a mostrar
-        if (visibleProducts <= 6) {
-            this.style.display = 'none';
-        }
+        // visibleProducts -= productsToHide; // Atualiza o contador de produtos visíveis
+
+        // // Ocultar o botão "Mostrar menos" se não houver produtos a mostrar
+        // if (visibleProducts <= 6) {
+        //     this.style.display = 'none';
+        // }
 
         // Mostrar o botão "Carregar mais" se não estiver exibindo todos os produtos
         if (visibleProducts < totalProducts) {
