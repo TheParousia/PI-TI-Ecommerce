@@ -99,37 +99,62 @@
     </div>
 </div>
 
+<style>
+    
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px; /* Espaçamento entre as imagens */
+    }
+    
+    .container img {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+    }
+</style>
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
-        </div>
-
-        <div class="col"> 
+        <div class="col-3"> 
             <div class="card">
                 <img
                     class="card-img-top" 
-                    src="{% static 'img/Ronald Monteiro.jpg' %}" 
+                    src="{% static 'img/Alekssandro Igreja.jpg' %}" 
                     alt="Ronald Monteiro" 
                     loading="lazy">
 
                     <div class="card-body">
-                        <p class="card-text">Ronald Monteiro 
+                        <p class="card-text">Alekssandro Igreja</p> 
                         <p class="card-text">responsável em mandar o pessoal comprar refrigerante</p>
+                        <p class="card-text"> Não sei como e quando a gente está pra morrer, mas não quero me arrepender do meu jeito de viver</p>
+                        <p><i>
+                            a frase aqui
+                        </i></p>
+                    </div>    
+            </div>
+        </div>
+
+        <div class="col-3"> 
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Eduardo.jpg' %}" 
+                    alt="Ronald Monteiro" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Eduardo</p>
+                        <p class="card-text">responsável em mandar o pessoal comprar refrigerante</p>
+                        <p><i>
+                            a frase aqui
+                        </i></p>
                     </div>    
             </div>
         </div>
         
 
-        <div class="col">
+        <div class="col-3">
             <div class="card">
                 <img
                     class="card-img-top" 
@@ -140,11 +165,30 @@
                     <div class="card-body">
                         <p class="card-text">Elian Thiago</p>
                         <p class="card-text">responsável em desenvolver o banco de dados</p>
+                        <p class="card-text">Ninguém baterá tão forte quanto a vida. Porém, não se trata de quão forte pode bater, se trata de quão forte pode ser atingido e continuar seguindo em frente. É assim que a vitória é conquistada.</p>
+
                     </div>
             </div>
         </div>
 
-        <div class="col">
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Erik Santos.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Erik Santos</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                        <p class="card-text"> São suas decisões, e não suas condições, que determinam seu destino</p>
+                    </div>
+            </div>
+        </div>
+
+
+        <div class="col-3">
             <div class="card">
                 <img
                     class="card-img-top" 
@@ -158,9 +202,112 @@
                     </div>
             </div>
         </div>
-        <div class="col">
-            foto do aluno aqui
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Kevin Clark.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Kevin Clark</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                        <p class="card-text">A jornada da programação web é cheia de erros e acertos, mas cada bug corrigido é uma vitória no caminho do sucesso.</p>
+                    </div>
+            </div>
         </div>
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Luciano Almeida.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Luciano Almeida</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                        <p class="card-text">"Não existe sucesso sem esforço"</p>
+                    </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Nickolas Lima.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Nickolas Lima</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                        <p class="card-text">Você pode até perder a fé nos outros, mas nunca em si mesmo.</p>
+                    </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Rian Kaik.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Rian Kaik</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                    </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Rodrigo Souza.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Rodrigo Souza</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                    </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Ronald Monteiro.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Ronald Monteiro</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                    </div>
+            </div>
+        </div>
+
+
+
     </div>
 </div>
+
+<div class="clearfix">
+    <img src="..." class="col-md-6 float-md-end mb-3 ms-md-3" alt="...">
+  
+    <p>
+      A paragraph of placeholder text. We're using it here to show the use of the clearfix class. We're adding quite a few meaningless phrases here to demonstrate how the columns interact here with the floated image.
+    </p>
+  
+    <p>
+      As you can see the paragraphs gracefully wrap around the floated image. Now imagine how this would look with some actual content in here, rather than just this boring placeholder text that goes on and on, but actually conveys no tangible information at. It simply takes up space and should not really be read.
+    </p>
+  
+    <p>
+      And yet, here you are, still persevering in reading this placeholder text, hoping for some more insights, or some hidden easter egg of content. A joke, perhaps. Unfortunately, there's none of that here.
+    </p>
+  </div>
 {% endblock %}  
