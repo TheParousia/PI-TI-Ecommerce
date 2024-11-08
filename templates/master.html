@@ -99,8 +99,11 @@
             <span class="input-group-text border-0 bg-body">
               <i class="fas fa-search"></i>
             </span>
-            <input class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar"
+            <form action="{% url 'produtos' %}" method="get">
+              <input name="q" class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar"
               aria-label="Procurar">
+            </form>
+
           </div>
           <span class="contador-sacola"></span> <!-- Contador sem fundo -->
           <a style="text-decoration:none;" href='{% url "carrinho" %}' class="botao-sem-borda ms-2" type="button">

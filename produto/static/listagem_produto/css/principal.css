@@ -1,11 +1,15 @@
-#conteudo_interno_especifico body {
+#conteudo_interno_especifico {
+    background-color: #EFF2F6; 
+}
+
+#conteudo_interno_especifico section {
     font-family: 'Public Sans', sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #EFF2F6;
+    background-color: #EFF2F6; 
     color: #000000;
 }
 
@@ -79,6 +83,7 @@
     /* Espaço à esquerda */
 }
 
+/*
 .products {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -86,6 +91,7 @@
     gap: 20px;
     justify-items: start;
 }
+*/
 
 .common-button {
     padding: 10px 20px;
@@ -97,25 +103,14 @@
     display: block;
 }
 
-.cartao {
-    margin: 10px;
-    padding: 20px;
-    width: 300px;
-    text-align: left;
+.cartao img{
+    border: 2px solid #d6dfe0;
 }
 
 .cartao img {
     border: 2px solid #d6dfe0;
-
-
 }
 
-img {
-    width: 260px;
-    height: 260px;
-    aspect-ratio: 1 / 1;
-    /* Isso mantém a proporção */
-}
 
 .cartao h2 {
     font-size: 1.5em;
@@ -204,7 +199,7 @@ button[type="reset"] {
     cursor: pointer;
     opacity: 0.7;
     flex: 1;
-
+    
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -316,49 +311,4 @@ input[type="range"]::-moz-range-thumb {
 .estrutura-filtros {
     display: flex;
     align-items: center;
-}
-
-.cartao a {
-    display: block;
-    width: 260px;
-    height: 260px;
-}
-
-@media (max-width: 720px) {
-    .filters {
-        width: 90%;
-        /* Filtros ocupam toda a largura em telas menores */
-        margin: 0;
-        /* Remove margem */
-        order: 1;
-        /* Filtros vão para o topo */
-    }
-
-    .products-section {
-        width: 100%;
-        /* Produtos ocupam toda a largura */
-        order: 2;
-        /* Seção de produtos fica abaixo dos filtros */
-    }
-
-    .common-button {
-        width: 100%;
-        /* Botões ocupam a largura total */
-    }
-
-    .sort-options {
-        flex-direction: column;
-        /* Coloca os itens em coluna em telas menores */
-        align-items: flex-start;
-        /* Alinha os itens à esquerda */
-    }
-
-    .sort-options select {
-        width: 100%;
-        /* O select ocupa 100% da largura disponível */
-        margin-left: 0;
-        /* Remove a margem à esquerda */
-        margin-top: 10px;
-        /* Adiciona margem superior */
-    }
 }

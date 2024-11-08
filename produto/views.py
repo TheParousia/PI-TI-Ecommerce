@@ -282,6 +282,10 @@ def produtos(request):
     preco_max = float(request.GET.get('precoMax', 10000))
     ordenar_por = request.GET.get('ordenar_produto')
 
+    query = request.GET.get('q')  # Obtém o parâmetro 'q' da URL
+
+    query = request.GET.get('q')  # Obtém o parâmetro 'q' da URL
+
     print("ordenar_por: ", ordenar_por)
 
     if preco_min - preco_max < 10:
@@ -301,7 +305,13 @@ def produtos(request):
     # Filtra produtos com preço maior que 100 e menor que 500
     # produtos_precos = Produto.objects.filter(preco__gt=preco_min, preco__lt=preco_max)
 
-    produtos = Produto.objects.all()
+    if query:
+        # Se houver um termo de pesquisa, realiza a busca
+        produtos = Produto.objects.filter(modelo__icontains=query)
+    else:
+        # Se não houver termo de pesquisa, define resultados como uma lista vazia
+        # E uma mensagem informativa para o usuário
+        produtos = Produto.objects.all()
 
     print("Id da marca: ", marca_id)
 
@@ -356,11 +366,31 @@ def produto_detalhes(request, produto_id):
 
 
 def produto_detalhes(request, produto_id):
+
     produto = get_object_or_404(Produto, id=produto_id)
     produto.acessos += 1
     produto.save()
 
     return render(request, 'produto_detalhes.html', {'produto': produto})
+
+
+def search(request):
+    query = request.GET.get('q')  # Obtém o parâmetro 'q' da URL
+    if query:
+        # Se houver um termo de pesquisa, realiza a busca
+        resultados = Produto.objects.filter(marca__nome__icontains=query)
+    else:
+        # Se não houver termo de pesquisa, define resultados como uma lista vazia
+        # E uma mensagem informativa para o usuário
+        resultados = []
+        mensagem = "Por favor, insira um termo de pesquisa."
+
+    return render(request, 'search.html', {
+        'resultados': resultados,  # Lista de produtos encontrados
+        'query': query,            # O termo de pesquisa usado
+        # Mensagem se não houver termo de pesquisa
+        'mensagem': mensagem if not query else None
+    })
 
 
 def detalhesProduto(request, produto_id):

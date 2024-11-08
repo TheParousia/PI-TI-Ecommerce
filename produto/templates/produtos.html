@@ -1,33 +1,31 @@
 {% extends "master.html" %}
-{% load static %}
+{%load static %}
+{% block title %}Produtos{% endblock %}
 
 {% block head_tags %}
-    <link rel="stylesheet" href="{% static 'listagem_produto/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'listagem_produto/css/range.css' %}">
-    
-    
-    <script defer src="{% static 'listagem_produto/js/script.js' %}"></script>
-    <script defer src="{% static 'listagem_produto/js/range.js' %}"></script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="{% static 'listagem_produto/css/principal.css' %}">
-{%endblock%}
+<link rel="stylesheet" href="{% static 'listagem_produto/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'listagem_produto/css/range.css' %}">
 
+
+<script defer src="{% static 'listagem_produto/js/script.js' %}"></script>
+<script defer src="{% static 'listagem_produto/js/range.js' %}"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'listagem_produto/css/principal.css' %}">
+
+
+{% endblock head_tags %}
 {% block content %}
-    <div class="new-div" style="text-align: left; padding: 0; margin: 0;">
-        <h1>Comprar</h1>
-        <p>Junte-se aos milhares de clientes satisfeitos que já<br>
-            escolheram nossa loja e descubra por que somos a<br>
-            escolha número um para todas as suas necessidades!</p>    
+<section>
+<div class="new-div" style="text-align: left; padding: 0; margin: 0;">
+    <h1>Comprar</h1>
+    <p>Junte-se aos milhares de clientes satisfeitos que já<br>
+        escolheram nossa loja e descubra por que somos a<br>
+        escolha número um para todas as suas necessidades!</p>    
     </div>
-    <div class="caixa-entrada">
-        <i class="uil uil-search"></i>
-        <input type="text" placeholder="Pesquise aqui..." />
-        <button class="button">Buscar</button>
-    </div>
+    
     <div class="main-content">
-        <div class="filters">
+        <div id="filtro_desktop" class="filters">
             <h1>Filtros</h1>
             <p>Categoria</p> <br>
             <form id="formFiltros" action="" method="get">
@@ -37,7 +35,7 @@
                     <select id="marca" name="marca" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
                         {% for marca in marcas %}
-                            <option value="{{ marca.id }}">{{ marca.nome }}</option>
+                        <option value="{{ marca.id }}">{{ marca.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -46,11 +44,11 @@
                     <select id="cor" name="cor" style="background-color: transparent; border: 1px solid #EFF2F6; color: #000;">
                         <option value="">Todas</option>
                         {% for cor in cores %}
-                            <option value="{{ cor.id }}">{{ cor.nome }}</option>
+                        <option value="{{ cor.id }}">{{ cor.nome }}</option>
                         {% endfor %}
                     </select>
                 </div>
-            
+                
                 <div class="price-input">
                     <div class="field">
                         <span>Min</span>
@@ -85,6 +83,7 @@
                 </div>
             </form>    
         </div>
+
         <div class="products-section">
             <div class="products-header">
                 <div class="sort-options">
@@ -100,29 +99,36 @@
                 <p>Mostrando {{ total_produtos }} Produtos</p>
             </div>
             <div class="products">
-                {% for produto in produtos %}
-                <div class="cartao" style="display: none;" data-popularidade="{{ produto.popularidade }}">
-                    <a href="{% url 'produto_detalhes' produto.id %}">
-                        <img src="/media/{{ produto.imagem1 }}" width="260px" height="260px" alt="{{ produto.modelo }}" style="display: block;">
-                    </a>
-                    <h2>{{ produto.modelo }}</h2>
-                    <p><strong>Marca:</strong>{{ produto.marca }}</p>
-                    <p><strong>Cor:</strong> {{ produto.cor }}</p>
-                    <p><strong>Disponíveis:</strong> {{ produto.qtd_estoque }}</p>
-                    <p class="price"><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+            <div class="container">
+                <div class="row">
+                    {% for produto in produtos %}
+                    <div class="cartao_produto col-lg-4 col-md-8 col-sm-12">
+                        <div class="card" style="background-color: transparent; border: none;" data-popularidade="{{ produto.popularidade }}">
+                            <a href="{% url 'produto_detalhes' produto.id %}">
+                                <img style="border: 2px solid #d6dfe0;" src="/media/{{ produto.imagem1 }}" alt="{{ produto.modelo }}" style="display: block;">
+                            </a>
+                            <h2>{{ produto.modelo }}</h2>
+                            <p><strong>Marca:</strong>{{ produto.marca }}</p>
+                            <p><strong>Cor:</strong> {{ produto.cor }}</p>
+                            <p><strong>Disponíveis:</strong> {{ produto.qtd_estoque }}</p>
+                            <p class="price"><strong>Preço:</strong> R$ {{ produto.preco }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
+            </div>
             </div>
         </div>
     </div>
-    <button class="load-more common-button">Carregar mais produtos</button>
-    <button class="show-less common-button" style="display: none;">Mostrar menos produtos</button>
+    <button id="load-more" class="load-more common-button">Carregar mais produtos</button>
+    <button id="show-less" class="show-less common-button" style="display: none;">Mostrar menos produtos</button>
 
+    
     <script>
                 
         
-    // Função para definir a ordem de classificação ao selecionar uma opção
-    function setSortOrder(value) {
+        // Função para definir a ordem de classificação ao selecionar uma opção
+        function setSortOrder(value) {
         document.getElementById('ordenar_por').value = value;
         // Opcionalmente, feche o menu suspenso aqui se necessário
     }
@@ -142,12 +148,14 @@
     });
 
     let visibleProducts = 6; // Número de produtos visíveis inicialmente
-    const products = document.querySelectorAll('.cartao');
+    const products = document.querySelectorAll('.cartao_produto');
 
     // Mostrar os primeiros 6 produtos
-    for (let i = 0; i < visibleProducts; i++) {
-        if (products[i]) {
+    for (let i = 0; i < products.length; i++) {
+        if (i < visibleProducts) {
             products[i].style.display = 'block'; // Exibe o produto
+        }else{
+            products[i].style.display = 'none'; // Oculta o produto
         }
     }
 
@@ -165,6 +173,7 @@
         // Mostrar botão "Mostrar menos" se houver mais produtos para mostrar
         if (visibleProducts < totalProducts) {
             document.querySelector('.show-less').style.display = 'block';
+            document.querySelector('#show-less').style.display = 'block';
         }
 
         // Ocultar botão "Carregar mais" se todos os produtos estiverem visíveis
@@ -177,17 +186,24 @@
     document.querySelector('.show-less').addEventListener('click', function() {
         const productsToHide = 6;
 
-        // Ocultar os últimos 6 produtos visíveis
-        for (let i = visibleProducts - 1; i >= visibleProducts - productsToHide && i >= 0; i--) {
-            products[i].style.display = 'none';
+        for (let i = products.length-1; i >= products.length - productsToHide; i--) {
+            products[i].style.display = 'none'; // Oculta o produto
         }
 
-        visibleProducts -= productsToHide; // Atualiza o contador de produtos visíveis
+        // // Ocultar os últimos 6 produtos visíveis
+        // for (
+        //     let i = visibleProducts - 1;
+        //     i >= visibleProducts - productsToHide && i >= 0;
+        //     i--) {
+        //     products[i].style.display = 'none';
+        // }
 
-        // Ocultar o botão "Mostrar menos" se não houver produtos a mostrar
-        if (visibleProducts <= 6) {
-            this.style.display = 'none';
-        }
+        // visibleProducts -= productsToHide; // Atualiza o contador de produtos visíveis
+
+        // // Ocultar o botão "Mostrar menos" se não houver produtos a mostrar
+        // if (visibleProducts <= 6) {
+        //     this.style.display = 'none';
+        // }
 
         // Mostrar o botão "Carregar mais" se não estiver exibindo todos os produtos
         if (visibleProducts < totalProducts) {
@@ -274,7 +290,7 @@
     const rangeInput = document.querySelectorAll(".range-input input"),
     priceInput = document.querySelectorAll(".price-input input"),
     range = document.querySelector(".slider .progress");
-    let priceGap = 10;
+    let priceGap = 100;
 
     // Atualiza o slider e os campos de preço ao digitar nos inputs
     priceInput.forEach(input =>{
@@ -346,28 +362,24 @@
     // Reaplica os filtros ao recarregar a página
     selectOrdenar.value = ordenarPor.value; // Sincroniza o seletor com o valor inicial
 
-/*
-    // Sincroniza o valor do campo de marca ao alterar o seletor
-    const selecionarMarca = document.getElementById('marca');
-    const marcaOculta = document.getElementById('marca'); // Supondo que você tenha um campo oculto com o mesmo id
+function aplicarFiltros() {
+        const marcaSelecionada = document.getElementById('marca').value;
+        const corSelecionada = document.getElementById('cor').value;
 
-    selecionarMarca.addEventListener('change', function() {
-        marcaOculta.value = selecionarMarca.value; // Atualiza o valor do campo oculto
+        // Para depuração, veja se os valores estão sendo capturados corretamente
+        console.log('Marca selecionada:', marcaSelecionada);
+        console.log('Cor selecionada:', corSelecionada);
+
+        // Aqui você pode implementar a lógica para filtrar produtos
+        // Exemplo fictício de lógica que poderia ser usada
+        // Se você tiver uma lista de produtos no frontend, filtre-a aqui
+    }
+
+    // Adiciona os eventos de mudança
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('marca').addEventListener('change', aplicarFiltros);
+        document.getElementById('cor').addEventListener('change', aplicarFiltros);
     });
-
-    // Sincroniza o valor do campo de cor ao alterar o seletor
-    const selecionarCor = document.getElementById('cor');
-    const corOculta = document.getElementById('cor'); // Supondo que você tenha um campo oculto com o mesmo id
-
-    selecionarCor.addEventListener('change', function() {
-        corOculta.value = selecionarCor.value; // Atualiza o valor do campo oculto
-    });
-
-    // Reaplica os valores iniciais ao recarregar a página
-    marcaOculta.value = selecionarMarca.value; // Sincroniza o seletor de marca com o valor inicial
-    corOculta.value = selecionarCor.value; // Sincroniza o seletor de cor com o valor inicial
-
-*/
-        
     </script>
-{% endblock%}
+</section>
+{% endblock %}
