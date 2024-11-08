@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Produtos</title>
+{% extends "master.html" %}
 
-    <style>
-        .modal-custom {
-            max-width: 600px;
-            width: 90%;
-        }
-        .container {
-            max-width: 90%; /* Largura do container */
-            margin: auto; /* Centralizando o container */
-        }
-        .table {
-            width: 100%; /* A tabela ocupa 100% do contêiner */
-            table-layout: fixed; /* Colunas com largura fixa */
-        }
+{% block title %}Lista de Produtos{% endblock title %}
+
+{% block head_tag %}
+<style>
+    .modal-custom {
+        max-width: 600px;
+        width: 90%;
+    }
+    .container {
+        max-width: 90%; /* Largura do container */
+        margin: auto; /* Centralizando o container */
+    }
+    .table {
+        width: 100%; /* A tabela ocupa 100% do contêiner */
+        table-layout: fixed; /* Colunas com largura fixa */
+    }
         .table th, .table td {
             min-width: 100px; /* Largura mínima para as colunas */
             word-wrap: break-word; /* Quebrar palavras longas */
@@ -35,14 +33,13 @@
             object-fit: cover; /* Para cortar as imagens mantendo a proporção */
         }
     </style>
-</head>
-<body>
-    {% block conteudo %}
-    {% if user.is_authenticated %}
+{% endblock head_tag %}
+
+{% block content %}
     <div class="container">
         <h2>Lista de Produtos</h2>
-        <a href="/" class="btn btn-primary mb-3">Criar novo produto</a>
-
+        <a href="{% url "tela_produto" %}" class="btn btn-primary mb-3">Criar novo produto</a>
+        
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -156,12 +153,4 @@
             form.action = '{% url "excluir_produto" 0 %}'.replace('0', id);
         });
     </script>
-    {% else %}
-    <div class="container">
-        <h2>Você precisa estar logado para acessar esta página.</h2>
-        <a href="{% url 'login' %}" class="btn btn-dark">Fazer Login</a>
-    </div>
-    {% endif %}
-    {% endblock %}
-</body>
-</html>
+{% endblock %}

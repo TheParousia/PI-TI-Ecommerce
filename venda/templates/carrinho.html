@@ -1,0 +1,32 @@
+{% extends "master.html" %}
+
+{% block title %}Carrinho{% endblock %}
+
+{% block head_tags %}
+{% endblock head_tags %}
+
+{% block content %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Produto</th>
+        <th scope="col">Preço</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for item in itensCarrinho %}
+            <tr>
+            <th scope="row">></th>
+            <td>{{item.produto.modelo}}</td>
+            <td>{{item.preco}}</td>
+            <td>{{item.quantidade}}</td>
+            <td>{{item.total}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
