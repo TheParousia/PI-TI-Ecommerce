@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'homolog',
+        'NAME': 'ecommerce',
         'USER': 'sys_ecommerce',
         'PASSWORD': 'DbPi@2024',
         'HOST': '172.16.0.40',
