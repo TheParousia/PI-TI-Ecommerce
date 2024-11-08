@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Cor
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.contrib import messages
 from usuario.forms import FormularioLogin, ClienteForm
 from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
@@ -17,7 +15,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 fs = FileSystemStorage()
 
 # views.py
-from django.contrib import messages
 
 # View para cadastrar uma nova marca
 @login_required
@@ -29,25 +26,30 @@ def cadastrar_marca(request):
         nome = request.POST.get('nome')  # Pega apenas o nome
 
         # Verifica se o campo nome foi preenchido corretamente
-        if nome:  
+        if nome:
             nova_marca = Marca(nome=nome)  # Cria uma nova instância de Marca
             nova_marca.save()  # Salva a nova marca no banco de dados
-            messages.success(request, "Marca cadastrada com sucesso!")  # Mensagem de sucesso
-            return redirect('cadastrar_marca')  # Redireciona para a página de cadastro de marca
+            # Mensagem de sucesso
+            messages.success(request, "Marca cadastrada com sucesso!")
+            # Redireciona para a página de cadastro de marca
+            return redirect('cadastrar_marca')
 
-        messages.error(request, "Por favor, preencha todos os campos.")  # Mensagem de erro
+        # Mensagem de erro
+        messages.error(request, "Por favor, preencha todos os campos.")
 
     contexto = {
         "marcas": marcas  # Passa todas as marcas para o template
     }
 
-    return render(request, "cadastrar_marca.html", contexto)  # Renderiza a página de cadastro
+    # Renderiza a página de cadastro
+    return render(request, "cadastrar_marca.html", contexto)
 
 # View para atualizar a marca (mostra todas as marcas cadastradas)
 @login_required
 def atualizar_marca(request):
     marcas = Marca.objects.all()  # Busca todas as marcas do banco de dados
-    return render(request, "atualizar_marca.html", {"marcas": marcas})  # Renderiza a página de atualização com as marcas
+    # Renderiza a página de atualização com as marcas
+    return render(request, "atualizar_marca.html", {"marcas": marcas})
 
 # View para cadastrar ou atualizar uma marca
 @user_passes_test(lambda u: u.is_superuser)
@@ -57,30 +59,38 @@ def marca_cadastrar_atualizar(request):
         nome = request.POST.get("nome")  # Apenas verifica o campo nome
 
         if id and id != "-1":  # Se o id for diferente de -1, significa que é uma atualização
-            marca = get_object_or_404(Marca, id=id)  # Busca a marca no banco de dados
+            # Busca a marca no banco de dados
+            marca = get_object_or_404(Marca, id=id)
             marca.nome = nome  # Atualiza o nome da marca
             marca.save()  # Salva as alterações no banco de dados
-            messages.success(request, "Marca atualizada com sucesso!")  # Mensagem de sucesso
+            # Mensagem de sucesso
+            messages.success(request, "Marca atualizada com sucesso!")
         else:
             # Se o id for -1 ou não estiver presente, significa que é um novo cadastro
             if nome:  # Apenas verifica o campo nome
-                nova_marca = Marca(nome=nome)  # Cria uma nova instância de Marca
+                # Cria uma nova instância de Marca
+                nova_marca = Marca(nome=nome)
                 nova_marca.save()  # Salva a nova marca no banco de dados
-                messages.success(request, "Marca cadastrada com sucesso!")  # Mensagem de sucesso
+                # Mensagem de sucesso
+                messages.success(request, "Marca cadastrada com sucesso!")
             else:
-                messages.error(request, "Por favor, preencha todos os campos.")  # Mensagem de erro
+                # Mensagem de erro
+                messages.error(request, "Por favor, preencha todos os campos.")
 
     return redirect('cadastrar_marca')  # Redireciona de volta para a página de cadastro
-@login_required
+
 # View para deletar uma marca
+@login_required
 def marca_deletar(request, id):
     marca = get_object_or_404(Marca, id=id)  # Obtém a marca a ser deletada
     marca.delete()  # Deleta a marca
     messages.success(request, "Marca deletada com sucesso!")  # Mensagem de sucesso
     return redirect('cadastrar_marca')  # Redireciona de volta para a página de cadastro de marcas
+
 @user_passes_test(lambda u: u.is_superuser)
 def menu_adm(request):
     return render(request, 'menu_adm.html')
+
 @user_passes_test(lambda u: u.is_superuser)
 def cadastrar_cor(request):
     cores = Cor.objects.all()
@@ -92,20 +102,25 @@ def cadastrar_cor(request):
         if nome and codigo_hex:
             nova_cor = Cor(nome=nome, codigo_hex=codigo_hex)
             nova_cor.save()  # Salva a nova cor no banco de dados
-            messages.success(request, "Cor cadastrada com sucesso!")  # Mensagem de sucesso
-            return redirect('atualizar_cor')  # Redireciona para a página de atualização de cor
+            # Mensagem de sucesso
+            messages.success(request, "Cor cadastrada com sucesso!")
+            # Redireciona para a página de atualização de cor
+            return redirect('atualizar_cor')
 
-        messages.error(request, "Por favor, preencha todos os campos.")  # Mensagem de erro
+        # Mensagem de erro
+        messages.error(request, "Por favor, preencha todos os campos.")
 
     contexto = {
         "cores": cores
     }
 
     return render(request, "cadastrar_cor.html", contexto)  # Renderiza a página de cadastro
+
 @user_passes_test(lambda u: u.is_superuser)
 def atualizar_cor(request):
     cores = Cor.objects.all()  # Busca todas as cores do banco de dados
     return render(request, "atualizar_cor.html", {"cores": cores})  # Renderiza a página de atualização com as cores
+
 @user_passes_test(lambda u: u.is_superuser)
 def cor_cadastrar_atualizar(request):
     if request.method == 'POST':
@@ -117,29 +132,33 @@ def cor_cadastrar_atualizar(request):
 
         if id != "-1":
             print("Atualizar")
-            
+
             cor = get_object_or_404(Cor, id=id)
 
             cor.nome = request.POST.get("nome")
             cor.codigo_hex = request.POST.get("codigo_hex")
 
             cor.save()
-            
+
         else:
             if nome and codigo_hex:
                 nova_cor = Cor(nome=nome, codigo_hex=codigo_hex)
                 nova_cor.save()  # Salva a nova cor no banco de dados
-                messages.success(request, "Cor cadastrada com sucesso!")  # Mensagem de sucesso
+                # Mensagem de sucesso
+                messages.success(request, "Cor cadastrada com sucesso!")
 
-         
-    
+    # Redireciona para a página de atualização se não for uma requisição POST
+    return redirect('cadastrar_cor')
+
     return redirect('cadastrar_cor')  # Redireciona para a página de atualização se não for uma requisição POST
+
 @user_passes_test(lambda u: u.is_superuser)
 def cor_deletar(request, id):  # Obtém a cor selecionada
     cor = get_object_or_404(Cor, id=id)
     cor.delete()
     
     return redirect('cadastrar_cor')  # Redireciona para a página de atualização se não for uma requisição POST
+
 @user_passes_test(lambda u: u.is_superuser)
 def registrar(request):
     if request.method == 'POST':
@@ -159,17 +178,21 @@ def registrar(request):
         # Valida se a senha e a confirmação de senha coincidem
         if senha != confirmar_senha:
             messages.error(request, 'As senhas não coincidem.')
-            return render(request, 'registrar.html')  # Volta para a página de registro
+            # Volta para a página de registro
+            return render(request, 'registrar.html')
 
         # Verifica se o email já está cadastrado
         if Cliente.objects.filter(email=email).exists():
             messages.error(request, 'Este e-mail já está em uso. Tente outro.')
-            return render(request, 'registrar.html')  # Volta para a página de registro
+            # Volta para a página de registro
+            return render(request, 'registrar.html')
 
         # Verifica se o username já está cadastrado
         if Cliente.objects.filter(username=username).exists():
-            messages.error(request, 'Este nome de usuário já está em uso. Tente outro.')
-            return render(request, 'registrar.html')  # Volta para a página de registro
+            messages.error(
+                request, 'Este nome de usuário já está em uso. Tente outro.')
+            # Volta para a página de registro
+            return render(request, 'registrar.html')
 
         # Cria o cliente (hashing a senha para segurança)
         cliente = Cliente(
@@ -190,14 +213,17 @@ def registrar(request):
         usuario = authenticate(request, username=username, password=senha)
         if usuario is not None:
             login(request, usuario)
-            return redirect('conta_criada')  # Redireciona para a página de sucesso
+            # Redireciona para a página de sucesso
+            return redirect('conta_criada')
 
     # Caso o método não seja POST, renderiza a página de registro
     return render(request, 'registrar.html')
-@user_passes_test(lambda u: u.is_superuser)
+
 # Create your views here.
+@user_passes_test(lambda u: u.is_superuser)
 def produtos(request):
     return render(request, "produtos.html") 
+
 @login_required
 def login_view(request):
     form = FormularioLogin()
@@ -209,12 +235,14 @@ def login_view(request):
             senha = form.cleaned_data['senha']
 
             # Tenta autenticar o usuário com os dados fornecidos
-            usuario = authenticate(request, username=nome_usuario, password=senha)
+            usuario = authenticate(
+                request, username=nome_usuario, password=senha)
             if usuario is not None:
                 # Se a autenticação for bem-sucedida, faz login e redireciona
                 login(request, usuario)
-                print("Usuário autenticado: ",usuario.is_authenticated)
-                return redirect('produtos')  # Redireciona para a página inicial (ou qualquer outra)
+                print("Usuário autenticado: ", usuario.is_authenticated)
+                # Redireciona para a página inicial (ou qualquer outra)
+                return redirect('produtos')
             else:
                 # Se as credenciais forem inválidas, exibe uma mensagem de erro
                 messages.error(request, 'Nome de usuário ou senha inválidos.')
@@ -224,10 +252,11 @@ def login_view(request):
 
     # Renderiza o template de login com o formulário
     return render(request, 'login_independente.html', {'form': form})
+
 @login_required
 def conta_criada(request):
     return render(request, 'conta_criada.html')  # Página de sucesso após a criação da conta
-@login_required
+
 def produtos(request):
     # Obtendo os parâmetros de consulta
     marca_id = request.GET.get('marca')
@@ -235,25 +264,22 @@ def produtos(request):
     preco_min = float(request.GET.get('precoMin', 0))
     preco_max = float(request.GET.get('precoMax', 10000))
     ordenar_por = request.GET.get('ordenar_produto')
-    
-    print("ordenar_por: ",ordenar_por)
-    
+
+    print("ordenar_por: ", ordenar_por)
+
     if preco_min - preco_max < 10:
         preco_min = 0
         preco_max = 10000
-    
+
     precoMin = 0
     precoMax = 10000
-    
-    
-    
+
     if preco_min != None:
         precoMin = preco_min
         precoMax = preco_max
-    
-    
-    print("preco_min: ",preco_min)
-    print("preco_max: ",preco_max)
+
+    print("preco_min: ", preco_min)
+    print("preco_max: ", preco_max)
 
     # Filtra produtos com preço maior que 100 e menor que 500
     # produtos_precos = Produto.objects.filter(preco__gt=preco_min, preco__lt=preco_max)
@@ -300,28 +326,29 @@ def produtos(request):
     }
 
     return render(request, 'produtos.html', context)
-@login_required
+
+
 def produto_detalhes(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
     produto.acessos += 1
     produto.save()
-    
+
     return render(request, 'produto_detalhes.html', {'produto': produto})
 
     return render(request, 'produtos.html', context)
-@login_required
+
 def produto_detalhes(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
     produto.acessos += 1
     produto.save()
-    
+
     return render(request, 'produto_detalhes.html', {'produto': produto})
-@login_required
+
 def detalhesProduto(request, produto_id):
     # Tenta buscar o produto pelo ID ou retorna um erro 404 se não encontrado
     produto = get_object_or_404(Produto, id=produto_id)
     produto.acessos += 1
-    produto.save()    
+    produto.save()
 
     # Dados do produto a serem passados para o template
     context = {
@@ -330,27 +357,40 @@ def detalhesProduto(request, produto_id):
     # Renderiza o template 'produto_detalhes.html' com o contexto do produto
     return render(request, 'produto_detalhes.html', context)
 
-    # return HttpResponse("template.render()")
+
 @login_required
 def pagina_home(request):
     return render(request, 'pagina_home.html')
+
 @login_required
 def pagina_adm(request):
     produtos = Produto.objects.all()
     return render(request, 'pagina_adm.html', {'produtos': produtos})
+
 @user_passes_test(lambda u: u.is_superuser)
+def pagina_home(request):
+    return render(request, 'pagina_home.html')
+
+def sobre_nos(request):
+    return render(request, 'sobre_nos.html')
+
+def pagina_adm(request):
+    produtos = Produto.objects.all()
+    return render(request, 'pagina_adm.html', {'produtos': produtos})
+
 def excluir_produtos(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
     if request.method == 'POST':
         produto.delete()
         return redirect('pagina_adm')
     return render(request, 'excluir_produtos.html', {'produto': produto})
+
 @user_passes_test(lambda u: u.is_superuser)
 def atualizar_produtos(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
 
     if request.method == 'POST':
-        #paramos aqui fresco
+        # paramos aqui fresco
 
         nomeModelo = request.POST.get('modelo', produto.modelo)
         
@@ -361,30 +401,30 @@ def atualizar_produtos(request, produto_id):
 
         # produto.cor = Cor.objects.get(nome=nomeCor)
         produto.cor = cor
-        
-        
+
         idMarca = request.POST.get('marca', produto.marca)
         marca = Marca.objects.get(id=idMarca)
-        
 
         produto.marca = marca
 
-
         produto.descricao = request.POST.get('descricao', produto.descricao)
-        produto.capacidade1 = request.POST.get('capacidade1', produto.capacidade1)
-        produto.capacidade2 = request.POST.get('capacidade2', produto.capacidade2)
-        produto.capacidade3 = request.POST.get('capacidade3', produto.capacidade3)
-        
+        produto.capacidade1 = request.POST.get(
+            'capacidade1', produto.capacidade1)
+        produto.capacidade2 = request.POST.get(
+            'capacidade2', produto.capacidade2)
+        produto.capacidade3 = request.POST.get(
+            'capacidade3', produto.capacidade3)
+
         # Convertendo qtd_estoque para inteiro
-        produto.qtd_estoque = int(request.POST.get('qtd_estoque', produto.qtd_estoque))
-        
+        produto.qtd_estoque = int(request.POST.get(
+            'qtd_estoque', produto.qtd_estoque))
+
         # Convertendo preco para float, substituindo vírgula por ponto
         preco_str = request.POST.get('preco', produto.preco)
         if preco_str:
             preco_str = preco_str.replace(',', '.')
             produto.preco = float(preco_str)
 
-        
         # Acessos pode ser um campo inteiro também
         produto.acessos = int(request.POST.get('acessos', produto.acessos))
 
@@ -393,15 +433,14 @@ def atualizar_produtos(request, produto_id):
             produto.imagem1.delete()
             produto.imagem1 = request.FILES['imagem1']
 
-
         if request.FILES.get('imagem2'):
             produto.imagem2.delete()
             produto.imagem2 = request.FILES['imagem2']
-        
+
         if request.FILES.get('imagem3'):
             produto.imagem3.delete()
             produto.imagem3 = request.FILES['imagem3']
-        
+
         if request.FILES.get('imagem4'):
             produto.imagem4.delete()
             produto.imagem4 = request.FILES['imagem4']
@@ -419,10 +458,13 @@ def atualizar_produtos(request, produto_id):
     }
 
     return render(request, 'atualizar_produtos.html', context)
-@user_passes_test(lambda u: u.is_superuser)
+
 def add_infor(request):
     return render(request, 'add_infor', context)
-@user_passes_test(lambda u: u.is_superuser)
+
+def add_infor(request):
+    return render(request, "sobre_nos.html")
+
 def tela_produto(request):
     if request.method == "POST":
         # Obtém ou cria as instâncias de Marca, Modelo e Cor
@@ -462,3 +504,6 @@ def tela_produto(request):
         return redirect("tela_produto")  # Redireciona após salvar
 
     return render(request, "tela_produto.html")
+
+def template(request):
+    return render(request, "sobre_nos.html") 

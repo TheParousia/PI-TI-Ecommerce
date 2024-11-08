@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +23,9 @@
   <!-- Carregamento do código js do bootstrap hospedado no próprio servidor -->
   <script src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"></script>
 
+  <!-- Carrega a biblioteca para manipulação de cookies no lado do cliente -->
+  <script defer src="{% static 'js-cookie/js.cookie.min.js' %}"></script>
+
   <!-- Carregamento de cada página -->
   <title>Storemobile - Ecommerce</title>
 
@@ -35,6 +39,10 @@
       flex-direction: row;
     }
 
+    .botao-sem-borda{
+      border:none;
+    }
+
     /* Ajuste de tamanho para botões em telas pequenas */
     @media (max-width: 40vw) {
       .container-botao button {
@@ -44,7 +52,6 @@
     }
   </style>
 </head>
-
 <body>
   <header>
     <!-- Navbar fixa -->
@@ -73,33 +80,42 @@
     <div class="bg-body shadow-sm">
       <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center my-2">
         <div class="d-flex flex-wrap justify-content-center">
-          <button class="botao-sem-borda me-2 mb-2 mb-md-0">Website</button>
-          <button class="botao-sem-borda me-2 mb-2 mb-md-0">Loja</button>
-          <button class="botao-sem-borda me-2 mb-2 mb-md-0">Compras</button>
-          <button class="botao-sem-borda mb-2 mb-md-0">Contato</button>
+          <a href='{% url "pagina_home" %}' class="botao-sem-borda me-2 mb-2 mb-md-0"
+            style="text-decoration: none; margin: auto 1.5em;">Website</a>
+          <a href='{% url "produtos" %}' class="botao-sem-borda me-2 mb-2 mb-md-0"
+            style="text-decoration: none; margin: auto 1.5em;">Loja</a>
+          <a href="" class="botao-sem-borda me-2 mb-2 mb-md-0"
+            style="text-decoration: none; margin: auto 1.5em;">Compras</a>
+          <a href='{% url "add_infor" %}' class="botao-sem-borda mb-2 mb-md-0"
+            style="text-decoration: none; margin: auto 1.5em;">Contato</a>
+          |
+          <a href='{% url "menu_adm" %}' class="botao-sem-borda mb-2 mb-md-0"
+            style="text-decoration: none; margin: auto 1.5em;">Menu Administrativo</a>
         </div>
-        <form class="d-flex align-items-center">
+        <div class="d-flex align-items-center">
           <div class="input-group me-2">
             <span class="input-group-text border-0 bg-body">
               <i class="fas fa-search"></i>
             </span>
-            <input class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar" aria-label="Procurar">
+            <input class="form-control barra-pesquisa-sem-borda" type="search" placeholder="Procurar"
+              aria-label="Procurar">
           </div>
-          <span class="contador-sacola">0</span> <!-- Contador sem fundo -->
-          <button class="botao-sem-borda ms-2" type="button">
+          <span class="contador-sacola"></span> <!-- Contador sem fundo -->
+          <a style="text-decoration:none;" href='{% url "carrinho" %}' class="botao-sem-borda ms-2" type="button">
             <i class="bi bi-handbag"></i> <!-- Ícone de sacola -->
-          </button> 
+          </a>
           {% if user.is_authenticated %}
-            <a href="/logout/">
-              <button class="botao-sem-borda ms-2" type="button">Deslogar</button> <!-- Botão Logar -->
-            </a>  
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <input id="logout" type="submit" class="botao-sem-borda ms-2" value="Deslogar" > <!-- Botão Logar -->
+          </form>
           {% else %}
-            <a href="/login">
-              <button class="botao-sem-borda ms-2" type="button">Logar</button> <!-- Botão Logar -->
-            </a>
-            
+          <a href="/login">
+            <button class="botao-sem-borda ms-2" type="button">Logar</button> <!-- Botão Logar -->
+          </a>
+
           {% endif %}
-        </form>
+        </div>
       </div>
     </div>
   </header>
@@ -125,9 +141,9 @@
         <div class="container-botao mt-3 mt-md-0" style="margin-left: 5vw;margin-botton: 10px;">
           <button class="botao-sem-borda font-weight-bold">Website</button>
           <button class="botao-sem-borda font-weight-bold">Loja</button>
-          <button class="botao-sem-borda font-weight-bold">Contato</button>
+          <button class="botao-sem-borda font-weight-bold">Sobre nós</button>
         </div>
-      </div>      
+      </div>
     </div>
   </div>
 
@@ -136,4 +152,5 @@
     <p>© 2024 STORE MOBILE. TODOS OS DIREITOS RESERVADOS.</p>
   </footer>
 </body>
+
 </html>

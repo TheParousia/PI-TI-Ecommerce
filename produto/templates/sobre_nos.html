@@ -1,0 +1,166 @@
+{% extends "master.html" %}
+{% load static %}
+
+
+{% block head_tags %}
+    <style>
+    body { 
+        font-family: Public Sans; 
+        margin: 30px; 
+        display: flex; 
+    }
+
+    .column {
+        flex: 1;
+        padding: 30px;
+        margin-right: 10vw;
+        margin-left: 10vw;
+        
+    }
+
+    #titulo{
+        
+        text-align: center; /* Centraliza o conteúdo da coluna */
+        
+    }
+    
+    #texto{
+        text-align: justify;
+    }
+
+    
+    .column img {
+        max-width: 100%; /* A imagem se ajusta à largura da coluna */
+        height: auto; /* Mantém a proporção da imagem */
+    }
+    
+    .full-image {
+        width: 100%; /* A imagem ocupará 100% da largura da coluna */
+        height: auto; /* Mantém a proporção da imagem */
+    }
+    h1 { 
+        color: #333; 
+    }
+</style>
+{% endblock head_tags %}
+
+
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <div class="card">
+                <img
+                class="card-img-top" 
+                src="{% static 'img/turma3.jpg' %}" 
+                alt="Turma 3, Turma 5" 
+                loading="lazy">
+
+                <div class="card-body">
+                  <p class="card-text">Processo de criação do PI.</p>
+                </div>
+            </div>
+          
+        </div>
+        <div class="col-12 col-sm-6">
+            <div class="card">
+                <img
+                class="card-img-top" 
+                src="{% static 'img/turma5.jpg' %}" 
+                alt="Turma 3, Turma 5" 
+                loading="lazy">
+
+                <div class="card-body">
+                  <p class="card-text">Testes de apresentação do trabalho.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="column">
+    <source srcset="{% static 'img/turma3.webp, turma5.webp' %}" type="image/webp">
+</div>
+<br>
+<div class="container">
+
+    <div class="column">
+        <h1 id="titulo">Sobre nós</h1>
+        <br>
+        <p id="texto"> 
+            Nosso projeto visa desenvolver uma simulação de um sistema de vendas e-commerce, proporcionando uma experiência prática e abrangente no campo da tecnologia da informação.
+            A equipe é composta por 11 membros do curso técnico de informática, cada um com um papel fundamental que contribui para o sucesso do projeto.
+            Desde o início na UC 16 (Unidade Curricular), temos trabalhado de forma colaborativa, dividindo as responsabilidades para garantir que todas as áreas do projeto sejam bem atendidas.
+            Alguns membros se dedicam à estruturação do código e ao desenvolvimento do banco de dados, garantindo que a base técnica do sistema seja sólida e eficiente.
+            Outros focam no design, criando uma interface intuitiva e atraente que melhore a experiência do usuário.
+            Este projeto não apenas nos permite aplicar os conhecimentos adquiridos em sala de aula, mas também nos ensina a importância do trabalho em equipe, da comunicação e da resolução de problemas.
+            Estamos animados com o resultado final e confiantes de que ele refletirá nosso esforço e aprendizado ao longo do processo.  
+        </p>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+        </div>
+
+        <div class="col"> 
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Ronald Monteiro.jpg' %}" 
+                    alt="Ronald Monteiro" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Ronald Monteiro 
+                        <p class="card-text">responsável em mandar o pessoal comprar refrigerante</p>
+                    </div>    
+            </div>
+        </div>
+        
+
+        <div class="col">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/Elian Thiago.jpg' %}" 
+                    alt="Elian Thiago" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">Elian Thiago</p>
+                        <p class="card-text">responsável em desenvolver o banco de dados</p>
+                    </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <img
+                    class="card-img-top" 
+                    src="{% static 'img/José Pantoja.jpg' %}" 
+                    alt="José Pantoja" 
+                    loading="lazy">
+
+                    <div class="card-body">
+                        <p class="card-text">José Pantoja</p>
+                        <p class="card-text">responsável pela criação e filtragem de produtos</p>
+                    </div>
+            </div>
+        </div>
+        <div class="col">
+            foto do aluno aqui
+        </div>
+    </div>
+</div>
+{% endblock %}  
