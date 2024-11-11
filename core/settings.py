@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-^9y!r9)o*td12i$)-b7d(2&xhdh-s&t7c=11=guz1cu9oh)-dk
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = True
 
 #ALLOWED_HOSTS = ['*', '172.16.0.8', 'homolog.ecommerce.lab202.cst']
 ALLOWED_HOSTS = ['*', '172.16.0.8', 'storemobile.senac.br']
@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'ecommerce',
+        'NAME': 'homolog',
         'USER': 'sys_ecommerce',
         'PASSWORD': 'DbPi@2024',
-        'HOST': '172.16.0.40',
+        'HOST': '172.16.0.113',
         'PORT': 3306,
     }
 }

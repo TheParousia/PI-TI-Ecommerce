@@ -526,7 +526,7 @@ def tela_produto(request):
 
         # Procura a marca, modelo e cor, ou cria novos se não existirem
         marca, created = Marca.objects.get_or_create(nome=marca_nome)
-        modelo, created = Modelo.objects.get_or_create(nome=modelo_nome)
+        modelo = modelo_nome
         cor, created = Cor.objects.get_or_create(nome=cor_nome)
 
         produto = Produto(
