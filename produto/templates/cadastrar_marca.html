@@ -6,7 +6,7 @@
 <div class="container">
     <h1 id="titulo">Cadastrar Marca</h1>
 
-    <!-- Formulário de cadastro/atualização -->
+    <!-- Formulário de cadastro/atualização-->
     <form action="{% url 'marca_cadastrar_atualizar' %}" method="POST">
         {% csrf_token %}
         <input type="hidden" id="id_da_marca" name="id" value="-1">  <!-- Campo oculto para o id da marca -->
