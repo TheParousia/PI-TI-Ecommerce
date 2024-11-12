@@ -106,6 +106,12 @@ width: 260px;
 height: 260px;
 aspect-ratio: 1 / 1; /* Isso mantém a proporção */
 }
+.card img{
+    border: 2px solid #d6dfe0;
+    width: 260px;
+    height: 260px;
+    aspect-ratio: 1 / 1; /* Isso mantém a proporção */
+}
 .cartao h2 {
 font-size: 1.5em;
 margin-bottom: 10px;
@@ -370,7 +376,7 @@ align-items: center;
                     <div class="cartao_produto col-lg-4 col-md-8 col-sm-12">
                         <div class="card" style="background-color: transparent; border: none;" data-popularidade="{{ produto.popularidade }}">
                             <a href="{% url 'produto_detalhes' produto.id %}">
-                                <img style="border: 2px solid #d6dfe0;" src="/media/{{ produto.imagem1 }}" alt="{{ produto.modelo }}" style="display: block;">
+                                <img style="border: 2px solid #d6dfe0; width: 260px; height: 260px;" src="/media/{{ produto.imagem1 }}" alt="{{ produto.modelo }}" style="display: block;">
                             </a>
                             <h2>{{ produto.modelo }}</h2>
                             <p><strong>Marca:</strong>{{ produto.marca }}</p>
